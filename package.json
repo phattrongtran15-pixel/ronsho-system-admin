@@ -1,0 +1,26 @@
+{
+  "name": "ronsho-system-admin",
+  "version": "1.0.0",
+  "private": false,
+  "description": "RONSHO AIOS — System Management & Autonomous Multi-Agent Operations Control Center",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "ronsho",
+    "aios",
+    "multi-agent",
+    "a2a",
+    "circuit-breaker",
+    "cyberpunk-hud",
+    "admin-dashboard"
+  ],
+  "author": "Thuyền trưởng Ron (Ronsho) <phattrongtran15-pixel>",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

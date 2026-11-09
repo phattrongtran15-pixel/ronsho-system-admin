@@ -1,0 +1,19 @@
+{
+  "SEAL_VERSION": "1.0",
+  "REPOSITORY": "phattrongtran15-pixel/ronsho-system-admin",
+  "COMMANDER": "Thuyền trưởng Ron (Ronsho)",
+  "ORCHESTRATOR": "Antigravity Cloud / Codex",
+  "MERKLE_ROOT_SHA256": "9bf62ded27e4bed6c1f7788f4d8c6aefde930f482be8169947ea888ee62fb9a8",
+  "TOTAL_FILES": 8,
+  "FILES": {
+    ".gitignore": "dd70969fb0e63258af71d960052e6de9ff66ef389bf584e52e8b52dd6d85b1a6",
+    "LICENSE": "392f8c7ff8a54e9c7f82e47875e1df6450be2744ef98fbec096ff51bb89a54ea",
+    "README.md": "6db05a9c0dc3ddeaaa85c6917aa0498ed2a07305dd3f3a417dc8a703fb74ebfc",
+    "index.html": "27f5a267b86c36ec23c9e83b8b69c18f96a45afeac7d8ecc8b30405d8a4b5292",
+    "package.json": "5a7bf2c1c737fa49aac24e98b78bec967ceb791ccad0c0e36c7273cf5b996aca",
+    "test.js": "2b8850aacd8706deb60a41caa84c80632bc3ebb083c2741a52f6fd99d2db55d9",
+    "vite.config.ts": "792feaa24827e0bc1368daae22af25113193460b72bd840d3a796b932b4053b0",
+    "public/favicon.svg": "771948f890e6d8c843a9d645c8687f0e6ab7dd0d0fc97292462d25281cedc1f0"
+  },
+  "STATUS": "VERIFIED_PRODUCTION_READY"
+}
