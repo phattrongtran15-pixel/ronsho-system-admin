@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "RON-SHO AIOS Triad Architecture",
+    "output": "ronsho-triad.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "ron", "type": "external", "label": "Captain Ron", "sublabel": "Human Sovereignty & Authority", "pos": [40, 200], "size": [150, 64], "tag": "Sovereign Master" },
+    { "id": "mcp_master", "type": "backend", "label": "Ron-MCP-Master", "sublabel": "Repo 1: Control & Mailbox", "pos": [260, 200], "size": [160, 64], "tag": "Circuit Breaker" },
+    { "id": "sys_admin", "type": "cloud", "label": "System Admin UI", "sublabel": "Repo 6: Mission Control", "pos": [490, 150], "size": [160, 64], "tag": "Live GitHub Pages" },
+    { "id": "c4_living", "type": "backend", "label": "LikeC4 Engine", "sublabel": "C4 Living Map (Bản đồ sống)", "pos": [720, 100], "size": [170, 64] },
+    { "id": "graph_flow", "type": "backend", "label": "Flow Graph Radar", "sublabel": "Graph (Tính liền mạch & nghẽn)", "pos": [720, 200], "size": [170, 64] },
+    { "id": "archify_oracle", "type": "security", "label": "Archify Oracle", "sublabel": "Archify (Kiểm tra đúng sai)", "pos": [720, 300], "size": [170, 64], "tag": "Merkle Proof Gate" },
+    { "id": "unified_core", "type": "database", "label": "Unified Core", "sublabel": "Consolidated Repos 3, 4, 5", "pos": [490, 350], "size": [160, 64], "tag": "Zero Fragmentation" },
+    { "id": "agent_fleet", "type": "backend", "label": "A2A Agent Fleet", "sublabel": "Goose Worker + Anti Cloud", "pos": [260, 350], "size": [160, 64], "tag": "M1-M5 Execution" }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Sovereign RON-SHO Runtime", "wraps": ["mcp_master", "sys_admin", "c4_living", "graph_flow", "archify_oracle", "unified_core", "agent_fleet"] },
+    { "kind": "security-group", "label": "Strategic Triad", "wraps": ["c4_living", "graph_flow", "archify_oracle"] }
+  ],
+  "connections": [
+    { "id": "ron-to-mcp", "from": "ron", "to": "mcp_master", "label": "Direct Command", "variant": "emphasis" },
+    { "id": "mcp-to-ui", "from": "mcp_master", "to": "sys_admin", "label": "Telemetry" },
+    { "id": "ui-to-c4", "from": "sys_admin", "to": "c4_living", "label": "Living Map" },
+    { "id": "ui-to-graph", "from": "sys_admin", "to": "graph_flow", "label": "Continuity" },
+    { "id": "mcp-to-archify", "from": "mcp_master", "to": "archify_oracle", "label": "Verify Gate", "variant": "security" },
+    { "id": "archify-to-core", "from": "archify_oracle", "to": "unified_core", "label": "Audit Seal" },
+    { "id": "mcp-to-fleet", "from": "mcp_master", "to": "agent_fleet", "label": "A2A Dispatch", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "Human Sovereignty", "items": ["Ron holds all protected decisions", "Zero copy-paste & no middleware burden", "Evidence before claims strictly enforced"] },
+    { "dot": "cyan", "title": "Triad Core Capabilities", "items": ["C4: Architecture-as-code living map", "Graph: Continuous bottleneck & latency detection", "Archify: Conformance verification oracle + Merkle receipt"] },
+    { "dot": "emerald", "title": "Repo Consolidation", "items": ["Repo 1: Ron-MCP-Master (Retain)", "Repo 2: RON-AIOS (Merge into Repo 1)", "Repo 3,4,5: Consolidated into Unified Core"] }
+  ]
+}
