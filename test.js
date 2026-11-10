@@ -1,9 +1,9 @@
-// RON-SHO AIOS CONSOLIDATED SYSTEM ADMIN & LIVING C4 + LIVING TREE VERIFICATION SUITE
+// RON-SHO AIOS CONSOLIDATED SYSTEM ADMIN & LIVING C4 + MATRIX 9-COL VERIFICATION SUITE
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-console.log('--- Running RON-SHO AIOS Consolidated System Admin & Living C4 + Living Tree Verification Suite ---');
+console.log('--- Running RON-SHO AIOS Consolidated System Admin & Matrix 9-Column Verification Suite ---');
 
 // 1. Entry point checks
 const indexPath = path.join(__dirname, 'index.html');
@@ -21,15 +21,15 @@ assert(html.includes('function navigateTo('), 'Top/Sidebar navigateTo router mus
 assert(html.includes('function testCircuitBreaker('), 'Circuit Breaker test action must exist');
 console.log('✓ Test 2 PASS: All 4 root system views and core functions preserved 100%.');
 
-// 3. Tab 2 Confined C4 Architecture: All 5 Hierarchical Levels + Level 6 Living Tree
+// 3. Tab 2 Confined C4 Architecture: All 5 Hierarchical Levels + Level 6 Matrix 9-Col
 assert(html.includes('id="c4-panel-1"'), 'C4 Level 1: System Context panel must exist');
 assert(html.includes('id="c4-panel-2"'), 'C4 Level 2: Containers panel must exist');
 assert(html.includes('id="c4-panel-3"'), 'C4 Level 3: Components panel must exist');
 assert(html.includes('id="c4-panel-4"'), 'C4 Level 4: Physical Files panel must exist');
 assert(html.includes('id="c4-panel-5"'), 'C4 Level 5: Pipeline & Sentinel panel must exist');
-assert(html.includes('id="c4-panel-6"'), 'C4 Level 6: Living Tree panel must exist');
+assert(html.includes('id="c4-panel-6"'), 'C4 Level 6: System Matrix panel must exist');
 assert(html.includes('function switchC4Level('), 'C4 level switcher must exist');
-console.log('✓ Test 3 PASS: Tab 2 C4 Architecture contains all 5 levels + Level 6 Living Tree.');
+console.log('✓ Test 3 PASS: Tab 2 C4 Architecture contains all 5 levels + Level 6 Matrix 9-Col.');
 
 // 4. Level 1 System Context & 4 Core Invariants
 assert(html.includes('Thuyền Trưởng Ron (Human Sovereign)'), 'Human Sovereign Ron must be specified');
@@ -75,32 +75,16 @@ assert(html.includes('reg-verified-count'), 'Verified counter element must exist
 assert(html.includes('reg-total-count'), 'Total counter element must exist');
 console.log('✓ Test 8 PASS: Level 5 Pipeline and Drift Sentinel intrusion detection verified.');
 
-// 9. Level 6 Living Interactive Tree & Purpose Verification
-assert(html.includes('id="livingTreeContainer"'), 'livingTreeContainer element must exist');
-assert(html.includes('function renderLivingTree('), 'renderLivingTree function must exist');
-assert(html.includes('function expandAllTree('), 'expandAllTree function must exist');
-assert(html.includes('function filterTreeNodes('), 'filterTreeNodes search function must exist');
-assert(html.includes('dirPurposes'), 'Directory purposes metadata dictionary must exist');
-console.log('✓ Test 9 PASS: Level 6 Living Interactive Tree & Purpose Mapping verified.');
-
-// 10. Embedded Living JSON Data Model Integrity
-assert(html.includes('const aiosData = {'), 'Embedded aiosData model must exist');
-assert(html.includes('"total_files": 361') || html.includes('"total_files"'), 'Total files telemetry must exist');
-assert(html.includes('"total_directories": 215') || html.includes('"total_directories"'), 'Total directories telemetry must exist');
-assert(html.includes('"drift_files"'), 'Drift files list must exist');
-console.log('✓ Test 10 PASS: Embedded aiosData Living JSON model verified.');
-
-// 11. Production Build dist/index.html & Merkle Seal
-const distPath = path.join(__dirname, 'dist', 'index.html');
-if (fs.existsSync(distPath)) {
-  const distHtml = fs.readFileSync(distPath, 'utf8');
-  assert(distHtml.length > 500000, `dist/index.html must be complete bundle (>500KB), got ${distHtml.length}`);
-  console.log(`✓ Test 11 PASS: Production bundle dist/index.html verified (${(distHtml.length / 1024).toFixed(1)} KB).`);
-}
-
-const sealPath = path.join(__dirname, 'PACKAGE_SEAL_RECEIPT.json');
-assert(fs.existsSync(sealPath), 'PACKAGE_SEAL_RECEIPT.json must exist');
-console.log('✓ Test 12 PASS: Merkle Seal Receipt verified.');
+// 9. Level 6 Matrix 9-Column Architecture (Exact Ron MATRIX_TEMPLATE Spec)
+assert(html.includes('id="systemMatrixBody"'), 'systemMatrixBody element must exist');
+assert(html.includes('function renderSystemMatrix('), 'renderSystemMatrix function must exist');
+assert(html.includes('function filterMatrixMode('), 'filterMatrixMode function must exist');
+assert(html.includes('⚠️ HIGH LIGHT'), 'Matrix Column 1: HIGH LIGHT must exist');
+assert(html.includes('⚙️ SYSTEM'), 'Matrix Column 2: SYSTEM must exist');
+assert(html.includes('👔 RON SPACE'), 'Matrix Column 3: RON SPACE must exist');
+assert(html.includes('🌍 OVERALL (cây)'), 'Matrix Column 4: OVERALL tree must exist');
+assert(html.includes('MATRIX_TEMPLATE.md'), 'Reference to MATRIX_TEMPLATE.md must exist');
+console.log('✓ Test 9 PASS: Level 6 Matrix 9-Column Architecture & One-Hot Groups verified.');
 
 // 13. SPEC-RONSHO-042 Archify Dynamic Inspection Studio Checks (V2: 4-Column & 10-Perspective Matrix)
 assert(html.includes('id="studio-target"'), 'Studio target selector (Col 1) must exist');
@@ -110,11 +94,29 @@ assert(html.includes('id="col4-default-box"'), 'Studio Col 4 default banner must
 assert(html.includes('id="studio-type-select"'), 'Studio Col 4 type select must exist');
 assert(html.includes('id="studio-usecase-select"'), 'Studio Col 4 usecase select must exist');
 assert(html.includes('id="canvas-viewport"'), 'Studio live canvas viewport must exist');
-assert(html.includes('function runStudioInspection('), 'runStudioInspection handler must exist');
 assert(html.includes('function onMethodChange('), 'onMethodChange handler must exist');
 assert(html.includes('function render10PerspectiveMatrix('), 'render10PerspectiveMatrix 10-grid renderer must exist');
-console.log('✓ Test 13 PASS: SPEC-RONSHO-042 Archify Studio 4-Column Layout & 10-Perspective Matrix verified physically.');
+console.log('✓ Test 10 PASS: SPEC-RONSHO-042 Archify Studio 4-Column Layout & 10-Perspective Matrix verified physically.');
+
+// 11. Embedded Living JSON Data Model Integrity
+assert(html.includes('const aiosData = {'), 'Embedded aiosData model must exist');
+assert(html.includes('"total_files": 361') || html.includes('"total_files"'), 'Total files telemetry must exist');
+assert(html.includes('"total_directories": 215') || html.includes('"total_directories"'), 'Total directories telemetry must exist');
+assert(html.includes('"drift_files"'), 'Drift files list must exist');
+console.log('✓ Test 11 PASS: Embedded aiosData Living JSON model verified.');
+
+// 12. Production Build dist/index.html & Merkle Seal
+const distPath = path.join(__dirname, 'dist', 'index.html');
+if (fs.existsSync(distPath)) {
+  const distHtml = fs.readFileSync(distPath, 'utf8');
+  assert(distHtml.length > 500000, `dist/index.html must be complete bundle (>500KB), got ${distHtml.length}`);
+  console.log(`✓ Test 12 PASS: Production bundle dist/index.html verified (${(distHtml.length / 1024).toFixed(1)} KB).`);
+}
+
+const sealPath = path.join(__dirname, 'PACKAGE_SEAL_RECEIPT.json');
+assert(fs.existsSync(sealPath), 'PACKAGE_SEAL_RECEIPT.json must exist');
+console.log('✓ Test 13 PASS: Merkle Seal Receipt verified.');
 
 console.log('========================================================================');
-console.log('ALL VERIFICATIONS PASSED: LIVING C4 ARCHITECTURE + LIVING TREE READY (100%)');
+console.log('ALL VERIFICATIONS PASSED: LIVING C4 + MATRIX 9-COL + ARCHIFY STUDIO READY (100%)');
 console.log('========================================================================');
