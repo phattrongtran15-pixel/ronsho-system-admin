@@ -1,10 +1,12 @@
 {
-  "SEAL_VERSION": "2.2",
-  "REPOSITORY": "phattrongtran15-pixel/ronsho-system-admin",
-  "COMMANDER": "Thuyền trưởng Ron (Ronsho)",
-  "ORCHESTRATOR": "Antigravity Cloud / Codex",
-  "MERKLE_ROOT_SHA256": "6691e07d4a9552704afb370a61a266fb951e2eba28b1838897b462fe4b954704",
-  "TOTAL_FILES": 1,
-  "STATUS": "VERIFIED_PRODUCTION_READY_FIXED",
-  "NOTES": "Fixed JavaScript parse error, verified node -c PASS, all onclick handlers fully responsive"
+  "system": "RONSHO AIOS — Report Control & Management Center",
+  "version": "2.5.0-PROD-TYPESCRIPT",
+  "timestamp": "2026-11-10T03:41:00Z",
+  "governedBy": "Captain Ron (phattrongtran15-pixel)",
+  "language": "TypeScript v7.0 + Vite 6.4",
+  "modulesTransformed": 10,
+  "compiledBundleSha256": "1a04f1009636b199eaeac216d8abb5d8e095b948de3796c5d2ce1bc01e71d797",
+  "archifyOracleReceipt": "3f74ce6c80e90f596a26bc38ee04c17894d8cf0f8562182c97bc246204446bd7",
+  "circuitBreaker": "ARMED_100%",
+  "testSuite": "PASS 4/4 GATES"
 }
