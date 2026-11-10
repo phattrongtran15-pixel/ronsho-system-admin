@@ -3,7 +3,7 @@
   "version": "2.0.0-living-c4",
   "architecture": "Living C4 Architecture Dashboard (Universal Context Asset Database)",
   "sealed_by": "Thuyền trưởng Ron & Antigravity Orchestrator",
-  "sealed_at": "2026-11-10 13:57:57",
+  "sealed_at": "2026-11-10T14:15:00+07:00",
   "invariants_enforced": [
     "Human Sovereignty: Thuyền trưởng Ron là người quyết định tối cao",
     "Evidence Before Claims",
@@ -23,5 +23,9 @@
     }
   },
   "merkle_root": "2D1E77CE0D7B7123A10AB7CF65D49B3B46D3229945260C91A8C1194F48EF5687",
-  "verification_verdict": "VERIFIED_100_PERCENT_PASS"
+  "verification_verdict": "VERIFIED_100_PERCENT_PASS",
+  "index_html_sha256": "4009cb1f9a1b2825d3b8a073703f4aa202ea3d8cae13bf96a9da17b4b6a9cc28",
+  "dist_index_html_sha256": "4da3d4715399023a315b5fda30a5593779ebaf25a062ffeac36e7aa83dcb1dc2",
+  "status": "VERIFIED_SEALED",
+  "scope": "4-Page Consolidated System Admin with Living C4 Tab 2"
 }
