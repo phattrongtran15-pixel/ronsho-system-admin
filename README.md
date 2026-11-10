@@ -1,74 +1,90 @@
-# 🚀 RONSHO AIOS — System Management & Multi-Agent Operations Control Center
+# 🛸 RON-SHO AIOS — Report Control & Management Center
+### Trung Tâm Giám Sát, Báo Cáo & Ra Quyết Định Chiến Lược
 
 [![CI Verification](https://github.com/phattrongtran15-pixel/ronsho-system-admin/actions/workflows/ci.yml/badge.svg)](https://github.com/phattrongtran15-pixel/ronsho-system-admin/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Fleet: 4 Agents](https://img.shields.io/badge/Fleet-4%20Active%20Agents-brightgreen.svg)]()
-[![Circuit Breaker](https://img.shields.io/badge/Circuit%20Breaker-100%25%20Armed-cyan.svg)]()
+[![Governance](https://img.shields.io/badge/RON--SHO-Human%20Sovereignty-gold.svg)]()
+[![Status: R&D Multi-Track](https://img.shields.io/badge/Status-Multi--Track%20Forks-orange.svg)]()
 
-> **Hệ thống điều phối trung tâm (Mission Control & Admin Operations)** thuộc hệ sinh thái **RON-SHO AIOS** do Thuyền trưởng Ron (`phattrongtran15-pixel`) chỉ huy. Tích hợp chuyển đổi chế độ kép giữa **Mẫu 3: Cyberpunk AI Agent Mission Control HUD** và **Mẫu 1: Enterprise Admin Dashboard (Shadcn style)**.
-
----
-
-## 🌐 Trải nghiệm Trực tiếp (Live Demo)
-
-* 🔗 **GitHub Pages:** [https://phattrongtran15-pixel.github.io/ronsho-system-admin/](https://phattrongtran15-pixel.github.io/ronsho-system-admin/)
-* 📦 **Mã nguồn:** [https://github.com/phattrongtran15-pixel/ronsho-system-admin](https://github.com/phattrongtran15-pixel/ronsho-system-admin)
+> **Tuyên ngôn sứ mệnh:** Repository này đóng vai trò là **Report Control & Management Center** của hệ điều hành tác tử **RON-SHO AIOS**, do Thuyền trưởng Ron (`phattrongtran15-pixel`) chỉ huy tối cao. Nơi đây hợp nhất các luồng báo cáo thời gian thực, kiểm toán tính đúng sai của kiến trúc và cung cấp bằng chứng vật lý (`Evidence Before Claims`) để hỗ trợ Thuyền trưởng ra quyết định nhanh chóng, chính xác và mạnh mẽ.
 
 ---
 
-## ⚡ Các Tính Năng Trọng Tâm
+## 🎯 Định Hướng Kiến Trúc & Chiến Lược Phân Nhánh (Multi-Track Forks)
 
-### 1. 🛸 Mẫu 3: Cyberpunk AI Agent Mission Control HUD
-- **Giám sát hạm đội A2A thời gian thực:**
-  - `RON RUNTIME` (Master Orchestrator / A2A Protocol / ONLINE)
-  - `GOOSE HEADLESS` (Free Router Worker / OpenRouter Nemotron 3.5 / WORKING)
-  - `KILO BUILDER` (Căn cứ mặt đất Windows / Local Ollama qwen3 / STANDBY)
-  - `ANTI CLOUD` (Cloud Architect & QA Oracle / ACTIVE)
-- **Cầu dao chống cháy Quota (Circuit Breaker HUD):**
-  - Hiển thị ngân sách token ($0.00 trên OpenRouter Free Tier).
-  - Khóa chống tham lam (Anti-Greedy Fallback).
-  - Cắt lỗ tối đa 2 lần, ngăn chặn triệt để loop sửa lỗi vô hạn trong đêm.
-  - Tuân thủ Rule 5: Zero Silent Halt (Bắt buộc phát cảnh báo thị giác `🚨 [HAVE ISSUE]`).
-- **Telemetry Log Stream:** Dòng log tự động cập nhật sự kiện thời gian thực.
+Hệ thống đang trong giai đoạn R&D tuyển chọn các khối công nghệ tối ưu. **Tuyệt đối không gộp vội vào một cụm duy nhất (chưa chốt main cứng)**, mà tổ chức lưu trữ và thử nghiệm theo từng phân nhánh/fork độc lập để Thuyền trưởng duyệt từng tính năng:
 
-### 2. 💼 Mẫu 1: Enterprise Admin Dashboard (Shadcn UI Style)
-- Bảng tổng kết số liệu KPIs (Tổng tác vụ, độ chính xác bàn giao handoff, ngân sách tiết kiệm).
-- Bảng dữ liệu tác vụ (Data Table) theo dõi các vé công việc (`TKT-A2A-071`, `TKT-BRN-179`, `TKT-MCP-001`).
-- Tìm kiếm, lọc và xuất báo cáo vận hành.
+```mermaid
+graph TD
+    Ron["🧑‍✈️ Thuyền Trưởng Ron (Quyền Ra Quyết Định)"] --> ManagementCenter["🛸 ronsho-system-admin (Report Control Center)"]
+    
+    subgraph MultiTrack["Các Phân Nhánh Thử Nghiệm (Independent Tracks / Forks)"]
+        Track1["📊 Track 1: [1. Mission HUD]<br/>(Giám sát chỉ số KPIs, Quota Circuit Breaker, A2A Fleet)"]
+        Track2["🛡️ Track 2: Archify Oracle<br/>(Kiểm tra đúng sai kiến trúc, bắt lỗi ranh giới & Merkle SHA-256)"]
+        Track3["🗺️ Track 3: LikeC4 Living Map<br/>(Bản đồ kiến trúc sống dạng mã DSL)"]
+        Track4["⚡ Track 4: Graph Continuity Radar<br/>(Biểu đồ luồng dữ liệu & dò điểm nghẽn A2A)"]
+    end
+    
+    ManagementCenter -. Duyệt từng phần .-> MultiTrack
+    MultiTrack -. "Đạt chuẩn M1-M5 & Thẩm định" .-> MainRelease["🚀 Chốt Bản Phát Hành Chính Thức (Main)"]
+```
 
 ---
 
-## 🛠️ Cài Đặt & Chạy Cục Bộ
+## 🧩 Các Khối Phân Hệ Trong Trung Tâm Điều Phối
 
-### Chạy nhanh (Zero Configuration)
-Mở trực tiếp file `index.html` bằng bất kỳ trình duyệt nào trên Windows, macOS hoặc Linux. Không cần cài đặt bất kỳ dependency nào.
+### 1. 📊 [1. Mission HUD] — Báo Cáo & Chỉ Số Vận Hành
+- **A2A Fleet Telemetry:** Giám sát trạng thái 4 tác tử cốt lõi (`RON RUNTIME`, `GOOSE WORKER`, `KILO LOCAL`, `ANTI CLOUD`).
+- **Quota Circuit Breaker:** Cầu dao chống cháy quota, hiển thị ngân sách token tiêu thụ, chặn triệt để vòng lặp tự sửa lỗi vô hạn (Anti-Greedy Fallback).
+- **Executive KPI Cards:** Báo cáo năng suất, số lượng vé bàn giao và tỷ lệ thành công của các phiên thực chiến.
 
-### Chạy với Node / Vite
+### 2. 🛡️ Archify Oracle — Kiểm Tra Đúng Sai & Bằng Chứng Vật Lý
+- **Gatekeeper Kiến Trúc:** Tự động phát hiện các thành phần vi phạm ranh giới bảo vệ (boundary encloses non-member) hoặc luồng kết nối sai hướng.
+- **Merkle Proof Receipt:** Cấp chứng chỉ nghiệm thu SHA-256 cho cấu trúc hệ thống trước khi triển khai.
+- **Standalone Explorer:** Bản vẽ trực quan độc lập, hỗ trợ dò vết hành trình dữ liệu (`Route Trace`), tầm ảnh hưởng Upstream/Downstream.
+
+### 3. 🗺️ C4 Living Map — Bản Đồ Sống Hệ Thống *(Kế hoạch tích hợp)*
+- Kiến trúc hóa bằng mã nguồn DSL (Architecture-as-Code).
+- Tự động đồng bộ với thay đổi thực tế của các repository con.
+
+### 4. ⚡ Graph Continuity — Radar Liền Mạch & Dò Điểm Nghẽn *(Kế hoạch tích hợp)*
+- Theo dõi thông lượng dữ liệu giữa các Node tác tử A2A.
+- Cảnh báo trực quan điểm trễ (latency bottleneck) và luồng tắc nghẽn.
+
+---
+
+## 💻 Sử Dụng & Vận Hành Cục Bộ (Local Guide)
+
+### 1. Trải nghiệm nhanh bảng điều khiển (Zero Dependencies)
+Mở trực tiếp file `index.html` bằng bất kỳ trình duyệt nào (Chrome, Edge, Firefox). Không cần cài đặt server.
+
+### 2. Chạy với môi trường phát triển Node.js
 ```bash
-# Cài đặt
+# Cài đặt gói phụ trợ
 pnpm install # hoặc npm install
 
-# Chạy môi trường phát triển
+# Khởi chạy máy chủ phát triển
 pnpm dev
 
-# Chạy kiểm thử tự động
+# Chạy kiểm thử tự động toàn diện
 npm test
 
-# Đóng gói xuất xưởng
+# Đóng gói sản phẩm
 pnpm build
 ```
 
 ---
 
-## 📜 Kỷ Luật & Triết Lý Vận Hành (Ron-Sho Standard)
-- **Human Sovereignty:** Quyền quyết định tối cao thuộc về Thuyền trưởng Ron.
-- **Evidence Before Claims:**
-  - `UNKNOWN != PASS`
-  - `FILE EXISTS != WORKS`
-  - `EXECUTED != VERIFIED != ACCEPTED`
-- **Zero Copy-Paste:** Không biến Ron thành middleware trung chuyển mã nguồn.
+## 📜 Kỷ Luật Tối Thượng (Ron-Sho Operating Principles)
+
+1. **Human Sovereignty:** Quyền ra quyết định tối cao luôn thuộc về Thuyền trưởng Ron. AI là công cụ hỗ trợ đề xuất, không thay thế con người.
+2. **Zero Middleware:** Không biến Thuyền trưởng thành người đi copy-paste mã nguồn giữa các hệ thống.
+3. **Evidence Before Claims:**
+   - `UNKNOWN != PASS`
+   - `FILE EXISTS != WORKS`
+   - `EXECUTED != VERIFIED != ACCEPTED`
 
 ---
 
-## 📄 Bản Quyền
-Phát hành theo giấy phép [MIT License](LICENSE). Bản quyền thuộc về **Thuyền trưởng Ron (`phattrongtran15-pixel`)**.
+## 📄 Bản Quyền & Sở Hữu
+Bản quyền kiến trúc thuộc về **Thuyền trưởng Ron (`phattrongtran15-pixel`)**. Phát hành theo giấy phép [MIT License](LICENSE).
