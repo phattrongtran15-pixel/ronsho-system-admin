@@ -1,16 +1,15 @@
 {
-  "system": "NEXVANTA NIMS — NOC Command Centre v3.0",
-  "version": "3.0.0-PROD-NEXVANTA",
-  "timestamp": "2026-11-10T04:12:00Z",
+  "system": "RONSHO AIOS — System Management & Multi-Agent Operations Command Center",
+  "version": "3.2.0-CONSOLIDATED-4PAGES",
+  "timestamp": "2026-11-10T05:15:00Z",
   "governedBy": "Captain Ron (phattrongtran15-pixel)",
-  "designSystem": "Nexvanta Deep Field Design System (#04070e)",
-  "components": [
-    "nexvantaHeader",
-    "nexvantaSidebar",
-    "nexvantaOverview",
-    "nexvantaModal",
-    "nexvantaTopology"
+  "architecture": "Cyberpunk Command Center (Consolidated 4 Pages)",
+  "pages": [
+    "1. Mission HUD (view-hud)",
+    "2. Kiến Trúc C4 4 Tầng (view-c4)",
+    "3. A2A & Điều Phối Multi-Agent (view-a2a: Fleet + Circuit + Mailbox + Forensic Reports)",
+    "4. Quản Lý Repo & Hệ Thống (view-repos: 7 Repos Matrix + Fencing Settings)"
   ],
-  "bundleSha256": "ad03004cacf6aab7af61dc6fd9142e1b0c21a071bd5998e4639dacd71b9bc300",
-  "testSuite": "PASS 4/4 GATES"
+  "bundleSha256": "ff55b4ecd417ad7c51a9ece4841259c27d6924dd9ed0f96ab3654d346cc7752f",
+  "testSuite": "PASS 8/8 GATES (100%)"
 }

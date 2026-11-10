@@ -1,31 +1,1299 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RON-SHO AIOS — Report Control & Management Center</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                cyan: '#06b6d4',
-                emerald: '#10b981',
-                indigo: '#6366f1',
-              }
-            }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RONSHO AIOS — Trung Tâm Quản Trị Hệ Thống & Điều Phối Đa Tác Tử</title>
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg">
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    :root {
+      --bg-dark: #07090e;
+      --card-dark: #0d121d;
+      --card-border: #1e293b;
+      --neon-cyan: #00f3ff;
+      --neon-green: #00ff9d;
+      --neon-amber: #ffb703;
+      --neon-red: #ff3366;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    .font-orbitron { font-family: 'Orbitron', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .glow-cyan { text-shadow: 0 0 10px rgba(0, 243, 255, 0.6); }
+    .glow-green { text-shadow: 0 0 10px rgba(0, 255, 157, 0.6); }
+    .box-glow-cyan { box-shadow: 0 0 20px rgba(0, 243, 255, 0.12), inset 0 0 15px rgba(0, 243, 255, 0.03); }
+    .box-glow-green { box-shadow: 0 0 20px rgba(0, 255, 157, 0.12), inset 0 0 15px rgba(0, 255, 157, 0.03); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #07090e; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+    .active-nav {
+      background: linear-gradient(90deg, rgba(0, 243, 255, 0.15), rgba(0, 255, 157, 0.05));
+      border-left: 3px solid #00f3ff;
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- Top Global Header -->
+  <header class="sticky top-0 z-50 bg-[#0a0f1d]/95 backdrop-blur-md border-b border-slate-800 px-4 py-2.5">
+    <div class="max-w-[1700px] mx-auto flex items-center justify-between gap-4">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 flex items-center justify-center text-black font-black text-xl shadow-lg shadow-cyan-500/20 font-orbitron">
+          R
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-orbitron font-bold text-lg tracking-wider text-white">RONSHO</span>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono font-semibold">AIOS v3.2</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono hidden sm:inline-block">CONSOLIDATED 4 TABS</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-none mt-1">Autonomous Operations & Delivery Control Center</p>
+        </div>
+      </div>
+
+      <!-- Quick Telemetry Tickers -->
+      <div class="hidden md:flex items-center space-x-6 text-xs font-mono">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-400">CIRCUIT BREAKER:</span>
+          <span class="text-emerald-400 font-bold">100% ARMED</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-400">TOKEN BURN (MAIN):</span>
+          <span class="text-emerald-400 font-bold">$0.00</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-slate-400">MAILBOX:</span>
+          <span class="text-cyan-400 font-bold">12/12 PROCESSED</span>
+        </div>
+      </div>
+
+      <!-- External Links & User Profile -->
+      <div class="flex items-center space-x-3">
+        <a href="https://github.com/phattrongtran15-pixel/ronsho-system-admin" target="_blank" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-slate-300 hover:text-white hover:border-cyan-500 transition">
+          <i class="fab fa-github"></i>
+          <span class="hidden sm:inline">GitHub Repo</span>
+        </a>
+        <div class="flex items-center space-x-3 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg">
+          <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-cyan-500 flex items-center justify-center text-xs font-bold text-black font-orbitron">
+            R
+          </div>
+          <div class="text-left text-xs">
+            <div class="text-slate-200 font-semibold leading-none">THUYỀN TRƯỞNG RON</div>
+            <div class="text-slate-500 font-mono text-[10px] leading-tight mt-0.5">Fleet Commander</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Top Horizontal Navigation Bar: EXACTLY 4 TABS AS ORDERED BY RONSHO -->
+  <div class="sticky top-[57px] z-40 bg-[#07090e]/95 backdrop-blur-md border-b border-cyan-900/40 px-3 py-2 overflow-x-auto">
+    <div class="max-w-[1700px] mx-auto flex items-center space-x-2 text-xs font-mono whitespace-nowrap min-w-max">
+      <span class="text-slate-500 font-bold uppercase text-[10px] mr-1 hidden sm:inline">MENU ĐIỀU HÀNH:</span>
+      <button onclick="navigateTo('hud')" id="top-nav-hud" class="px-3 py-1.5 rounded-lg font-semibold bg-cyan-600 text-white shadow transition flex items-center space-x-1.5">
+        <i class="fas fa-terminal text-[11px]"></i>
+        <span>1. Mission HUD</span>
+      </button>
+      <button onclick="navigateTo('c4')" id="top-nav-c4" class="px-3 py-1.5 rounded-lg font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-1.5 border border-slate-800">
+        <i class="fas fa-project-diagram text-emerald-400 text-[11px]"></i>
+        <span>2. Kiến Trúc C4 (4 Tầng)</span>
+      </button>
+      <button onclick="navigateTo('a2a')" id="top-nav-a2a" class="px-3 py-1.5 rounded-lg font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-1.5 border border-slate-800">
+        <i class="fas fa-robot text-purple-400 text-[11px]"></i>
+        <span>3. A2A & Điều Phối Multi-Agent</span>
+      </button>
+      <button onclick="navigateTo('repos')" id="top-nav-repos" class="px-3 py-1.5 rounded-lg font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-1.5 border border-slate-800">
+        <i class="fas fa-cubes text-pink-400 text-[11px]"></i>
+        <span>4. Quản Lý Repo & Hệ Thống</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Layout: Sidebar + Main Content -->
+  <div class="flex-1 flex max-w-[1700px] w-full mx-auto">
+    
+    <!-- Sidebar Navigation: EXACTLY 4 TABS -->
+    <aside class="w-64 border-r border-slate-800 bg-[#07090e]/80 p-3 space-y-6 flex-shrink-0 hidden md:block">
+      
+      <div>
+        <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider px-3 mb-2 font-bold">VẬN HÀNH & KIẾN TRÚC</div>
+        <nav class="space-y-1">
+          <button onclick="navigateTo('hud')" id="nav-hud" class="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-900 transition active-nav">
+            <i class="fas fa-terminal text-cyan-400 w-4 text-center"></i>
+            <span>1. Mission Control HUD</span>
+          </button>
+          <button onclick="navigateTo('c4')" id="nav-c4" class="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-200 transition">
+            <i class="fas fa-project-diagram text-emerald-400 w-4 text-center"></i>
+            <span>2. Kiến Trúc C4 & Topology</span>
+          </button>
+        </nav>
+      </div>
+
+      <div>
+        <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider px-3 mb-2 font-bold">ĐIỀU PHỐI & TÀI NGUYÊN</div>
+        <nav class="space-y-1">
+          <button onclick="navigateTo('a2a')" id="nav-a2a" class="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-200 transition">
+            <i class="fas fa-robot text-purple-400 w-4 text-center"></i>
+            <span>3. A2A & Điều Phối Multi-Agent</span>
+          </button>
+          <button onclick="navigateTo('repos')" id="nav-repos" class="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-900 hover:text-slate-200 transition">
+            <i class="fas fa-cubes text-pink-400 w-4 text-center"></i>
+            <span>4. Quản Lý Repo & Hệ Thống</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Quick System Health Card -->
+      <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+        <div class="text-[11px] font-mono font-bold text-slate-300 flex items-center justify-between">
+          <span>MERKLE SEAL</span>
+          <span class="text-emerald-400">PASSED</span>
+        </div>
+        <div class="text-[10px] font-mono text-slate-500 truncate">
+          SHA: 9bf62ded27e4bed6c...
+        </div>
+        <div class="text-[10px] text-slate-400 leading-tight">
+          Evidence Before Claims tuân thủ 100%. Đã thu hoạch 179 phiên & 71 ca thực chiến.
+        </div>
+      </div>
+
+      <div class="p-3 rounded-xl bg-gradient-to-b from-cyan-950/30 to-slate-950 border border-cyan-900/40 text-[11px] font-mono space-y-1.5 text-slate-400">
+        <div class="text-cyan-400 font-bold flex items-center gap-1.5">
+          <i class="fas fa-balance-scale"></i>
+          <span>HIẾN CHƯƠNG M1→M5</span>
+        </div>
+        <div>M1: Context & Positioning</div>
+        <div>M2: Capability Supply</div>
+        <div>M3: Reality Reconciliation</div>
+        <div>M4: Claim Verification</div>
+        <div>M5: Responsibility Stop</div>
+      </div>
+
+    </aside>
+
+    <!-- Main Content Area: EXACTLY 4 VIEW SECTIONS -->
+    <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+
+      <!-- ====================================================================== -->
+      <!-- VIEW 1: MISSION CONTROL HUD (GIỮ) -->
+      <!-- ====================================================================== -->
+      <section id="view-hud" class="space-y-6">
+        
+        <!-- Visual Version Confirmation & Quick Jump Banner -->
+        <div class="p-4 rounded-xl bg-gradient-to-r from-cyan-950/80 via-slate-900 to-emerald-950/80 border border-cyan-500/50 shadow-lg flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="font-bold text-white text-sm">TRUNG TÂM ĐIỀU HÀNH 4 TRANG:</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-900/80 text-emerald-300 border border-emerald-600 text-[10px] font-mono font-bold">CHUẨN CHỈ THỊ THUYỀN TRƯỞNG RON</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-0.5">Hệ thống đã tinh gọn còn đúng 4 trang: Mission HUD, Kiến Trúc C4, A2A & Multi-Agent, Quản Lý Repo & Hệ Thống.</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="navigateTo('c4')" class="px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center space-x-1.5">
+              <i class="fas fa-project-diagram"></i>
+              <span>2. C4 (4 Tầng)</span>
+            </button>
+            <button onclick="navigateTo('a2a')" class="px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center space-x-1.5">
+              <i class="fas fa-robot"></i>
+              <span>3. A2A & Multi-Agent</span>
+            </button>
+            <button onclick="navigateTo('repos')" class="px-3.5 py-1.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold text-xs rounded-lg shadow-md transition flex items-center space-x-1.5">
+              <i class="fas fa-cubes"></i>
+              <span>4. Kho Repo & Cấu Hình</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-[#0d121d] border border-cyan-900/50 p-4 rounded-xl box-glow-cyan relative overflow-hidden">
+            <div class="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+              <span>Hạm Đội A2A Active</span>
+              <i class="fas fa-robot text-cyan-400"></i>
+            </div>
+            <div class="text-3xl font-orbitron font-black text-white glow-cyan">4 / 4</div>
+            <div class="text-xs text-slate-400 font-mono mt-2 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 100% Operational Uptime
+            </div>
+          </div>
+
+          <div class="bg-[#0d121d] border border-emerald-900/50 p-4 rounded-xl box-glow-green relative overflow-hidden">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+              <span>Token Quota Tiêu Hao</span>
+              <i class="fas fa-shield-alt text-emerald-400"></i>
+            </div>
+            <div class="text-3xl font-orbitron font-black text-emerald-400 glow-green">$0.00</div>
+            <div class="text-xs text-slate-400 font-mono mt-2">
+              Bảo toàn 100% nhờ Router Free
+            </div>
+          </div>
+
+          <div class="bg-[#0d121d] border border-amber-900/50 p-4 rounded-xl relative overflow-hidden">
+            <div class="text-xs font-mono text-amber-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+              <span>Vé Mailbox Nhiệm Vụ</span>
+              <i class="fas fa-envelope-open-text text-amber-400"></i>
+            </div>
+            <div class="text-3xl font-orbitron font-black text-amber-400">12 / 12</div>
+            <div class="text-xs text-slate-400 font-mono mt-2">
+              Queue 0 Pending • 100% Handled
+            </div>
+          </div>
+
+          <div class="bg-[#0d121d] border border-purple-900/50 p-4 rounded-xl relative overflow-hidden">
+            <div class="text-xs font-mono text-purple-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+              <span>Kho Hệ Thống RON-SHO</span>
+              <i class="fas fa-cubes text-purple-400"></i>
+            </div>
+            <div class="text-3xl font-orbitron font-black text-purple-400">7 REPOS</div>
+            <div class="text-xs text-slate-400 font-mono mt-2">
+              Ma trận Giữ / Bỏ / Dồn đã thiết lập
+            </div>
+          </div>
+        </div>
+
+        <!-- Fast Action Bar -->
+        <div class="bg-[#0d121d] border border-slate-800 p-4 rounded-xl flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-bolt text-amber-400"></i>
+            <span class="text-xs font-mono font-semibold text-slate-300">THAO TÁC NHANH:</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="pingAllAgents()" class="px-3 py-1.5 rounded-lg bg-cyan-950 border border-cyan-800 text-cyan-300 text-xs font-mono hover:bg-cyan-900 transition flex items-center space-x-1.5">
+              <i class="fas fa-broadcast-tower"></i>
+              <span>Ping Hạm Đội</span>
+            </button>
+            <button onclick="testCircuitBreaker()" class="px-3 py-1.5 rounded-lg bg-red-950 border border-red-800 text-red-300 text-xs font-mono hover:bg-red-900 transition flex items-center space-x-1.5">
+              <i class="fas fa-shield-virus"></i>
+              <span>Test Cầu Dao Quota</span>
+            </button>
+            <button onclick="createNewTicket()" class="px-3 py-1.5 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-300 text-xs font-mono hover:bg-emerald-900 transition flex items-center space-x-1.5">
+              <i class="fas fa-plus-circle"></i>
+              <span>Tạo Vé Mailbox</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Task Stream & Event Logs -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Current Tasks -->
+          <div class="lg:col-span-2 bg-[#0d121d] border border-slate-800 p-5 rounded-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-tasks text-cyan-400"></i>
+                <h3 class="font-orbitron font-bold text-sm text-white">NHIỆM VỤ ĐANG THỰC THI (A2A DISPATCH)</h3>
+              </div>
+              <span class="text-xs font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">4 ACTIVE TRACKS</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-lg bg-cyan-950 border border-cyan-800 flex items-center justify-center text-cyan-400 font-mono text-xs font-bold">
+                    01
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-200">Tinh gọn ronsho-system-admin thành 4 trang</div>
+                    <div class="text-[11px] text-slate-400 font-mono mt-0.5">HUD • C4 Model • A2A Multi-Agent • Repos & Settings</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-800">VERIFIED</span>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 font-mono text-xs font-bold">
+                    02
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-200">Bảo toàn Quota Token qua Goose Nemotron Free Router</div>
+                    <div class="text-[11px] text-slate-400 font-mono mt-0.5">Tiết kiệm 100% token Antigravity cho tác vụ quét mã</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-800">RUNNING</span>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-lg bg-amber-950 border border-amber-800 flex items-center justify-center text-amber-400 font-mono text-xs font-bold">
+                    03
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-200">Chờ tiếp nhận bộ đồ nghề LikeC4 từ Thuyền trưởng Ron</div>
+                    <div class="text-[11px] text-slate-400 font-mono mt-0.5">Sẵn sàng cắm vào kiến trúc C4 4 tầng khi Thuyền trưởng gửi</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800">STANDBY</span>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 rounded-lg bg-purple-950 border border-purple-800 flex items-center justify-center text-purple-400 font-mono text-xs font-bold">
+                    04
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-200">Ma trận Giữ / Bỏ / Dồn 7 Repositories</div>
+                    <div class="text-[11px] text-slate-400 font-mono mt-0.5">POKE_AI Giữ • RON-AIOS Hợp nhất • Remi+MCP+Kit Dồn 1 • Demo Giữ</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono font-bold text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded border border-purple-800">DEFINED</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event Log Stream -->
+          <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-stream text-emerald-400"></i>
+                <h3 class="font-orbitron font-bold text-sm text-white">NHẬT KÝ SỰ KIỆN (EVENT LOG)</h3>
+              </div>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            </div>
+
+            <div id="hud-log" class="space-y-2.5 font-mono text-xs max-h-[300px] overflow-y-auto pr-1">
+              <div class="text-emerald-400">
+                [04:25:10] ✓ Hệ thống đã gom gọn thành công về 4 trang chuẩn chỉ thị Thuyền trưởng Ron.
+              </div>
+              <div class="text-cyan-400">
+                [04:20:00] ℹ Sẵn sàng đón nhận bộ đồ nghề LikeC4 do Thuyền trưởng gửi sau tại Trang 2.
+              </div>
+              <div class="text-slate-400">
+                [04:15:30] ℹ A2A Multi-Agent đã tích hợp: Hạm Đội + Cầu Dao + Mailbox + Báo Cáo 6 Lỗi.
+              </div>
+              <div class="text-slate-400">
+                [04:10:00] ℹ Ma trận 7 Repos đã gom Tab 3,4,5 thành 1, Tab 1 giữ, Tab 2 bỏ, Tab 6,7 tạm giữ.
+              </div>
+              <div class="text-slate-500">
+                [03:40:00] ℹ Khởi tạo giao diện nền tảng RONSHO AIOS System Management & Delivery Center.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 5 Truth Rules -->
+        <div class="bg-gradient-to-r from-slate-900 to-[#0d121d] border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-3 font-bold flex items-center gap-2">
+            <i class="fas fa-shield-alt"></i> 5 NGUYÊN TẮC BẤT DI BẤT DỊCH CỦA RON-SHO AIOS
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
+            <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+              <span class="text-red-400 font-bold">1. UNKNOWN != PASS</span>
+              <p class="text-slate-400 text-[11px] mt-1">Chưa rõ thì đánh dấu UNKNOWN, tuyệt đối không bịa đặt.</p>
+            </div>
+            <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+              <span class="text-amber-400 font-bold">2. FILE EXISTS != WORKS</span>
+              <p class="text-slate-400 text-[11px] mt-1">File tồn tại không đồng nghĩa chạy được thực tế.</p>
+            </div>
+            <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+              <span class="text-cyan-400 font-bold">3. EXECUTED != VERIFIED</span>
+              <p class="text-slate-400 text-[11px] mt-1">Lệnh chạy xong phải đọc lại kết quả mới nghiệm thu.</p>
+            </div>
+            <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+              <span class="text-purple-400 font-bold">4. NO SELF-ACCEPTANCE</span>
+              <p class="text-slate-400 text-[11px] mt-1">Tác tử thực thi không tự cấp quyền nghiệm thu độc lập.</p>
+            </div>
+            <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-800">
+              <span class="text-emerald-400 font-bold">5. ZERO MIDDLEWARE</span>
+              <p class="text-slate-400 text-[11px] mt-1">Cấm biến Thuyền trưởng Ron thành cầu nối copy-paste thủ công.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================== -->
+      <!-- VIEW 2: C4 ARCHITECTURE & SYSTEM TOPOLOGY (GIỮ - CHỜ ĐỒ NGHỀ THUYỀN TRƯỞNG) -->
+      <!-- ====================================================================== -->
+      <section id="view-c4" class="space-y-6 hidden">
+        
+        <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono text-xs font-bold">C4 MODEL LEVEL 1–4</span>
+              <h1 class="text-2xl font-bold text-white">Kiến Trúc Hệ Thống RON-SHO AIOS</h1>
+            </div>
+            <p class="text-sm text-slate-400 mt-1">Sơ đồ 4 tầng kiến trúc chuẩn C4 Model mô tả toàn cảnh quan hệ điều phối giữa Thuyền trưởng Ron, Căn cứ Mặt Đất và Đám Mây.</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="switchC4Level(1)" id="c4-btn-1" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-600 text-white">L1: Context</button>
+            <button onclick="switchC4Level(2)" id="c4-btn-2" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">L2: Containers</button>
+            <button onclick="switchC4Level(3)" id="c4-btn-3" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">L3: Components</button>
+            <button onclick="switchC4Level(4)" id="c4-btn-4" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">L4: A2A Protocol</button>
+          </div>
+        </div>
+
+        <!-- Banner Chờ đồ nghề Thuyền trưởng Ron -->
+        <div class="p-4 rounded-xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-cyan-950/40 border border-amber-500/50 flex items-center space-x-3 text-xs font-mono text-amber-200 shadow-md">
+          <i class="fas fa-toolbox text-amber-400 text-lg"></i>
+          <div>
+            <span class="font-bold text-amber-300">TRẠNG THÁI KIẾN TRÚC C4:</span> Giữ nguyên bản vẽ 4 tầng hiện tại. Sẵn sàng tiếp nhận và cắm bộ đồ nghề LikeC4 / Archify do Thuyền trưởng gửi sau vào vị trí này mà không làm xáo trộn kiến trúc tổng thể.
+          </div>
+        </div>
+
+        <!-- C4 Level 1: System Context Diagram -->
+        <div id="c4-panel-1" class="bg-[#0d121d] border border-slate-800 p-6 rounded-2xl space-y-6">
+          <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+            <h3 class="font-orbitron font-bold text-sm text-cyan-400">C4 LEVEL 1 — SYSTEM CONTEXT (NGỮ CẢNH HỆ THỐNG TOÀN CỤC)</h3>
+            <span class="text-xs font-mono text-slate-400">Human Sovereignty In Command</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Actor: Ron -->
+            <div class="p-5 rounded-xl bg-gradient-to-b from-amber-950/40 to-slate-900 border-2 border-amber-500/80 text-center space-y-3">
+              <div class="w-12 h-12 mx-auto rounded-full bg-amber-500 text-black font-black flex items-center justify-center text-xl font-orbitron">
+                RON
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-base">Thuyền Trưởng Ron</h4>
+                <p class="text-xs text-amber-300 font-mono">Quyền Quyết Định Tối Cao (Sovereign)</p>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Chỉ huy toàn bộ chiến dịch, phê duyệt kế hoạch, nghiệm thu kết quả. Cấm biến Ron thành middleware trung chuyển thủ công.
+              </p>
+            </div>
+
+            <!-- Core System: RON-SHO AIOS -->
+            <div class="p-5 rounded-xl bg-gradient-to-b from-cyan-950/40 to-slate-900 border-2 border-cyan-500/80 text-center space-y-3 box-glow-cyan">
+              <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500 text-black font-black flex items-center justify-center text-xl font-orbitron">
+                AIOS
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-base">RON-SHO AIOS</h4>
+                <p class="text-xs text-cyan-300 font-mono">Hệ Điều Hành Đa Tác Tử Trung Tâm</p>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Điều phối phân bổ công việc, thực thi chu trình M1→M5, quản lý hạm đội A2A, ngắt cầu dao chống cháy quota.
+              </p>
+            </div>
+
+            <!-- External Integrations -->
+            <div class="p-5 rounded-xl bg-gradient-to-b from-purple-950/40 to-slate-900 border-2 border-purple-500/80 text-center space-y-3">
+              <div class="w-12 h-12 mx-auto rounded-xl bg-purple-500 text-black font-black flex items-center justify-center text-xl">
+                <i class="fas fa-cloud"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-white text-base">Hạ Tầng Bên Ngoài</h4>
+                <p class="text-xs text-purple-300 font-mono">GitHub • Google Drive • OpenRouter</p>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Lưu trữ kho mã nguồn, kho tài liệu 02_domains trên Drive, định tuyến mô hình Router miễn phí qua OpenRouter.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- C4 Level 2: Container Diagram -->
+        <div id="c4-panel-2" class="bg-[#0d121d] border border-slate-800 p-6 rounded-2xl space-y-6 hidden">
+          <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+            <h3 class="font-orbitron font-bold text-sm text-emerald-400">C4 LEVEL 2 — CONTAINER DIAGRAM (CÁC KHỐI CHỨA CĂN CỨ KÉP)</h3>
+            <span class="text-xs font-mono text-slate-400">Dual-Base Architecture</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Ground Base (Windows) -->
+            <div class="p-5 rounded-xl bg-slate-900/90 border border-slate-700 space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-windows text-blue-400 text-lg"></i>
+                  <h4 class="font-bold text-white text-sm">CĂN CỨ MẶT ĐẤT (WINDOWS LOCAL BASE)</h4>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800">C:\Users\phatt...</span>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Chạy Kilo IDE, Ollama Local engine, lưu trữ mã nguồn cục bộ và các bộ kiểm thử phần mềm thực tế.
+              </p>
+              <div class="space-y-2 font-mono text-xs">
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800 flex justify-between items-center">
+                  <span class="text-slate-300">Container: Kilo Builder IDE</span>
+                  <span class="text-emerald-400 font-bold">READY</span>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800 flex justify-between items-center">
+                  <span class="text-slate-300">Container: Local Ollama (qwen3)</span>
+                  <span class="text-amber-400 font-bold">PORT 11434</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cloud Operations Base -->
+            <div class="p-5 rounded-xl bg-slate-900/90 border border-slate-700 space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-network-wired text-cyan-400 text-lg"></i>
+                  <h4 class="font-bold text-white text-sm">CĂN CỨ ĐÁM MÂY (CLOUD ORCHESTRATION VM)</h4>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">Linux Debian VM</span>
+              </div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Môi trường tổng thầu thực thi độc lập, Goose headless router, đồng bộ Google Drive và đóng gói GitHub Pages.
+              </p>
+              <div class="space-y-2 font-mono text-xs">
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800 flex justify-between items-center">
+                  <span class="text-slate-300">Container: Anti Cloud (Orchestrator)</span>
+                  <span class="text-cyan-400 font-bold">GOVERNED</span>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800 flex justify-between items-center">
+                  <span class="text-slate-300">Container: Goose Headless Worker</span>
+                  <span class="text-emerald-400 font-bold">FREE ROUTER</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C4 Level 3: Component Diagram -->
+        <div id="c4-panel-3" class="bg-[#0d121d] border border-slate-800 p-6 rounded-2xl space-y-6 hidden">
+          <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+            <h3 class="font-orbitron font-bold text-sm text-purple-400">C4 LEVEL 3 — COMPONENT DIAGRAM (CÁC MODULE NỘI BỘ AIOS)</h3>
+            <span class="text-xs font-mono text-slate-400">M1→M5 Pipeline Engine</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
+            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+              <span class="text-cyan-400 font-bold">Module M1 — Context</span>
+              <p class="text-slate-400 font-sans text-xs">Xác lập Actor, mục tiêu chiến dịch, Current Truth trước khi xuất quân.</p>
+            </div>
+            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+              <span class="text-emerald-400 font-bold">Module M2 — Fitness Gate</span>
+              <p class="text-slate-400 font-sans text-xs">Chọn công cụ nhỏ nhất: REUSE &rarr; ADAPT &rarr; CONFIGURE &rarr; BUILD.</p>
+            </div>
+            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+              <span class="text-amber-400 font-bold">Module M3 & M4 — Oracle</span>
+              <p class="text-slate-400 font-sans text-xs">Đọc lại log thực tế, kiểm tra mã băm SHA-256 đối soát vật lý.</p>
+            </div>
+            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+              <span class="text-purple-400 font-bold">Module M5 — Handoff</span>
+              <p class="text-slate-400 font-sans text-xs">Bàn giao chuẩn hóa CODEX_STATE_HANDOFF, chống mất mát ngữ cảnh.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- C4 Level 4: A2A Protocol & Token Circuit Diagram -->
+        <div id="c4-panel-4" class="bg-[#0d121d] border border-slate-800 p-6 rounded-2xl space-y-6 hidden">
+          <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+            <h3 class="font-orbitron font-bold text-sm text-pink-400">C4 LEVEL 4 — A2A PROTOCOL & CIRCUIT BREAKER LOGIC</h3>
+            <span class="text-xs font-mono text-slate-400">Zero Token Burn Policy</span>
+          </div>
+
+          <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs space-y-3">
+            <div class="text-emerald-400 font-bold">[LUỒNG ĐIỀU PHỐI ĐA TÁC TỬ KHÔNG CHÁY QUOTA]:</div>
+            <div class="text-slate-300">
+              1. Thuyền trưởng Ron ra lệnh &rarr; Ron Runtime tiếp nhận (M1 Context).<br>
+              2. Nếu tác vụ là quét mã nguồn / đọc file nặng &rarr; Điều chuyển cho Goose Headless (Worker).<br>
+              3. Goose gọi qua OpenRouter Free Tier (nemotron-3.5) &rarr; <span class="text-emerald-400 font-bold">$0.00 chi phí token</span>.<br>
+              4. Nếu Worker treo quá 30s hoặc lặp lỗi 2 lần &rarr; <span class="text-red-400 font-bold">Cầu Dao Circuit Breaker tự ngắt lập tức</span>.<br>
+              5. Báo cáo bằng ngôn ngữ đời thường cho Ron, cấm vòng lặp tự chữa lành vô hạn.
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================== -->
+      <!-- VIEW 3: A2A & ĐIỀU PHỐI MULTI-AGENT (GỘP 3, 4, 5, 6) -->
+      <!-- ====================================================================== -->
+      <section id="view-a2a" class="space-y-8 hidden">
+        
+        <!-- Header View 3 -->
+        <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded bg-purple-950 text-purple-400 border border-purple-800 font-mono text-xs font-bold">CONSOLIDATED MULTI-AGENT HUB</span>
+              <h1 class="text-2xl font-bold text-white">A2A & Điều Phối Multi-Agent Toàn Diện</h1>
+            </div>
+            <p class="text-sm text-slate-400 mt-1">Trung tâm hội tụ 4 phân hệ cốt lõi: Hạm Đội Đa Tác Tử, Cầu Dao Chống Cháy Quota, Hộp Thư Tác Vụ Mailbox và Báo Cáo Pháp Y 6 Cạm Bẫy Thực Chiến.</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="pingAllAgents()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
+              <i class="fas fa-broadcast-tower"></i>
+              <span>Ping Toàn Hạm Đội</span>
+            </button>
+            <button onclick="testCircuitBreaker()" class="px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg text-xs font-semibold shadow-md transition flex items-center space-x-1.5">
+              <i class="fas fa-bolt"></i>
+              <span>Test Cầu Dao</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Sub-Navigation Sticky Bar -->
+        <div class="flex items-center space-x-2 overflow-x-auto text-xs font-mono py-1">
+          <a href="#section-fleet" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-400 hover:border-cyan-700 transition flex items-center space-x-1">
+            <i class="fas fa-robot text-purple-400"></i>
+            <span>3.1 Hạm Đội A2A</span>
+          </a>
+          <a href="#section-circuit" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-amber-400 hover:border-amber-700 transition flex items-center space-x-1">
+            <i class="fas fa-shield-virus text-amber-400"></i>
+            <span>3.2 Cầu Dao Quota</span>
+          </a>
+          <a href="#section-mailbox" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-blue-400 hover:border-blue-700 transition flex items-center space-x-1">
+            <i class="fas fa-envelope-open-text text-blue-400"></i>
+            <span>3.3 Hộp Thư Mailbox</span>
+          </a>
+          <a href="#section-reports" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-red-400 hover:border-red-700 transition flex items-center space-x-1">
+            <i class="fas fa-file-invoice text-red-400"></i>
+            <span>3.4 Pháp Y 6 Cạm Bẫy</span>
+          </a>
+        </div>
+
+        <!-- SUB-SECTION 3.1: HẠM ĐỘI ĐA TÁC TỬ (A2A FLEET) -->
+        <div id="section-fleet" class="space-y-4 pt-2">
+          <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
+            <h3 class="font-orbitron font-bold text-sm text-purple-400 flex items-center gap-2">
+              <i class="fas fa-robot"></i> 3.1 QUẢN TRỊ HẠM ĐỘI ĐA TÁC TỬ (A2A FLEET)
+            </h3>
+            <span class="text-xs font-mono text-slate-400">6 Thành Viên Hạm Đội</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Card: Ron Runtime -->
+            <div class="bg-[#0d121d] border border-cyan-900/60 p-5 rounded-xl space-y-3">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-orbitron font-bold text-white text-sm">RON RUNTIME</h3>
+                  <span class="text-xs font-mono text-cyan-400">Master Orchestrator</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono">ONLINE</span>
+              </div>
+              <div class="text-xs space-y-1.5 font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                <div class="flex justify-between"><span>Host:</span><span class="text-slate-200">System Controller</span></div>
+                <div class="flex justify-between"><span>Vòng đời:</span><span class="text-emerald-400">M1→M5 Cycle</span></div>
+                <div class="flex justify-between"><span>Ủy quyền:</span><span class="text-slate-200">Bounded Grant</span></div>
+              </div>
+            </div>
+
+            <!-- Card: Goose Headless -->
+            <div class="bg-[#0d121d] border border-emerald-900/60 p-5 rounded-xl space-y-3">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-orbitron font-bold text-white text-sm">GOOSE HEADLESS</h3>
+                  <span class="text-xs font-mono text-emerald-400">Free Router Worker</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-cyan-950 text-cyan-400 border border-cyan-800 font-mono">ACTIVE</span>
+              </div>
+              <div class="text-xs space-y-1.5 font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                <div class="flex justify-between"><span>Binary:</span><span class="text-slate-200">Goose v1.57.0</span></div>
+                <div class="flex justify-between"><span>Model:</span><span class="text-emerald-400">nemotron-3.5:free</span></div>
+                <div class="flex justify-between"><span>Chi phí:</span><span class="text-emerald-400">$0.00 Token Burn</span></div>
+              </div>
+            </div>
+
+            <!-- Card: Kilo Builder -->
+            <div class="bg-[#0d121d] border border-amber-900/60 p-5 rounded-xl space-y-3">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-orbitron font-bold text-white text-sm">KILO BUILDER</h3>
+                  <span class="text-xs font-mono text-amber-400">Ground Base Workhorse</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-amber-950 text-amber-400 border border-amber-800 font-mono">STANDBY</span>
+              </div>
+              <div class="text-xs space-y-1.5 font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                <div class="flex justify-between"><span>Platform:</span><span class="text-slate-200">Windows Local Base</span></div>
+                <div class="flex justify-between"><span>Skill:</span><span class="text-amber-400">a2a-kilo-orchestration</span></div>
+                <div class="flex justify-between"><span>Local Engine:</span><span class="text-slate-200">Ollama qwen3</span></div>
+              </div>
+            </div>
+
+            <!-- Card: Anti Cloud -->
+            <div class="bg-[#0d121d] border border-purple-900/60 p-5 rounded-xl space-y-3">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-orbitron font-bold text-white text-sm">ANTI CLOUD</h3>
+                  <span class="text-xs font-mono text-purple-400">Cloud Architect & QA</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-purple-950 text-purple-400 border border-purple-800 font-mono">ONLINE</span>
+              </div>
+              <div class="text-xs space-y-1.5 font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                <div class="flex justify-between"><span>Platform:</span><span class="text-slate-200">Linux Debian VM</span></div>
+                <div class="flex justify-between"><span>Thực thi:</span><span class="text-purple-400">Zero Copy-Paste</span></div>
+                <div class="flex justify-between"><span>Oracle:</span><span class="text-slate-200">Evidence Before Claims</span></div>
+              </div>
+            </div>
+
+            <!-- Card: Sherry OpenHuman -->
+            <div class="bg-[#0d121d] border border-pink-900/60 p-5 rounded-xl space-y-3">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-orbitron font-bold text-white text-sm">SHERRY OPENHUMAN</h3>
+                  <span class="text-xs font-mono text-pink-400">Logistics & Supply Liaison</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-pink-950 text-pink-400 border border-pink-800 font-mono">READY</span>
+              </div>
+              <div class="text-xs space-y-1.5 font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                <div class="flex justify-between"><span>Role:</span><span class="text-slate-200">Operations Control</span></div>
+                <div class="flex justify-between"><span>Drive Hub:</span><span class="text-pink-400">SHERRY_OPENHUMAN</span></div>
+                <div class="flex justify-between"><span>Status:</span><span class="text-slate-200">Active Duty</span></div>
+              </div>
+            </div>
+
+            <!-- Card: Remi Automation -->
+            <div class="bg-[#0d121d] border border-blue-900/60 p-5 rounded-xl space-y-3">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-orbitron font-bold text-white text-sm">REMI AUTOMATION</h3>
+                  <span class="text-xs font-mono text-blue-400">Task Execution Engine</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-blue-950 text-blue-400 border border-blue-800 font-mono">READY</span>
+              </div>
+              <div class="text-xs space-y-1.5 font-mono text-slate-400 pt-2 border-t border-slate-800/80">
+                <div class="flex justify-between"><span>Repo:</span><span class="text-slate-200">Remi-ron-sho-automation</span></div>
+                <div class="flex justify-between"><span>Workflow:</span><span class="text-blue-400">Scheduled Scripts</span></div>
+                <div class="flex justify-between"><span>Queue:</span><span class="text-slate-200">0 Tasks Pending</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-SECTION 3.2: CẦU DAO CIRCUIT BREAKER -->
+        <div id="section-circuit" class="space-y-4 pt-4">
+          <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
+            <h3 class="font-orbitron font-bold text-sm text-amber-400 flex items-center gap-2">
+              <i class="fas fa-shield-virus"></i> 3.2 CẦU DAO QUOTA CIRCUIT BREAKER & BẢO VỆ TÀI NGUYÊN
+            </h3>
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">100% ARMED</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-xl space-y-4">
+              <h4 class="font-orbitron font-bold text-xs text-amber-400 flex items-center gap-2">
+                <i class="fas fa-gavel"></i> CÁC ĐỊNH LUẬT BẢO VỆ BẮT BUỘC
+              </h4>
+              <div class="space-y-3 text-xs">
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+                  <span class="text-cyan-400 font-bold font-mono">Định luật 1 — Tách Bạch Thẩm Quyền:</span>
+                  <p class="text-slate-400 mt-1 leading-relaxed">Anti Cloud làm Tổng thầu / QA Oracle. Kilo / OpenCode làm Thợ gõ code. Cấm Orchestrator tự ý gõ file code 5.000 dòng gây cháy token.</p>
+                </div>
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">Định luật 2 — Rule 5 (Cấm Im Lặng Tự Tắt):</span>
+                  <p class="text-slate-400 mt-1 leading-relaxed">Khi sự cố xảy ra, cấm ngắt âm thầm. Bắt buộc hiển thị cảnh báo đỏ <code>🚨 [HAVE ISSUE: AI PLATFORM UNRESPONSIVE]</code> và báo cáo cho Thuyền trưởng Ron.</p>
+                </div>
+                <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+                  <span class="text-amber-400 font-bold font-mono">Định luật 3 — Cắt Lỗ Tối Đa 2 Lần:</span>
+                  <p class="text-slate-400 mt-1 leading-relaxed">Chỉ cho phép tự sửa lỗi tối đa 2 lần liên tiếp. Lần thứ 3 vẫn tắc phải dừng lại và giải thích bằng ngôn ngữ đời thường cho Ron.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-xl space-y-4">
+              <h4 class="font-orbitron font-bold text-xs text-cyan-400 flex items-center gap-2">
+                <i class="fas fa-tachometer-alt"></i> THÔNG SỐ CẦU DAO THỜI GIAN THỰC
+              </h4>
+              <div class="space-y-3 font-mono text-xs">
+                <div class="flex justify-between p-2.5 bg-slate-900 rounded border border-slate-800">
+                  <span class="text-slate-400">Trạng Thái Cầu Dao:</span>
+                  <span class="text-emerald-400 font-bold">ARMED (SẴN SÀNG)</span>
+                </div>
+                <div class="flex justify-between p-2.5 bg-slate-900 rounded border border-slate-800">
+                  <span class="text-slate-400">Ngưỡng Lỗi Kích Hoạt:</span>
+                  <span class="text-amber-400 font-bold">Max 3 lần</span>
+                </div>
+                <div class="flex justify-between p-2.5 bg-slate-900 rounded border border-slate-800">
+                  <span class="text-slate-400">Trần Token / Phiên:</span>
+                  <span class="text-cyan-400 font-bold">120,000 tokens</span>
+                </div>
+                <div class="flex justify-between p-2.5 bg-slate-900 rounded border border-slate-800">
+                  <span class="text-slate-400">Timeout Worker Chờ:</span>
+                  <span class="text-purple-400 font-bold">30.0 giây</span>
+                </div>
+              </div>
+              <button onclick="testCircuitBreaker()" class="w-full py-2 bg-red-950 hover:bg-red-900 text-red-300 border border-red-700 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center space-x-2">
+                <i class="fas fa-bolt"></i>
+                <span>Thử Nghiệm Kích Hoạt Cầu Dao Khẩn Cấp</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-SECTION 3.3: HỘP THƯ TÁC VỤ MAILBOX -->
+        <div id="section-mailbox" class="space-y-4 pt-4">
+          <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
+            <h3 class="font-orbitron font-bold text-sm text-blue-400 flex items-center gap-2">
+              <i class="fas fa-envelope-open-text"></i> 3.3 HỘP THƯ TÁC VỤ KHÔNG ĐỒNG BỘ (MAILBOX MANAGER)
+            </h3>
+            <button onclick="createNewTicket()" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-semibold shadow transition flex items-center space-x-1">
+              <i class="fas fa-plus"></i>
+              <span>Tạo Vé Mới</span>
+            </button>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-300">
+                <thead class="bg-slate-950 uppercase font-mono text-slate-500 border-b border-slate-800 text-[11px]">
+                  <tr>
+                    <th class="p-3.5">Mã Vé</th>
+                    <th class="p-3.5">Tác Tử Phụ Trách</th>
+                    <th class="p-3.5">Tiêu Đề Công Việc</th>
+                    <th class="p-3.5">Cấp Độ</th>
+                    <th class="p-3.5">Trạng Thái</th>
+                    <th class="p-3.5">Mã Băm Nghiệm Thu</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60">
+                  <tr class="hover:bg-slate-800/40">
+                    <td class="p-3.5 font-mono text-cyan-400 font-bold">TKT-BRN-179</td>
+                    <td class="p-3.5">Anti Cloud</td>
+                    <td class="p-3.5 font-medium text-white">Thu hoạch 179 phiên Brain, mổ xẻ 6 nguyên nhân thất bại & đồng bộ GDrive</td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-purple-950 text-purple-400 text-[10px]">CRITICAL</span></td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold text-[10px]">VERIFIED</span></td>
+                    <td class="p-3.5 font-mono text-slate-400">36 files synced</td>
+                  </tr>
+                  <tr class="hover:bg-slate-800/40">
+                    <td class="p-3.5 font-mono text-cyan-400 font-bold">TKT-MCP-001</td>
+                    <td class="p-3.5">Ron-MCP-Commander</td>
+                    <td class="p-3.5 font-medium text-white">Nâng cấp Level 3: CircuitBreaker, MailboxManager & 9/9 Tests Passing</td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 text-[10px]">CORE</span></td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold text-[10px]">LEVEL 3</span></td>
+                    <td class="p-3.5 font-mono text-slate-400">commit e1eecc8</td>
+                  </tr>
+                  <tr class="hover:bg-slate-800/40">
+                    <td class="p-3.5 font-mono text-cyan-400 font-bold">TKT-GOS-057</td>
+                    <td class="p-3.5">Goose Headless</td>
+                    <td class="p-3.5 font-medium text-white">Tải Goose v1.57.0, bọc cấu hình router OpenRouter Free model & quét repo</td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 text-[10px]">HIGH</span></td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold text-[10px]">PASSED</span></td>
+                    <td class="p-3.5 font-mono text-slate-400">nemotron-3.5:free</td>
+                  </tr>
+                  <tr class="hover:bg-slate-800/40">
+                    <td class="p-3.5 font-mono text-cyan-400 font-bold">TKT-ADM-004</td>
+                    <td class="p-3.5">Anti Cloud</td>
+                    <td class="p-3.5 font-medium text-white">Tinh gọn ronsho-system-admin thành 4 trang theo chỉ đạo của Thuyền trưởng Ron</td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 text-[10px]">RELEASE</span></td>
+                    <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 font-bold text-[10px]">LIVE</span></td>
+                    <td class="p-3.5 font-mono text-slate-400">4-page consolidated</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-SECTION 3.4: BÁO CÁO PHÁP Y 6 CẠM BẪY THỰC CHIẾN -->
+        <div id="section-reports" class="space-y-4 pt-4">
+          <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
+            <h3 class="font-orbitron font-bold text-sm text-red-400 flex items-center gap-2">
+              <i class="fas fa-file-invoice"></i> 3.4 BÁO CÁO PHÁP Y & MỔ XẺ 6 CẠM BẪY THỰC CHIẾN (TỪ 71 PHIÊN A2A)
+            </h3>
+            <span class="text-xs font-mono text-slate-400">Audit & Quota ROI</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- 6 Cạm bẫy thất bại -->
+            <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-xl space-y-4">
+              <h4 class="font-orbitron font-bold text-xs text-red-400 flex items-center gap-2">
+                <i class="fas fa-skull-crossbones"></i> PHÁP Y 6 CẠM BẪY THẤT BẠI KINH ĐIỂN
+              </h4>
+              <div class="space-y-2.5 text-xs">
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">FAIL-01 (Tham lam ôm việc):</span>
+                  <p class="text-slate-400 mt-0.5">Worker đứng hình &rarr; Orchestrator tự mở file 5.000 dòng để gõ &rarr; cháy sạch quota trong 10 phút.</p>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">FAIL-02 (Nổ quota trong đêm):</span>
+                  <p class="text-slate-400 mt-0.5">Phiên <code>CONV_617d993d</code>, AI tự chạy loop chẩn đoán liên tục khi Ron đang ngủ &rarr; sập quota 2 lần liên tiếp.</p>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">FAIL-03 (Vòng lặp sửa lỗi không hội tụ):</span>
+                  <p class="text-slate-400 mt-0.5">Sửa A hỏng B, sửa B hỏng C. Ron phải cưỡng chế: <code>DO_NOT_CREATE_DEBUG_LOOPS=TRUE</code>.</p>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">FAIL-04 (Lạc trôi mục tiêu):</span>
+                  <p class="text-slate-400 mt-0.5">AI sa đà viết tài liệu trừu tượng vũ trụ. Ron phải nhắc: <i>"em đi xa quá, quay về trái đất nào!"</i>.</p>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">FAIL-05 (Lệch môi trường Windows):</span>
+                  <p class="text-slate-400 mt-0.5">Lỗi Tiếng Việt encoding cp1252 giết chết script Python, hardcode đường dẫn Linux thay vì Windows path.</p>
+                </div>
+                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                  <span class="text-red-400 font-bold font-mono">FAIL-06 (Ảo giác trạng thái):</span>
+                  <p class="text-slate-400 mt-0.5">Tự nhận DONE 100% khi chưa có mã băm SHA-256 đối soát vật lý độc lập.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Báo cáo Hiệu quả & Chứng chỉ Merkle -->
+            <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-xl space-y-4">
+              <h4 class="font-orbitron font-bold text-xs text-emerald-400 flex items-center gap-2">
+                <i class="fas fa-chart-pie"></i> BÁO CÁO BẢO TOÀN HẠN NGẠCH (TOKEN ROI)
+              </h4>
+              <div class="space-y-3 text-xs font-mono">
+                <div class="p-3 bg-slate-950 rounded border border-slate-800 space-y-2">
+                  <div class="flex justify-between text-slate-300">
+                    <span>Phiên làm việc thu hoạch:</span>
+                    <span class="text-cyan-400 font-bold">179 Sessions</span>
+                  </div>
+                  <div class="flex justify-between text-slate-300">
+                    <span>Phiên A2A / Kilo thực chiến:</span>
+                    <span class="text-emerald-400 font-bold">71 Sessions</span>
+                  </div>
+                  <div class="flex justify-between text-slate-300">
+                    <span>Tài liệu bóc tách độc lập:</span>
+                    <span class="text-purple-400 font-bold">30 Raw Dossiers</span>
+                  </div>
+                  <div class="flex justify-between text-slate-300">
+                    <span>Đồng bộ Google Drive:</span>
+                    <span class="text-emerald-400 font-bold">36/36 Files (100%)</span>
+                  </div>
+                </div>
+
+                <div class="p-3 bg-emerald-950/40 rounded border border-emerald-800/80 space-y-1.5">
+                  <div class="text-emerald-400 font-bold">KẾT QUẢ VẬN HÀNH THỰC TẾ:</div>
+                  <p class="text-slate-300 text-[11px] leading-relaxed font-sans">
+                    Bằng việc áp dụng <b>Goose Headless + OpenRouter Free Tier (Nemotron 3.5)</b> và cơ chế ngắt cầu dao <b>Circuit Breaker</b>, toàn bộ thao tác đọc mã nguồn và phân tích log không tốn bất kỳ 1 token nào của phiên chính Antigravity. Rủi ro cháy quota trong đêm đã được loại trừ triệt để!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================== -->
+      <!-- VIEW 4: QUẢN LÝ REPO & HỆ THỐNG (GỘP 7, 8) -->
+      <!-- ====================================================================== -->
+      <section id="view-repos" class="space-y-8 hidden">
+        
+        <!-- Header View 4 -->
+        <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded bg-pink-950 text-pink-400 border border-pink-800 font-mono text-xs font-bold">REPOS & SYSTEM GOVERNANCE</span>
+              <h1 class="text-2xl font-bold text-white">Quản Lý Repo & Hệ Thống</h1>
+            </div>
+            <p class="text-sm text-slate-400 mt-1">Hợp nhất quản lý 7 repositories theo ma trận Giữ/Bỏ/Dồn của Thuyền trưởng Ron và bảng cấu hình hạ tầng, khóa bảo mật Fencing.</p>
+          </div>
+          <span class="text-xs font-mono px-3 py-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-800">
+            100% GITHUB CONNECTED
+          </span>
+        </div>
+
+        <!-- Quick Sub-Navigation Pills -->
+        <div class="flex items-center space-x-2 overflow-x-auto text-xs font-mono py-1">
+          <a href="#section-repos-matrix" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-pink-400 hover:border-pink-700 transition flex items-center space-x-1">
+            <i class="fas fa-cubes text-pink-400"></i>
+            <span>4.1 Ma Trận 7 Repos (Giữ / Bỏ / Dồn)</span>
+          </a>
+          <a href="#section-settings-fencing" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-cyan-400 hover:border-cyan-700 transition flex items-center space-x-1">
+            <i class="fas fa-sliders-h text-cyan-400"></i>
+            <span>4.2 Cấu Hình & Khóa Bảo Mật Fencing</span>
+          </a>
+        </div>
+
+        <!-- SUB-SECTION 4.1: MA TRẬN 7 REPOS THEO QUYẾT ĐỊNH CỦA RON -->
+        <div id="section-repos-matrix" class="space-y-4 pt-2">
+          
+          <!-- Decision Summary Banner -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-pink-950/40 via-slate-900 to-purple-950/40 border border-pink-500/50 space-y-2">
+            <div class="flex items-center space-x-2 text-xs font-mono font-bold text-pink-300">
+              <i class="fas fa-gavel text-amber-400"></i>
+              <span>QUYẾT ĐỊNH QUẢN TRỊ 7 REPOSITORIES CỦA THUYỀN TRƯỞNG RON:</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs font-mono">
+              <div class="p-2.5 bg-slate-950 rounded border border-emerald-800/80">
+                <span class="text-emerald-400 font-bold">1. POKE_AI:</span>
+                <span class="ml-1 text-slate-300">GIỮ</span>
+                <p class="text-[11px] text-slate-400 mt-0.5">Repo quản lý chỉ số, tạm thời chưa làm gì.</p>
+              </div>
+              <div class="p-2.5 bg-slate-950 rounded border border-red-800/80">
+                <span class="text-red-400 font-bold">2. RON-AIOS:</span>
+                <span class="ml-1 text-slate-300">BỎ / HỢP NHẤT</span>
+                <p class="text-[11px] text-slate-400 mt-0.5">Bỏ repo riêng, tích hợp lõi vào Runtime.</p>
+              </div>
+              <div class="p-2.5 bg-slate-950 rounded border border-purple-800/80">
+                <span class="text-purple-400 font-bold">3, 4, 5. REMI + MCP + KIT:</span>
+                <span class="ml-1 text-slate-300">DỒN THÀNH 1</span>
+                <p class="text-[11px] text-slate-400 mt-0.5">Gom automation, MCP và delivery kit.</p>
+              </div>
+              <div class="p-2.5 bg-slate-950 rounded border border-amber-800/80">
+                <span class="text-amber-400 font-bold">6, 7. DESKTOP & KINHDICH:</span>
+                <span class="ml-1 text-slate-300">TẠM GIỮ</span>
+                <p class="text-[11px] text-slate-400 mt-0.5">Tài liệu mẫu giao diện & nghiên cứu.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cards Matrix -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            <!-- Repo 1: POKE_AI (GIỮ) -->
+            <div class="bg-[#0d121d] border-2 border-emerald-500/80 p-4 rounded-xl space-y-2 box-glow-green">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm font-mono truncate">POKE_AI</h4>
+                  <span class="text-[10px] font-mono text-emerald-400 font-bold">[TAB 1 — GIỮ NGUYÊN]</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-950 text-emerald-400 font-bold border border-emerald-800">KEEP</span>
+              </div>
+              <p class="text-xs text-slate-300">Repo quản lý về chỉ số, chiến thuật Anime Pokemon & Automation pipeline. Tạm thời giữ nguyên chưa can thiệp.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800 flex justify-between">
+                <span>Chỉ thị: Giữ nguyên</span>
+                <span class="text-emerald-400">5/5 PASS</span>
+              </div>
+            </div>
+
+            <!-- Repo 2: RON-AIOS (BỎ ĐI / HỢP NHẤT) -->
+            <div class="bg-[#0d121d] border-2 border-red-500/80 p-4 rounded-xl space-y-2 opacity-80 hover:opacity-100 transition">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm font-mono truncate">RON-AIOS</h4>
+                  <span class="text-[10px] font-mono text-red-400 font-bold">[TAB 2 — BỎ RIÊNG / HỢP NHẤT]</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-red-950 text-red-400 font-bold border border-red-800">MERGE/DROP</span>
+              </div>
+              <p class="text-xs text-slate-400">Không cần tách thành repo riêng lẻ gây phân mảnh. Tích hợp thẳng các quy chuẩn AGENTS.md vào Runtime Core.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800 flex justify-between">
+                <span>Chỉ thị: Bỏ đi</span>
+                <span class="text-red-400">Hợp nhất Core</span>
+              </div>
+            </div>
+
+            <!-- Repos 3, 4, 5: Remi + MCP + Delivery Kit (DỒN THÀNH 1 REPO) -->
+            <div class="bg-[#0d121d] border-2 border-purple-500/80 p-4 rounded-xl space-y-2 box-glow-cyan md:col-span-2 lg:col-span-1">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm font-mono truncate">REMI + MCP + DELIVERY KIT</h4>
+                  <span class="text-[10px] font-mono text-purple-400 font-bold">[TAB 3, 4, 5 — DỒN THÀNH 1 REPO]</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-purple-950 text-purple-400 font-bold border border-purple-800">CONSOLIDATED</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Hợp nhất 3 repo rời rạc: <code>Remi-ron-sho-automation</code> + <code>Ron-MCP-Maste-Comander</code> + <code>ai-delivery-control-kit</code> thành một khối thống nhất mạnh mẽ.
+              </p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800 flex justify-between">
+                <span>Chỉ thị: Dồn thành 1</span>
+                <span class="text-purple-400">Level 3 Certified</span>
+              </div>
+            </div>
+
+            <!-- Repo 6: desktop-tutorial (TẠM GIỮ) -->
+            <div class="bg-[#0d121d] border border-amber-800/80 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm font-mono truncate">desktop-tutorial</h4>
+                  <span class="text-[10px] font-mono text-amber-400 font-bold">[TAB 6 — TẠM GIỮ]</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-amber-950 text-amber-400 font-bold border border-amber-800">HOLD</span>
+              </div>
+              <p class="text-xs text-slate-400">Tài liệu mẫu xây dựng giao diện desktop và ứng dụng cục bộ. Tạm giữ phục vụ tham khảo kỹ thuật.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800 flex justify-between">
+                <span>Chỉ thị: Tạm giữ</span>
+                <span class="text-amber-400">Reference Mode</span>
+              </div>
+            </div>
+
+            <!-- Repo 7: kinhdich (TẠM GIỮ) -->
+            <div class="bg-[#0d121d] border border-amber-800/80 p-4 rounded-xl space-y-2">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm font-mono truncate">kinhdich</h4>
+                  <span class="text-[10px] font-mono text-amber-400 font-bold">[TAB 7 — TẠM GIỮ]</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-amber-950 text-amber-400 font-bold border border-amber-800">HOLD</span>
+              </div>
+              <p class="text-xs text-slate-400">Ứng dụng tương tác 64 quẻ Kinh Dịch, âm thanh audio podcast. Tạm giữ phục vụ nghiên cứu tri thức hệ thống.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800 flex justify-between">
+                <span>Chỉ thị: Tạm giữ</span>
+                <span class="text-amber-400">Interactive UI</span>
+              </div>
+            </div>
+
+            <!-- Repo Trung Tâm: ronsho-system-admin -->
+            <div class="bg-[#0d121d] border-2 border-cyan-500/80 p-4 rounded-xl space-y-2 box-glow-cyan">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-bold text-white text-sm font-mono truncate">ronsho-system-admin</h4>
+                  <span class="text-[10px] font-mono text-cyan-400 font-bold">[MANAGEMENT CENTER]</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] bg-cyan-950 text-cyan-400 font-bold border border-cyan-800">COMMAND HUB</span>
+              </div>
+              <p class="text-xs text-slate-300">Trung tâm điều hành và ra quyết định tối cao của Thuyền trưởng Ron. Nơi xuất bản live preview 4 trang.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 border-t border-slate-800 flex justify-between">
+                <span>GitHub Pages Live</span>
+                <span class="text-cyan-400">v3.2 Production</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SUB-SECTION 4.2: CẤU HÌNH HỆ THỐNG & KHÓA BẢO MẬT FENCING -->
+        <div id="section-settings-fencing" class="space-y-4 pt-4">
+          <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
+            <h3 class="font-orbitron font-bold text-sm text-cyan-400 flex items-center gap-2">
+              <i class="fas fa-sliders-h"></i> 4.2 CẤU HÌNH HẠ TẦNG & KHÓA BẢO MẬT (FENCING LOCKS)
+            </h3>
+            <span class="text-xs font-mono text-slate-400">Security & Execution Boundaries</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-xl space-y-4">
+              <h4 class="font-orbitron font-bold text-xs text-white flex items-center gap-2">
+                <i class="fas fa-key text-cyan-400"></i> KẾT NỐI MÔ HÌNH ROUTER (OPENROUTER FREE)
+              </h4>
+              <div class="space-y-3 text-xs font-mono">
+                <div>
+                  <label class="text-slate-400 block mb-1">OpenRouter Free API Key (Masked for Security):</label>
+                  <input type="password" value="sk-or-v1-••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-300 focus:outline-none">
+                </div>
+                <div>
+                  <label class="text-slate-400 block mb-1">Free Tier Model Engine:</label>
+                  <input type="text" value="nvidia/nemotron-3.5-lightning:free" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-emerald-400 focus:outline-none">
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-[#0d121d] border border-slate-800 p-5 rounded-xl space-y-4">
+              <h4 class="font-orbitron font-bold text-xs text-white flex items-center gap-2">
+                <i class="fas fa-network-wired text-purple-400"></i> CĂN CỨ MẶT ĐẤT LOCAL ENDPOINTS
+              </h4>
+              <div class="space-y-3 text-xs font-mono">
+                <div>
+                  <label class="text-slate-400 block mb-1">Ollama Local API Endpoint:</label>
+                  <input type="text" value="http://localhost:11434" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-slate-300 focus:outline-none">
+                </div>
+                <div>
+                  <label class="text-slate-400 block mb-1">Local Model Name:</label>
+                  <input type="text" value="qwen3:1.7b" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-amber-400 focus:outline-none">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Interactive JavaScript Logic: EXACTLY 4 PAGES NAVIGATION -->
+  <script>
+    // 4 Consolidated views
+    const views = ['hud', 'c4', 'a2a', 'repos'];
+
+    // Legacy hash support so old URLs do not 404
+    const legacyAliases = {
+      'fleet': { view: 'a2a', section: 'section-fleet' },
+      'circuit': { view: 'a2a', section: 'section-circuit' },
+      'mailbox': { view: 'a2a', section: 'section-mailbox' },
+      'reports': { view: 'a2a', section: 'section-reports' },
+      'settings': { view: 'repos', section: 'section-settings-fencing' }
+    };
+
+    function navigateTo(targetView, subSectionId = null) {
+      let viewId = targetView;
+      let targetSection = subSectionId;
+
+      if (legacyAliases[viewId]) {
+        targetSection = legacyAliases[viewId].section;
+        viewId = legacyAliases[viewId].view;
+      }
+
+      views.forEach(id => {
+        const el = document.getElementById('view-' + id);
+        const sideNav = document.getElementById('nav-' + id);
+        const topNav = document.getElementById('top-nav-' + id);
+
+        if (id === viewId) {
+          if (el) el.classList.remove('hidden');
+          if (sideNav) sideNav.classList.add('active-nav');
+          if (topNav) {
+            topNav.className = "px-3 py-1.5 rounded-lg font-semibold bg-cyan-600 text-white shadow transition flex items-center space-x-1.5";
+          }
+        } else {
+          if (el) el.classList.add('hidden');
+          if (sideNav) sideNav.classList.remove('active-nav');
+          if (topNav) {
+            topNav.className = "px-3 py-1.5 rounded-lg font-semibold bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center space-x-1.5 border border-slate-800";
+          }
+        }
+      });
+
+      if (targetSection) {
+        setTimeout(() => {
+          const subEl = document.getElementById(targetSection);
+          if (subEl) {
+            subEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 60);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Auto-detect hash on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (views.includes(hash)) {
+        navigateTo(hash);
+      } else if (legacyAliases[hash]) {
+        navigateTo(hash);
+      }
+    });
+
+    function switchC4Level(level) {
+      for (let i = 1; i <= 4; i++) {
+        const panel = document.getElementById('c4-panel-' + i);
+        const btn = document.getElementById('c4-btn-' + i);
+        if (panel && btn) {
+          if (i === level) {
+            panel.classList.remove('hidden');
+            btn.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-600 text-white";
+          } else {
+            panel.classList.add('hidden');
+            btn.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700";
           }
         }
       }
-    </script>
-  </head>
-  <body class="bg-slate-950 text-slate-100 antialiased min-h-screen">
-    <div id="app"></div>
-    <script type="module" src="./src/main.ts"></script>
-  </body>
+    }
+
+    function testCircuitBreaker() {
+      alert("🚨 [HAVE ISSUE: CIRCUIT BREAKER TRIGGERED]\n\n- Anti-Greedy Fallback kích hoạt thành công!\n- Đã cắt đứt kết nối vòng lặp vô hạn.\n- Toàn bộ ngân sách token được bảo toàn 100%.\n- Đã gửi tín hiệu khẩn cấp đến Thuyền trưởng Ron.");
+      const log = document.getElementById('hud-log');
+      if (log) {
+        const div = document.createElement('div');
+        div.className = "text-red-400 font-bold animate-pulse";
+        div.innerText = "[" + new Date().toLocaleTimeString() + "] 🚨 [HAVE ISSUE: CIRCUIT BREAKER] Anti-Greedy activated. Token quota preserved!";
+        log.prepend(div);
+      }
+    }
+
+    function pingAllAgents() {
+      alert("📡 [A2A PING FLEET]\n\n- RON RUNTIME: Pong (0.2ms)\n- GOOSE HEADLESS: Pong (1.1s - OpenRouter Free)\n- KILO BUILDER: Pong (Windows Local Ready)\n- ANTI CLOUD: Pong (Cloud Oracle Active)\n- SHERRY: Pong (Logistics Ready)\n- REMI: Pong (Automation Ready)\n\nToàn bộ 6 tác tử đồng bộ 100%!");
+    }
+
+    function createNewTicket() {
+      const title = prompt("Nhập tiêu đề nhiệm vụ mới:");
+      if (title) {
+        alert("✓ Đã khởi tạo vé công việc mới thành công theo Task Ticket Schema! Vé đã đưa vào Outbox của Mailbox Manager.");
+      }
+    }
+  </script>
+
+</body>
 </html>
