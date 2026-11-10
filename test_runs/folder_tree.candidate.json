@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "Cây Thư Mục Thực Tế — Ron-MCP-Maste-Comander",
+    "subtitle": "Được quét trực tiếp từ hệ thống tệp vật lý",
+    "output": "folder_tree.rendered.html",
+    "quality_profile": "showcase"
+  },
+  "nodes": [
+    {
+      "id": "root",
+      "label": "Ron-MCP-Maste-Comander",
+      "sublabel": "Level 3 Certified Repo"
+    },
+    {
+      "id": "root_README_md",
+      "label": "README.md",
+      "parent": "root",
+      "sublabel": "File"
+    },
+    {
+      "id": "root_docs",
+      "label": "docs",
+      "parent": "root",
+      "sublabel": "Directory"
+    },
+    {
+      "id": "root_docs_CIRCUIT_BREAKER_RULES_md",
+      "label": "CIRCUIT_BREAKER_RULES.md",
+      "parent": "root_docs",
+      "sublabel": "File"
+    },
+    {
+      "id": "root_pyproject_toml",
+      "label": "pyproject.toml",
+      "parent": "root",
+      "sublabel": "File"
+    },
+    {
+      "id": "root_schemas",
+      "label": "schemas",
+      "parent": "root",
+      "sublabel": "Directory"
+    },
+    {
+      "id": "root_schemas_task_ticket_schema_json",
+      "label": "task_ticket.schema.json",
+      "parent": "root_schemas",
+      "sublabel": "File"
+    },
+    {
+      "id": "root_src",
+      "label": "src",
+      "parent": "root",
+      "sublabel": "Directory"
+    },
+    {
+      "id": "root_src_ron_mcp_commander",
+      "label": "ron_mcp_commander",
+      "parent": "root_src",
+      "sublabel": "Directory"
+    },
+    {
+      "id": "root_tests",
+      "label": "tests",
+      "parent": "root",
+      "sublabel": "Directory"
+    },
+    {
+      "id": "root_tests_test_circuit_breaker_py",
+      "label": "test_circuit_breaker.py",
+      "parent": "root_tests",
+      "sublabel": "File"
+    },
+    {
+      "id": "root_tests_test_mailbox_py",
+      "label": "test_mailbox.py",
+      "parent": "root_tests",
+      "sublabel": "File"
+    }
+  ]
+}

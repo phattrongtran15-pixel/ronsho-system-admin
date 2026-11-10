@@ -1,0 +1,120 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Vòng Đời Vé Nhiệm Vụ A2A (Task Ticket Schema)",
+    "subtitle": "Được trích xuất trực tiếp từ file schemas/task_ticket.schema.json",
+    "output": "task_ticket.rendered.html",
+    "quality_profile": "showcase"
+  },
+  "mainPath": [
+    "pending",
+    "processing",
+    "completed"
+  ],
+  "states": [
+    {
+      "id": "pending",
+      "type": "start",
+      "label": "PENDING",
+      "sublabel": "Vé đã vào Mailbox",
+      "tag": "queue",
+      "step": "01"
+    },
+    {
+      "id": "processing",
+      "type": "active",
+      "label": "PROCESSING",
+      "sublabel": "Worker đang thực thi",
+      "tag": "work",
+      "step": "02"
+    },
+    {
+      "id": "completed",
+      "type": "success",
+      "label": "COMPLETED",
+      "sublabel": "Nghiệm thu thành công",
+      "tag": "done",
+      "step": "03"
+    },
+    {
+      "id": "timeout",
+      "type": "failure",
+      "label": "TIMEOUT",
+      "sublabel": "Quá thời gian 30s",
+      "tag": "halt"
+    },
+    {
+      "id": "failed",
+      "type": "failure",
+      "label": "FAILED",
+      "sublabel": "Lỗi thực thi lệnh",
+      "tag": "retryable"
+    },
+    {
+      "id": "circuit_tripped",
+      "type": "failure",
+      "label": "CIRCUIT TRIPPED",
+      "sublabel": "Cầu dao ngắt khẩn cấp",
+      "tag": "safety"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "p-proc",
+      "from": "pending",
+      "to": "processing",
+      "label": "dispatch"
+    },
+    {
+      "id": "proc-comp",
+      "from": "processing",
+      "to": "completed",
+      "label": "verify pass"
+    },
+    {
+      "id": "proc-time",
+      "from": "processing",
+      "to": "timeout",
+      "label": "timeout > 30s",
+      "variant": "security"
+    },
+    {
+      "id": "proc-fail",
+      "from": "processing",
+      "to": "failed",
+      "label": "error code != 0",
+      "variant": "security"
+    },
+    {
+      "id": "fail-proc",
+      "from": "failed",
+      "to": "processing",
+      "label": "retry (max 2)",
+      "variant": "dashed"
+    },
+    {
+      "id": "proc-circuit",
+      "from": "processing",
+      "to": "circuit_tripped",
+      "label": "loop detected",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Đường dẫn chính (Happy Path)",
+      "items": [
+        "Vé từ PENDING sang PROCESSING và COMPLETED khi kiểm thử PASS 100%"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Bảo vệ Cầu Dao & Timeout",
+      "items": [
+        "Nếu chạy quá 30s chuyển TIMEOUT, nếu lặp lỗi kích hoạt CIRCUIT TRIPPED"
+      ]
+    }
+  ]
+}
