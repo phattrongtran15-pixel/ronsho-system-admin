@@ -6,6 +6,13 @@
 [![Governance](https://img.shields.io/badge/RON--SHO-Human%20Sovereignty-gold.svg)]()
 [![Status: R&D Multi-Track](https://img.shields.io/badge/Status-Multi--Track%20Forks-orange.svg)]()
 
+
+> 🌐 **[TRUY CẬP LIVING C4 ARCHITECTURE DASHBOARD (GITHUB PAGES)](https://phattrongtran15-pixel.github.io/ronsho-system-admin/)**  
+> *Bản vẽ kiến trúc sống thời gian thực theo chuẩn C4 Model của Hệ điều hành tác tử **RON-SHO AIOS** do Thuyền trưởng Ron chỉ huy.*  
+> *Bao gồm đầy đủ 5 cấp độ: Level 1 System Context (4 Invariants), Level 2 Containers (Khung quản trị & 8 Vùng cốt lõi, từng file với định dạng tag và liên kết), Level 3 Components (Supervisor Fencing Lock, Pre-Action Gate Cedar, Canonical DB), Level 4 Code & Files (Tra cứu tức thì toàn bộ 361 tệp vật lý), Level 5 Pipeline & Context Database (8 chặng khép kín, đối soát chữ ký Merkle SHA-256 & Drift Sentinel phát hiện Quân Địch).*
+
+---
+
 > **Tuyên ngôn sứ mệnh:** Repository này đóng vai trò là **Report Control & Management Center** của hệ điều hành tác tử **RON-SHO AIOS**, do Thuyền trưởng Ron (`phattrongtran15-pixel`) chỉ huy tối cao. Nơi đây hợp nhất các luồng báo cáo thời gian thực, kiểm toán tính đúng sai của kiến trúc và cung cấp bằng chứng vật lý (`Evidence Before Claims`) để hỗ trợ Thuyền trưởng ra quyết định nhanh chóng, chính xác và mạnh mẽ.
 
 ---
