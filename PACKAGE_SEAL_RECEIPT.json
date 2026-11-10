@@ -1,15 +1,27 @@
 {
-  "system": "RONSHO AIOS — System Management & Multi-Agent Operations Command Center",
-  "version": "3.3.0-LIVING-C4-INTEGRATED",
-  "timestamp": "2026-11-10T06:20:00Z",
-  "governedBy": "Captain Ron (phattrongtran15-pixel)",
-  "architecture": "Cyberpunk Command Center with Living C4 Architecture Model",
-  "pages": [
-    "1. Mission HUD (view-hud)",
-    "2. Kiến Trúc C4 4 Tầng Sống (view-c4: Context, Containers, Components, Living Assets)",
-    "3. A2A & Điều Phối Multi-Agent (view-a2a: Fleet + Circuit + Mailbox + Forensic Reports)",
-    "4. Quản Lý Repo & Hệ Thống (view-repos: 7 Repos Matrix + Fencing Settings)"
+  "package_name": "ronsho-system-admin",
+  "version": "2.0.0-living-c4",
+  "architecture": "Living C4 Architecture Dashboard (Universal Context Asset Database)",
+  "sealed_by": "Thuyền trưởng Ron & Antigravity Orchestrator",
+  "sealed_at": "2026-11-10 13:57:57",
+  "invariants_enforced": [
+    "Human Sovereignty: Thuyền trưởng Ron là người quyết định tối cao",
+    "Evidence Before Claims",
+    "Executed != Verified != Accepted",
+    "Memory != Current Truth (aios_canonical.db)",
+    "UNKNOWN != PASS",
+    "Whole-System Fencing Lock (Supervisor Lock Epoch 104)"
   ],
-  "bundleSha256": "31b0087161e090783622c6034a986e0371d837eea9512a522eeb2f0ca846395f",
-  "testSuite": "PASS 8/8 GATES (100%)"
+  "artifacts": {
+    "index.html": {
+      "size_bytes": 715631,
+      "sha256": "D70EA1E99D66C31AC3D4368B88D0949494AB669ADD2E1FD9947A844C9705B1CC"
+    },
+    "dist/index.html": {
+      "size_bytes": 715377,
+      "sha256": "22CC25C1957A9A3A7F6A4F79DB64887B566014BB43C9D6B1AA063473BB597CB2"
+    }
+  },
+  "merkle_root": "2D1E77CE0D7B7123A10AB7CF65D49B3B46D3229945260C91A8C1194F48EF5687",
+  "verification_verdict": "VERIFIED_100_PERCENT_PASS"
 }
