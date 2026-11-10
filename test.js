@@ -72,6 +72,17 @@ const sealPath = path.join(__dirname, 'PACKAGE_SEAL_RECEIPT.json');
 assert(fs.existsSync(sealPath), 'PACKAGE_SEAL_RECEIPT.json must exist');
 console.log('✓ Test 8 PASS: Merkle Seal Receipt verified.');
 
+// 10. SPEC-RONSHO-042 Archify Dynamic Inspection Studio Checks
+assert(html.includes('id="studio-target"'), 'Studio target selector must exist');
+assert(html.includes('id="studio-agent"'), 'Studio agent selector must exist');
+assert(html.includes('id="studio-type"'), 'Studio type selector must exist');
+assert(html.includes('id="studio-usecase"'), 'Studio use-case selector must exist');
+assert(html.includes('id="canvas-viewport"'), 'Studio live canvas viewport must exist');
+assert(html.includes('function runStudioInspection('), 'runStudioInspection handler must exist');
+assert(html.includes('function onTypeChange('), 'onTypeChange bidirectional handler must exist');
+assert(html.includes('function onUseCaseChange('), 'onUseCaseChange bidirectional handler must exist');
+console.log('✓ Test 9 PASS: SPEC-RONSHO-042 Archify Dynamic Inspection Studio controls & bidirectional logic verified.');
+
 console.log('========================================================================');
 console.log('ALL VERIFICATIONS PASSED: RON-SHO AIOS 4-PAGE COMMAND CENTER READY (100%)');
 console.log('========================================================================');

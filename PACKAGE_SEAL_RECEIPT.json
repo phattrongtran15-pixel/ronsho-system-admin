@@ -1,15 +1,15 @@
 {
   "system": "RONSHO AIOS — System Management & Multi-Agent Operations Command Center",
-  "version": "3.2.0-CONSOLIDATED-4PAGES",
-  "timestamp": "2026-11-10T05:15:00Z",
+  "version": "3.3.0-SPEC-042-STUDIO",
+  "timestamp": "2026-11-10T07:35:00Z",
   "governedBy": "Captain Ron (phattrongtran15-pixel)",
-  "architecture": "Cyberpunk Command Center (Consolidated 4 Pages)",
-  "pages": [
-    "1. Mission HUD (view-hud)",
-    "2. Kiến Trúc C4 4 Tầng (view-c4)",
-    "3. A2A & Điều Phối Multi-Agent (view-a2a: Fleet + Circuit + Mailbox + Forensic Reports)",
-    "4. Quản Lý Repo & Hệ Thống (view-repos: 7 Repos Matrix + Fencing Settings)"
+  "architecture": "Cyberpunk Command Center with C4 + Archify Dynamic Studio",
+  "features": [
+    "1. Mission HUD",
+    "2. Kiến Trúc C4 (4 Tầng) + SPEC-RONSHO-042 Archify Dynamic Inspection Studio",
+    "3. A2A & Điều Phối Multi-Agent (Fleet + Circuit + Mailbox + Forensic Reports)",
+    "4. Quản Lý Repo & Hệ Thống (7 Repos Matrix + Fencing Settings)"
   ],
-  "bundleSha256": "ff55b4ecd417ad7c51a9ece4841259c27d6924dd9ed0f96ab3654d346cc7752f",
-  "testSuite": "PASS 8/8 GATES (100%)"
+  "bundleSha256": "5f86a9f435c12bc55a1d05f1a2473625848b3c6566099bafcf54ac10eb030e33",
+  "testSuite": "PASS 9/9 GATES (100%)"
 }
