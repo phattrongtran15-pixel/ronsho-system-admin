@@ -15,5 +15,25 @@
   ],
   "verification_verdict": "VERIFIED_100_PERCENT_PASS",
   "status": "VERIFIED_SEALED",
-  "scope": "Consolidated 4-Page Command Center + Living C4 Architecture + Archify Dynamic Studio"
+  "scope": "Consolidated 4-Page Command Center + Living C4 Architecture + Archify Dynamic Studio",
+  "index_html_sha256": "610b9fe697c74a3ea9318c0207047d8f32a5915ce159d742e69063ad4179549c",
+  "dist_index_html_sha256": "1c18c2d40c3854ed3705f5ca6617a250e734d8454175750ce141986bb6431dee",
+  "timestamp_utc": "2026-11-10T07:49:36Z",
+  "matrix_9_column": {
+    "status": "OPERATIONAL",
+    "columns": 9,
+    "one_hot_groups": [
+      "HIGH LIGHT",
+      "SYSTEM",
+      "RON SPACE"
+    ],
+    "tree_column": "OVERALL (cây ├──)",
+    "spec": "MATRIX_TEMPLATE.md",
+    "verified_pass": true
+  },
+  "archify_studio": {
+    "status": "OPERATIONAL",
+    "spec": "SPEC-RONSHO-042",
+    "verified_pass": true
+  }
 }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
   <meta charset="UTF-8">
@@ -46,6 +46,39 @@
       border-left: 3px solid #00f3ff;
       color: #ffffff !important;
     }
+  
+    /* MATRIX 9-COLUMN STYLES (RONSHO APPROVED MATRIX_TEMPLATE SPEC) */
+    .mx { border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; background: #0b0f19; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .r { display: grid; grid-template-columns: 110px 110px 140px minmax(180px, 1.4fr) 44px minmax(130px, 1.2fr) 90px 60px minmax(100px, 0.9fr); align-items: center; }
+    .r > div { min-width: 0; padding: 5px 8px; border-bottom: 1px solid #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: ui-monospace, 'JetBrains Mono', Consolas, monospace; font-size: 11px; }
+    .head { font-size: 9px; font-weight: 800; text-transform: uppercase; background: #111827; }
+    .head > div { padding: 8px 8px; border-bottom: 2px solid #334155; }
+    .head .hl { color: #f87171; }
+    .head .sy { color: #94a3b8; }
+    .head .rn { color: #34d399; }
+    .head .ov { color: #38bdf8; }
+    .cc { border-right: 1px dashed #334155; }
+    .nhl { color: #f87171; font-weight: 700; }
+    .nsy { color: #94a3b8; font-weight: 600; }
+    .nrn { color: #34d399; font-weight: 600; }
+    .ovc { border-right: 2px solid rgba(56, 189, 248, 0.4); font-weight: 600; display: flex; align-items: center; }
+    .pre { font-family: ui-monospace, Consolas, monospace; color: #64748b; white-space: pre; font-size: 11px; flex: none; }
+    .ovn { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+    .ovn.l1 { color: #a78bfa; font-weight: 700; }
+    .ovn.l2 { color: #38bdf8; }
+    .ovn.lh { color: #f87171; font-weight: 700; }
+    .ovn.lx { color: #cbd5e1; }
+    .lvb { font-size: 8.5px; font-weight: 700; padding: 1px 6px; border-radius: 20px; }
+    .b1 { background: rgba(167, 139, 250, 0.2); color: #c084fc; border: 1px solid rgba(167, 139, 250, 0.4); }
+    .b2 { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .ds, .pc, .ty, .rm { font-size: 9.5px; color: #94a3b8; }
+    .pc { font-weight: 600; color: #e2e8f0; }
+    .rm { color: #fbbf24; }
+    .rm.drift { color: #f87171; font-weight: bold; }
+    .muted { color: #475569; }
+    .rowhl { background: rgba(239, 68, 68, 0.08); }
+    .rowhl:hover { background: rgba(239, 68, 68, 0.16); }
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
@@ -447,7 +480,7 @@
             <button onclick="switchC4Level(4)" id="c4-btn-4" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">L4: Tệp Vật Lý (361 Files)</button>
             <button onclick="switchC4Level(5)" id="c4-btn-5" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">L5: Pipeline & Quân Ta/Địch</button>
             <button onclick="switchC4Level(6)" id="c4-btn-6" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-950 text-emerald-300 hover:bg-emerald-900 border border-emerald-500/60 shadow flex items-center space-x-1.5">
-              <span>🌲 Sơ Đồ Tree Sống</span>
+              <span>🗂️ Ma Trận Hệ Thống (9 Cột)</span>
             </button>
           </div>
         </div>
@@ -796,61 +829,58 @@
           <div class="border-b border-slate-800 pb-3 flex justify-between items-center flex-wrap gap-2">
             <div>
               <div class="flex items-center space-x-2">
-                <span class="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono text-xs font-bold">LIVING TREE NAVIGATOR</span>
-                <h3 class="font-orbitron font-bold text-sm text-emerald-400">SƠ ĐỒ CÂY THƯ MỤC SỐNG (SYSTEM_AIOS ROOT TREE + PURPOSE)</h3>
+                <span class="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono text-xs font-bold">SYSTEM MATRIX 9-COL</span>
+                <h3 class="font-orbitron font-bold text-sm text-emerald-400">📊 MA TRẬN HỆ THỐNG — 9 CỘT (CHUẨN RON MATRIX_TEMPLATE)</h3>
               </div>
-              <p class="text-xs text-slate-400 mt-1">Cây phân cấp tương tác sống động toàn bộ 9 Khối Containers, 215 Thư mục và 361 Tệp vật lý. Hỗ trợ mở/thu gọn nhánh, đối soát Quân Ta/Quân Địch và giải thích mục đích tồn tại (Why it exists).</p>
+              <p class="text-xs text-slate-400 mt-1">One-hot 3 nhóm sở hữu (⚠️ HIGH LIGHT · ⚙️ SYSTEM · 👔 RON SPACE) · Cột OVERALL duy trì trọn vẹn nhánh cây ├── · Tự động bắt đối tượng lạ / trôi dạt (drift guardrail) theo spec MATRIX_TEMPLATE.md.</p>
             </div>
             <div class="flex items-center space-x-2">
-              <span class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Tree Mode: INTERACTIVE LIVE</span>
+              <span id="matrix-status-badge" class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Đọc cây đĩa thật lúc build</span>
             </div>
           </div>
 
-          <!-- Tree Controls Bar -->
+          <!-- Matrix Controls Bar -->
           <div class="flex flex-wrap items-center justify-between gap-3 p-3 bg-slate-950/80 rounded-xl border border-slate-800">
             <div class="flex items-center space-x-2 flex-wrap gap-y-1.5">
-              <button onclick="expandAllTree()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 flex items-center space-x-1">
-                <span>[+] Mở Rộng Tất Cả</span>
-              </button>
-              <button onclick="collapseAllTree()" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 flex items-center space-x-1">
-                <span>[-] Thu Gọn Tất Cả</span>
-              </button>
-              <button onclick="filterTreeFocus('control')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-950 text-cyan-300 hover:bg-cyan-900 border border-cyan-800 flex items-center space-x-1">
-                <span>🔒 Control Plane Only</span>
-              </button>
-              <button onclick="filterTreeFocus('drift')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-red-950 text-red-300 hover:bg-red-900 border border-red-800 flex items-center space-x-1">
-                <span>🚨 Chỉ Hiện Quân Địch</span>
-              </button>
-              <button onclick="filterTreeFocus('all')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-950 text-emerald-300 hover:bg-emerald-900 border border-emerald-800 flex items-center space-x-1">
-                <span>🔄 Hiện Toàn Bộ</span>
-              </button>
+              <span class="text-xs font-mono text-slate-400 mr-1">Bộ Lọc 9 Cột:</span>
+              <button onclick="filterMatrixMode('ALL')" id="mx-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-600 text-white shadow">Tất Cả (<span id="mx-cnt-all">0</span>)</button>
+              <button onclick="filterMatrixMode('HL')" id="mx-btn-hl" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-red-400 hover:bg-slate-700 border border-red-900/40">⚠️ HIGH LIGHT (<span id="mx-cnt-hl">0</span>)</button>
+              <button onclick="filterMatrixMode('SYS')" id="mx-btn-sys" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">⚙️ SYSTEM (<span id="mx-cnt-sys">0</span>)</button>
+              <button onclick="filterMatrixMode('RON')" id="mx-btn-ron" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 hover:bg-slate-700 border border-emerald-900/40">👔 RON SPACE (<span id="mx-cnt-ron">0</span>)</button>
             </div>
             <div class="relative w-80">
               <i class="fas fa-search absolute left-3 top-2.5 text-slate-500 text-xs"></i>
-              <input type="text" id="treeSearchInput" oninput="filterTreeNodes()" placeholder="Tìm thư mục hoặc tệp trên cây..." class="w-full pl-9 pr-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-emerald-500 shadow-inner">
+              <input type="text" id="matrixSearchInput" oninput="filterMatrixSearch()" placeholder="Tìm nhanh theo tên, PIC, diễn giải..." class="w-full pl-9 pr-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500 shadow-inner">
             </div>
           </div>
 
-          <!-- Living Tree Container (Split View: Tree Node | Purpose) -->
-          <div class="rounded-xl border border-slate-800 bg-slate-950/90 overflow-hidden shadow-2xl">
-            <!-- Table Header -->
-            <div class="grid grid-cols-12 bg-slate-900/90 p-3 border-b border-slate-800 text-xs font-mono font-bold text-slate-400">
-              <div class="col-span-12 md:col-span-7 flex items-center space-x-2">
-                <span>📁 NÚT VẬT LÝ TRÊN CÂY (PHYSICAL NODE / PATH)</span>
-              </div>
-              <div class="hidden md:block md:col-span-5 border-l border-slate-800 pl-4">
-                <span>💡 MỤC ĐÍCH TỒN TẠI (PURPOSE / WHY IT EXISTS)</span>
-              </div>
+          <!-- The Matrix 9-Column Box (Pixel-perfect replica from Ron's MATRIX.html) -->
+          <div class="mx">
+            <!-- Fixed Head -->
+            <div class="r head">
+              <div class="hl">⚠️ HIGH LIGHT</div>
+              <div class="sy">⚙️ SYSTEM</div>
+              <div class="rn">👔 RON SPACE</div>
+              <div class="ov">🌍 OVERALL (cây)</div>
+              <div>LV</div>
+              <div>DIỄN GIẢI</div>
+              <div>PIC</div>
+              <div>TYPE</div>
+              <div>REMARK</div>
             </div>
 
-            <!-- Interactive Tree Body -->
-            <div id="livingTreeContainer" class="p-3 max-h-[600px] overflow-y-auto space-y-1 text-xs font-mono">
-              <!-- Rendered dynamically by renderLivingTree() -->
+            <!-- Dynamic Matrix Body -->
+            <div id="systemMatrixBody" class="max-h-[620px] overflow-y-auto">
+              <!-- Rendered via renderSystemMatrix() -->
             </div>
           </div>
-        
 
-        <!-- ====================================================================== -->
+          <div class="text-[11px] font-mono text-slate-500 flex justify-between items-center px-1">
+            <span>⚙️ Đọc đĩa thật & sổ cái Context DB &rarr; tự phân 9 cột + bắt đối tượng lạ</span>
+            <span>Chuẩn: MATRIX_TEMPLATE.md (Ron approved)</span>
+          </div>
+        </div>
+
         <!-- ARCHIFY DYNAMIC INSPECTION STUDIO (STUDIO KHÁM NGHIỆM ĐỘNG 10 GÓC NHÌN) -->
         <!-- ====================================================================== -->
         <div class="mt-8 pt-6 border-t-2 border-cyan-900/60 space-y-6">
@@ -1020,6 +1050,7 @@
           </div>
 
         </div>
+
 
       </section>
 
@@ -2400,6 +2431,221 @@
       renderLivingTree();
     });
 
+  
+    // =========================================================================
+    // SYSTEM MATRIX 9-COLUMN ENGINE (EXACT RON MATRIX_TEMPLATE REPLICA)
+    // =========================================================================
+    let systemMatrixRows = [];
+    let currentMatrixFilter = 'ALL';
+
+    function buildSystemMatrixRows() {
+      if (!aiosData || !aiosData.files) return [];
+      
+      const root = { name: "System_AIOS", path: "System_AIOS", type: "Folder", children: {}, files: [], drift: false };
+      aiosData.files.forEach(f => {
+        const rel = (f.rel_path || '').replace(/\\/g, '/');
+        const parts = rel.split('/');
+        let cur = root;
+        for (let i = 0; i < parts.length - 1; i++) {
+          const p = parts[i];
+          const sub = parts.slice(0, i + 1).join('/');
+          if (!cur.children[p]) {
+            cur.children[p] = { name: p, path: sub, type: "Folder", children: {}, files: [], drift: false };
+          }
+          cur = cur.children[p];
+          if (f.is_drift) cur.drift = true;
+        }
+        cur.files.push(f);
+        if (f.is_drift) root.drift = true;
+      });
+
+      const rows = [];
+
+      function getPic(path, name) {
+        const p = (path + '/' + name).toLowerCase();
+        if (p.includes('00_control_plane')) return 'Argus+Antigravity';
+        if (p.includes('01_governance')) return 'Themis+Ares';
+        if (p.includes('02_domains')) return 'Kilo+Sherry';
+        if (p.includes('03_capabilities')) return 'Antigravity';
+        if (p.includes('04_orchestration')) return 'Sherry+Goose';
+        if (p.includes('05_data_and_state')) return 'Midas+Ryan';
+        if (p.includes('06_assurance')) return 'Argus';
+        if (p.includes('07_deploy')) return 'Lumi';
+        if (p.includes('08_document')) return 'Ryan+Lumi';
+        if (p.includes('.kilo')) return 'Kilo';
+        if (p.includes('.github') || p.includes('.pytest') || p.includes('.claude') || p.includes('.obsidian')) return 'Argus';
+        return 'Antigravity';
+      }
+
+      function getDesc(path, name, isDir, f) {
+        if (f && f.role_description) return f.role_description;
+        const p = (path + '/' + name).toLowerCase();
+        if (p.includes('00_control_plane')) return 'Khung quản trị tối cao, Fencing Lock & Canonical DB';
+        if (p.includes('01_governance')) return 'Cổng an ninh bảo mật & Hiến pháp AIOS';
+        if (p.includes('02_domains')) return 'Miền nghiệp vụ phân lập (Domain Isolation)';
+        if (p.includes('03_capabilities')) return 'Thư viện Kỹ năng, Tools & MCP Registry';
+        if (p.includes('04_orchestration')) return 'Động cơ vận hành M1→M5 & Quota Circuit Breaker';
+        if (p.includes('05_data_and_state')) return 'Sổ cái sự thật hiện hành TOPIC_STATE & Logs';
+        if (p.includes('06_assurance')) return 'Nhà máy bằng chứng & Session Counter Enforcer';
+        if (p.includes('07_deploy')) return 'Môi trường triển khai Docker, K8s & GitHub Pages';
+        if (p.includes('08_document')) return 'Living C4 Architecture, Specs & Niêm phong Merkle';
+        if (f && f.is_drift) return f.drift_reason || 'Đối tượng LẠ — chưa đăng ký Context DB';
+        return 'Tài sản hợp chuẩn hệ thống';
+      }
+
+      function getRem(path, name, isDir, f) {
+        if ((path + '/' + name).includes('00_control_plane')) return '🔒 LOCKED IMMUTABLE';
+        if (f && f.is_drift) {
+          const sha = f.sha256 ? f.sha256.substring(0, 8) + '...' : 'N/A';
+          return '🚨 QUÂN ĐỊCH · SHA ' + sha;
+        }
+        if (name.startsWith('.')) return '⚙️ Tự sinh · SKIP';
+        return '🟢 Niêm phong Merkle';
+      }
+
+      function walk(node, prefix) {
+        const dirKeys = Object.keys(node.children).sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+        const fileKeys = (node.files || []).sort((a,b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+        const total = dirKeys.length + fileKeys.length;
+        let idx = 0;
+
+        dirKeys.forEach(k => {
+          const d = node.children[k];
+          const last = (idx === total - 1);
+          const conn = last ? '└── ' : '├── ';
+          const isSys = d.name.startsWith('.') || d.name.includes('pytest');
+          const isHl = d.drift;
+          const cat = isHl ? 'hl' : (isSys ? 'sy' : 'rn');
+          const lv = d.name.startsWith('00_') || d.name.startsWith('01_') || d.name.startsWith('02_') || d.name.startsWith('03_') || d.name.startsWith('04_') || d.name.startsWith('05_') || d.name.startsWith('06_') || d.name.startsWith('07_') || d.name.startsWith('08_') ? 'LV1' : 'LV2';
+
+          rows.push({
+            cat: cat,
+            name: d.name,
+            prefix: prefix + conn,
+            lv: lv,
+            type: 'Folder',
+            pic: getPic(d.path, d.name),
+            desc: getDesc(d.path, d.name, true, null),
+            rem: getRem(d.path, d.name, true, null),
+            uri: ''
+          });
+
+          walk(d, prefix + (last ? '    ' : '│   '));
+          idx++;
+        });
+
+        fileKeys.forEach(f => {
+          const last = (idx === total - 1);
+          const conn = last ? '└── ' : '├── ';
+          const isSys = f.name.startsWith('.');
+          const isHl = f.is_drift;
+          const cat = isHl ? 'hl' : (isSys ? 'sy' : 'rn');
+
+          rows.push({
+            cat: cat,
+            name: f.name,
+            prefix: prefix + conn,
+            lv: '',
+            type: f.ext || 'file',
+            pic: getPic(f.rel_path, f.name),
+            desc: getDesc(f.rel_path, f.name, false, f),
+            rem: getRem(f.rel_path, f.name, false, f),
+            uri: f.uri || ''
+          });
+          idx++;
+        });
+      }
+
+      walk(root, '');
+      return rows;
+    }
+
+    function renderSystemMatrix() {
+      const container = document.getElementById('systemMatrixBody');
+      if (!container) return;
+      if (!systemMatrixRows.length) {
+        systemMatrixRows = buildSystemMatrixRows();
+      }
+
+      const hlCount = systemMatrixRows.filter(r => r.cat === 'hl').length;
+      const sysCount = systemMatrixRows.filter(r => r.cat === 'sy').length;
+      const rnCount = systemMatrixRows.filter(r => r.cat === 'rn').length;
+
+      if (document.getElementById('mx-cnt-all')) document.getElementById('mx-cnt-all').innerText = systemMatrixRows.length;
+      if (document.getElementById('mx-cnt-hl')) document.getElementById('mx-cnt-hl').innerText = hlCount;
+      if (document.getElementById('mx-cnt-sys')) document.getElementById('mx-cnt-sys').innerText = sysCount;
+      if (document.getElementById('mx-cnt-ron')) document.getElementById('mx-cnt-ron').innerText = rnCount;
+
+      const term = (document.getElementById('matrixSearchInput') ? document.getElementById('matrixSearchInput').value : '').toLowerCase().trim();
+
+      let filtered = systemMatrixRows;
+      if (currentMatrixFilter === 'HL') {
+        filtered = filtered.filter(r => r.cat === 'hl');
+      } else if (currentMatrixFilter === 'SYS') {
+        filtered = filtered.filter(r => r.cat === 'sy');
+      } else if (currentMatrixFilter === 'RON') {
+        filtered = filtered.filter(r => r.cat === 'rn');
+      }
+
+      if (term) {
+        filtered = filtered.filter(r => 
+          r.name.toLowerCase().includes(term) || 
+          r.pic.toLowerCase().includes(term) || 
+          r.desc.toLowerCase().includes(term) || 
+          r.rem.toLowerCase().includes(term) || 
+          r.type.toLowerCase().includes(term)
+        );
+      }
+
+      let html = '';
+      filtered.forEach(r => {
+        const c1 = (r.cat === 'hl') ? '<span class="nhl">' + r.name + '</span>' : '';
+        const c2 = (r.cat === 'sy') ? '<span class="nsy">' + r.name + '</span>' : '';
+        const c3 = (r.cat === 'rn') ? '<span class="nrn">' + r.name + '</span>' : '';
+
+        const lc = (r.lv === 'LV1') ? 'l1' : ((r.lv === 'LV2') ? 'l2' : ((r.cat === 'hl') ? 'lh' : 'lx'));
+        const lb = (r.lv === 'LV1') ? '<span class="lvb b1">LV1</span>' : ((r.lv === 'LV2') ? '<span class="lvb b2">LV2</span>' : '<span class="muted">—</span>');
+        const rowCls = (r.cat === 'hl') ? 'rowhl' : '';
+        const remCls = (r.cat === 'hl') ? 'rm drift' : 'rm';
+
+        const nameLink = r.uri ? '<a href="' + r.uri + '" class="hover:underline ' + (r.cat === 'hl' ? 'text-red-300' : 'text-slate-200') + '">' + r.name + '</a>' : r.name;
+
+        html += '<div class="r ' + rowCls + '">' +
+          '<div class="cc">' + c1 + '</div>' +
+          '<div class="cc">' + c2 + '</div>' +
+          '<div class="cc">' + c3 + '</div>' +
+          '<div class="ovc"><span class="pre">' + r.prefix + '</span><span class="ovn ' + lc + '">' + nameLink + '</span></div>' +
+          '<div>' + lb + '</div>' +
+          '<div class="ds" title="' + r.desc + '">' + r.desc + '</div>' +
+          '<div class="pc">' + r.pic + '</div>' +
+          '<div class="ty">' + r.type + '</div>' +
+          '<div class="' + remCls + '">' + r.rem + '</div>' +
+        '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    function filterMatrixMode(mode) {
+      currentMatrixFilter = mode;
+      ['all', 'hl', 'sys', 'ron'].forEach(m => {
+        const b = document.getElementById('mx-btn-' + m);
+        if (b) {
+          if (m === mode.toLowerCase()) {
+            b.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-600 text-white shadow";
+          } else {
+            b.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-300 hover:bg-slate-700";
+          }
+        }
+      });
+      renderSystemMatrix();
+    }
+
+    function filterMatrixSearch() {
+      renderSystemMatrix();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => { renderSystemMatrix(); });
   </script>
 
 </body>
