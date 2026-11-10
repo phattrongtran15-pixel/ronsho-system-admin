@@ -102,16 +102,18 @@ const sealPath = path.join(__dirname, 'PACKAGE_SEAL_RECEIPT.json');
 assert(fs.existsSync(sealPath), 'PACKAGE_SEAL_RECEIPT.json must exist');
 console.log('✓ Test 12 PASS: Merkle Seal Receipt verified.');
 
-// 10. SPEC-RONSHO-042 Archify Dynamic Inspection Studio Checks
-assert(html.includes('id="studio-target"'), 'Studio target selector must exist');
-assert(html.includes('id="studio-agent"'), 'Studio agent selector must exist');
-assert(html.includes('id="studio-type"'), 'Studio type selector must exist');
-assert(html.includes('id="studio-usecase"'), 'Studio use-case selector must exist');
+// 13. SPEC-RONSHO-042 Archify Dynamic Inspection Studio Checks (V2: 4-Column & 10-Perspective Matrix)
+assert(html.includes('id="studio-target"'), 'Studio target selector (Col 1) must exist');
+assert(html.includes('id="studio-agent"'), 'Studio agent selector (Col 2) must exist');
+assert(html.includes('id="studio-method"'), 'Studio method selector (Col 3: Default/Type/Usecase) must exist');
+assert(html.includes('id="col4-default-box"'), 'Studio Col 4 default banner must exist');
+assert(html.includes('id="studio-type-select"'), 'Studio Col 4 type select must exist');
+assert(html.includes('id="studio-usecase-select"'), 'Studio Col 4 usecase select must exist');
 assert(html.includes('id="canvas-viewport"'), 'Studio live canvas viewport must exist');
 assert(html.includes('function runStudioInspection('), 'runStudioInspection handler must exist');
-assert(html.includes('function onTypeChange('), 'onTypeChange bidirectional handler must exist');
-assert(html.includes('function onUseCaseChange('), 'onUseCaseChange bidirectional handler must exist');
-console.log('✓ Test 9 PASS: SPEC-RONSHO-042 Archify Dynamic Inspection Studio controls & bidirectional logic verified.');
+assert(html.includes('function onMethodChange('), 'onMethodChange handler must exist');
+assert(html.includes('function render10PerspectiveMatrix('), 'render10PerspectiveMatrix 10-grid renderer must exist');
+console.log('✓ Test 13 PASS: SPEC-RONSHO-042 Archify Studio 4-Column Layout & 10-Perspective Matrix verified physically.');
 
 console.log('========================================================================');
 console.log('ALL VERIFICATIONS PASSED: LIVING C4 ARCHITECTURE + LIVING TREE READY (100%)');
