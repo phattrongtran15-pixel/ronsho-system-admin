@@ -1,0 +1,1472 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#090e16" />
+<title>REMIN Signal OS v2.0 — Ghi Âm, Bóc Băng AI & Quản Trị Cuộc Họp</title>
+<style>
+:root{--bg:#090e16;--panel:#101a25;--panel2:#142231;--panel3:#192839;--line:#2b3a48;--fg:#f0f7f6;--sub:#9db4bd;--low:#66818d;--mint:#7af0c5;--teal:#3fcbb4;--blue:#8bbcfb;--amber:#ffc987;--pink:#ff8e9a;--shadow:0 18px 50px #02060b60;--r:18px;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1000px 500px at 0 -12%,#153b3b 0%,transparent 65%),radial-gradient(850px 550px at 100% 17%,#162b46 0%,transparent 62%),var(--bg);color:var(--fg);font:14px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{border:0;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+a{color:var(--mint)}
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.side{background:linear-gradient(165deg,#111e29,#0b141f);border-right:1px solid var(--line);height:100vh;position:sticky;top:0;display:flex;flex-direction:column;padding:24px 15px 18px;gap:14px}
+.logo-row{display:flex;align-items:center;gap:12px;padding:4px 10px 10px}
+.logo{width:42px;height:42px;background:conic-gradient(from 35deg,#86ffe0,#5796fd,#86ffe0);color:#081e20;font-size:22px;display:grid;place-items:center;border-radius:13px;font-weight:900;box-shadow:0 7px 24px #0ef0bb18}
+.word{font-size:20px;letter-spacing:2px;font-weight:850}
+.word small{display:block;font-size:10px;letter-spacing:2px;color:#8db8b4;font-weight:600;margin-top:-4px}
+.navgroup{color:var(--low);text-transform:uppercase;font-size:10px;letter-spacing:1.8px;margin:2px 10px}
+.nav{display:grid;gap:4px}
+.nav button{width:100%;background:transparent;border-radius:11px;color:#b2c5cb;display:flex;align-items:center;text-align:left;gap:11px;padding:11px 12px;font-weight:650;transition:.18s}
+.nav button:hover,.nav button.active{background:#1a3440;color:#e8fdf6}
+.nav button.active{box-shadow:inset 3px 0 var(--mint)}
+.ico{font-size:16px;display:inline-flex;align-items:center;justify-content:center;width:20px}
+.sidefoot{margin-top:auto;padding:14px;border:1px solid #29443e;border-radius:13px;background:#102620}
+.sidefoot strong{font-size:12px;color:#c5ffe9;display:block}
+.sidefoot p{font-size:11px;color:#9ac6ba;margin:6px 0 0}
+.main{min-width:0;max-width:1440px;width:100%;margin:auto;padding:22px 32px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 22px;flex-wrap:wrap}
+.top-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.top-badge{border:1px solid #305449;background:#17362d;color:#91f5d0;border-radius:100px;padding:6px 11px;font-size:11px;font-weight:800;letter-spacing:.05em}
+.top-meta{color:#91a8b6;font-size:12px}
+.view{display:none}.view.active{display:block}
+.kicker{font-size:11px;color:var(--mint);font-weight:850;letter-spacing:2px;text-transform:uppercase}
+.heading{font-size:clamp(24px,3.6vw,38px);letter-spacing:-1px;line-height:1.15;margin:6px 0 10px;font-weight:850}
+.muted{color:var(--sub)}
+.subhead{font-size:14px;color:#aec4cc;max-width:760px;margin:0 0 18px}
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:16px}
+.pane{background:linear-gradient(160deg,#132430,#101923);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);min-width:0}
+.hero-main{background:radial-gradient(550px 240px at 95% 0,#1e534b77,transparent),linear-gradient(165deg,#152938,#10202a)}
+.hero-main h2{font-size:clamp(22px,3.2vw,36px);line-height:1.18;letter-spacing:-1px;margin:14px 0 10px}
+.hero-main h2 span{color:var(--mint)}
+.hero-main p{color:#b0c6cc;max-width:540px;margin:0 0 20px}
+.button-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 15px;border-radius:11px;background:#26394a;color:#ecf4f6;font-weight:730;text-decoration:none;border:1px solid #385065;min-height:42px;transition:.15s}
+.btn.primary{background:var(--mint);color:#06261c;border-color:var(--mint)}
+.btn.primary:hover{background:#a0ffe0}
+.btn.danger{background:#52232c;color:#ffc4cd;border-color:#873949}
+.btn.danger.recording{background:#e11d48;color:#fff;border-color:#fb7185;animation:pulseRec 1.4s infinite}
+@keyframes pulseRec{0%,100%{box-shadow:0 0 0 0 rgba(225,29,72,.6)}50%{box-shadow:0 0 0 10px rgba(225,29,72,0)}}
+.btn.ghost{background:#192a38}
+.btn.tiny{padding:6px 11px;min-height:33px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.pill{display:inline-block;padding:4px 9px;border-radius:99px;background:#1c3e32;border:1px solid #2f6350;color:#8ef5c7;font-size:11px;font-weight:800}
+.pill.amber{color:#ffcf93;background:#45301d;border-color:#75512e}
+.pill.neutral{color:#c7d8e7;background:#263443;border-color:#45576b}
+.pill.pink{color:#ffc1c9;background:#40252e;border-color:#73404e}
+.minihead{font-size:15px;font-weight:850;margin:0 0 11px;letter-spacing:-.2px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.stats .pane{padding:15px}
+.stats strong{font-size:24px;display:block;letter-spacing:-.5px;color:var(--mint)}
+.stats small{font-size:12px;color:#a9bfc6}
+.section-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 12px}
+.section-header h2{margin:0;font-size:18px;letter-spacing:-.4px}
+.cardgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.meeting{background:#12202b;border:1px solid #2c4152;border-radius:15px;padding:16px;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
+.meeting.active-card{border-color:var(--mint);box-shadow:0 0 0 1px var(--mint)}
+.meeting .kind{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:6px}
+.meeting h3{font-size:15px;line-height:1.35;margin:0 0 6px}
+.meeting p{color:#9fb7c0;font-size:12px;margin:0 0 12px}
+.split{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:16px}
+.wave{height:110px;display:flex;gap:3px;align-items:center;justify-content:center;overflow:hidden;border-radius:13px;background:repeating-linear-gradient(90deg,transparent 0,transparent 17px,#203442 18px),linear-gradient(180deg,#1c3540,#152531);margin:12px 0;padding:0 10px}
+.wave i{display:block;width:4px;min-width:4px;height:var(--h,24px);border-radius:9px;background:linear-gradient(0deg,#3aaf9d,#95ffe0);opacity:.88;transition:height .1s ease}
+.audio-wrap audio{width:100%;margin:10px 0;accent-color:var(--mint)}
+.fine{font-size:11px;color:#95aeb6}
+.uploader{display:flex;justify-content:center;align-items:center;gap:10px;border:1px dashed #467068;background:#112c2e;padding:14px;border-radius:13px;text-align:center;cursor:pointer;flex:1}
+.uploader strong{display:block;font-size:13px}.uploader small{display:block;color:#9fc2ba;font-size:11px}
+.timeline{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:420px;overflow-y:auto;padding-right:4px}
+.segment{display:grid;grid-template-columns:54px minmax(0,1fr);gap:9px;border-left:3px solid #335b54;padding:10px 12px;background:#192a33;border-radius:9px;cursor:pointer;transition:.15s}
+.segment:hover{border-left-color:var(--mint);background:#1f3540}
+.segment .tm{font-size:11px;color:var(--mint);font-weight:750;padding-top:2px;font-family:monospace}
+.segment b{display:inline-block;font-size:12px;margin-right:7px}
+.segment p{font-size:13px;color:#d3e6e6;margin:3px 0 0;white-space:pre-wrap}
+.smallrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:10px;padding:4px 9px;border-radius:20px;border:1px solid #3a5669;background:#253a46;color:#bcdae7}
+.insight{padding:12px 14px;border-radius:12px;background:#1a2e38;border:1px solid #375063;margin-bottom:10px}
+.insight b{color:#a4efd4;display:block;font-size:12px;margin-bottom:3px}
+.insight p{font-size:12.5px;margin:0;color:#c5d5dd;white-space:pre-wrap}
+.task{padding:13px;border:1px solid #375065;border-radius:13px;background:#172937;margin:9px 0}
+.task p{margin:4px 0 9px;font-size:13px}
+.task .caption{font-size:11px;color:#a6b9c6}
+.task-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.task-status{color:#ffd6a4;font-weight:750;font-size:11px}
+.task-status.accept{color:var(--mint)}
+.search,.input-box{background:#172a35;color:#e8f4f3;border:1px solid #3c5563;padding:10px 12px;border-radius:10px;min-width:0;width:100%}
+.feedbackbox{margin-top:8px;width:100%;height:70px;border:1px solid #385363;border-radius:10px;padding:9px;background:#0d1c27;color:#e4f3f2;resize:vertical;font-size:12px}
+.hint{background:#3b2b1b;border:1px solid #745337;border-radius:12px;padding:11px 13px;color:#f8ddac;font-size:12px}
+.successline{background:#193c2c;border:1px solid #39694d;border-radius:12px;padding:11px 13px;color:#b5f7ce;font-size:12px}
+.bottom{display:none}
+.toast{position:fixed;z-index:99;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 16px;background:#d0ffe8;color:#0b2921;font-weight:800;border-radius:11px;box-shadow:0 10px 40px #0009;max-width:min(92vw,520px);display:none;font-size:13px}
+.toast.show{display:block}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hide{display:none!important}
+hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+.review-footer{color:#7894a0;margin:32px 0 0;text-align:center;font-size:11px}
+.space{height:8px}
+.theme-picker{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:5px 9px;background:var(--panel);color:var(--fg);white-space:nowrap}
+.theme-picker span{font-size:11px;font-weight:700;color:var(--sub)}
+.theme-picker select{font-size:12px;font-weight:700;padding:3px 12px 3px 4px;border:0;background:var(--panel);color:var(--fg);cursor:pointer}
+
+/* Light & Dark Themes */
+:root[data-remin-theme="light"]{color-scheme:light;--bg:#f5f8f7;--panel:#fff;--panel2:#f0f5f3;--panel3:#e8f1ed;--line:#d6e3df;--fg:#162d28;--sub:#4f6962;--low:#688078;--mint:#087e5d;--teal:#087e5d;--blue:#246aae;--amber:#8f5d13;--pink:#a73759;--shadow:0 12px 30px #28493f12}
+:root[data-remin-theme="light"] body{background:radial-gradient(900px 450px at 0 -12%,#dbf3e7 0%,transparent 65%),var(--bg);color:var(--fg)}
+:root[data-remin-theme="light"] .side{background:linear-gradient(160deg,#fff,#f3f9f6)}
+:root[data-remin-theme="light"] .word small,:root[data-remin-theme="light"] .nav button,:root[data-remin-theme="light"] .sidefoot p,:root[data-remin-theme="light"] .top-meta,:root[data-remin-theme="light"] .subhead,:root[data-remin-theme="light"] .hero-main p,:root[data-remin-theme="light"] .meeting p,:root[data-remin-theme="light"] .insight p,:root[data-remin-theme="light"] .task .caption,:root[data-remin-theme="light"] .stats small,:root[data-remin-theme="light"] .fine,:root[data-remin-theme="light"] .review-footer{color:#4e6862}
+:root[data-remin-theme="light"] .nav button:hover,:root[data-remin-theme="light"] .nav button.active{background:#e4f4eb;color:#0f533e}
+:root[data-remin-theme="light"] .sidefoot,:root[data-remin-theme="light"] .pane,:root[data-remin-theme="light"] .hero-main,:root[data-remin-theme="light"] .meeting,:root[data-remin-theme="light"] .task,:root[data-remin-theme="light"] .segment,:root[data-remin-theme="light"] .insight,:root[data-remin-theme="light"] .uploader{background:var(--panel);border-color:var(--line);color:var(--fg)}
+:root[data-remin-theme="light"] .wave{background:repeating-linear-gradient(90deg,transparent 0,transparent 17px,#e2eee9 18px),#f2f8f4}
+:root[data-remin-theme="light"] .sidefoot strong,:root[data-remin-theme="light"] .segment p,:root[data-remin-theme="light"] .meeting h3,:root[data-remin-theme="light"] .insight b{color:#135e48}
+:root[data-remin-theme="light"] .top-badge,:root[data-remin-theme="light"] .pill,:root[data-remin-theme="light"] .tag,:root[data-remin-theme="light"] .successline{background:#e5f4ec;color:#146349;border-color:#c5e4d6}
+:root[data-remin-theme="light"] .btn,:root[data-remin-theme="light"] .btn.ghost,:root[data-remin-theme="light"] .search,:root[data-remin-theme="light"] .input-box,:root[data-remin-theme="light"] .feedbackbox{background:#edf4f1;color:#173b30;border-color:#cbded6}
+:root[data-remin-theme="light"] .btn.primary{background:#087e5d;color:#fff;border-color:#087e5d}
+:root[data-remin-theme="light"] .pill.neutral{background:#edf2f5;color:#294d61;border-color:#ccd9e0}
+:root[data-remin-theme="light"] .pill.amber,:root[data-remin-theme="light"] .hint{background:#fff1d8;color:#84551c;border-color:#ebca93}
+:root[data-remin-theme="light"] .bottom{background:#fff;border-color:var(--line);box-shadow:0 -5px 22px #22382f14}
+:root[data-remin-theme="light"] .bottom button{color:#43685b}
+:root[data-remin-theme="light"] .bottom button.active{color:#087e5d}
+
+:root[data-remin-theme="dark"]{color-scheme:dark;--bg:#0d0e10;--panel:#191b1e;--panel2:#212428;--panel3:#25292e;--line:#34383d;--fg:#f0f1f2;--sub:#b1b5bb;--low:#8d949a;--mint:#c1e8dd;--teal:#87bbb0;--blue:#9cbee5;--amber:#f8cf93;--pink:#fcaeb5;--shadow:0 12px 34px #0008}
+:root[data-remin-theme="dark"] body{background:var(--bg);color:var(--fg)}
+:root[data-remin-theme="dark"] .side{background:linear-gradient(165deg,#1b1d21,#101114)}
+:root[data-remin-theme="dark"] .pane,:root[data-remin-theme="dark"] .hero-main,:root[data-remin-theme="dark"] .sidefoot,:root[data-remin-theme="dark"] .meeting,:root[data-remin-theme="dark"] .task,:root[data-remin-theme="dark"] .segment,:root[data-remin-theme="dark"] .insight,:root[data-remin-theme="dark"] .uploader{background:var(--panel);border-color:var(--line);color:var(--fg)}
+:root[data-remin-theme="dark"] .wave{background:repeating-linear-gradient(90deg,transparent 0,transparent 17px,#303438 18px),#191b1f}
+:root[data-remin-theme="dark"] .btn,:root[data-remin-theme="dark"] .btn.ghost,:root[data-remin-theme="dark"] .feedbackbox,:root[data-remin-theme="dark"] .search,:root[data-remin-theme="dark"] .input-box{background:#2a2d31;color:var(--fg);border-color:#454b51}
+:root[data-remin-theme="dark"] .btn.primary{background:var(--mint);color:#101a18;border-color:var(--mint)}
+:root[data-remin-theme="dark"] .bottom{background:#17191c;border-color:#34383d}
+
+@media(max-width:1100px){.main{padding:20px 20px 84px}.cardgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero,.split{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:790px){
+  .app{display:block}.side{display:none}
+  .main{padding:16px 14px calc(96px + env(safe-area-inset-bottom))}
+  .top-meta{display:none}
+  .bottom{display:flex;position:fixed;z-index:40;left:0;right:0;bottom:0;background:rgba(16,28,39,.96);border-top:1px solid #31505a;padding:7px 4px calc(7px + env(safe-area-inset-bottom));justify-content:space-around;backdrop-filter:blur(16px)}
+  .bottom button{background:transparent;color:#91acb5;min-width:0;flex:1;display:grid;place-items:center;gap:2px;font-size:10px;font-weight:800;padding:4px 0}
+  .bottom button .ico{font-size:18px}
+  .bottom button.active{color:var(--mint)}
+  .toast{bottom:86px}
+}
+@media(max-width:480px){.cardgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side" aria-label="Điều hướng máy tính">
+  <div class="logo-row"><div class="logo">R</div><div class="word">REMIN<small>SIGNAL OS v2.0</small></div></div>
+  <div class="navgroup">KHÔNG GIAN LÀM VIỆC</div>
+  <div class="nav" id="desktopNav">
+    <button data-go="home" class="active"><span class="ico">⌂</span> Tổng quan</button>
+    <button data-go="studio"><span class="ico">🎙️</span> Phòng thu & Bóc băng</button>
+    <button data-go="library"><span class="ico">▦</span> Thư viện cuộc họp</button>
+    <button data-go="actions"><span class="ico">✓</span> Công việc AI (<span id="sideTaskCount">0</span>)</button>
+    <button data-go="memory"><span class="ico">◈</span> Hỏi đáp Trí nhớ</button>
+  </div>
+  <div class="navgroup">CẤU HÌNH HỆ THỐNG</div>
+  <div class="nav">
+    <button data-go="settings"><span class="ico">⚙️</span> Cài đặt AI & Sao lưu</button>
+  </div>
+  <div class="sidefoot">
+    <strong>✓ REMIN Production v2.0</strong>
+    <p id="aiStatusSide">Chế độ: Ghi âm Micro trực tiếp + AI Cloud (Groq / Gemini)</p>
+  </div>
+</aside>
+
+<main class="main">
+  <header class="top">
+    <div class="top-info">
+      <span class="top-badge" id="statusBadge">● SẴN SÀNG GHI ÂM & BÓC BĂNG</span>
+      <span class="top-meta">Bản hoàn thiện v2.0 · Lưu trữ bền vững trên thiết bị</span>
+    </div>
+    <div class="row">
+      <label class="theme-picker" for="reminThemeChoice">
+        <span>Giao diện</span>
+        <select id="reminThemeChoice" aria-label="Chọn giao diện REMIN">
+          <option value="green">Xanh REMIN</option>
+          <option value="light">Sáng</option>
+          <option value="dark">Tối</option>
+          <option value="system">Theo máy</option>
+        </select>
+      </label>
+      <button class="btn tiny ghost" data-go="settings" id="aiConfigBtn">⚙️ Cấu hình AI</button>
+    </div>
+  </header>
+
+  <!-- VIEW 1: HOME -->
+  <section class="view active" id="v-home" aria-label="Tổng quan">
+    <span class="kicker">REMIN SIGNAL OS v2.0 · PRODUCTION READY</span>
+    <h1 class="heading">Ghi âm cuộc họp.<br>Tự động hóa thành hành động.</h1>
+    <p class="subhead">Bản hoàn thiện cho điện thoại & máy tính: Ghi âm trực tiếp qua Micro (tự nhảy chữ tiếng Việt thời gian thực) hoặc tải file ghi âm có sẵn để AI bóc băng, tóm tắt quyết định và trích xuất công việc cần duyệt.</p>
+    <div class="hero">
+      <div class="pane hero-main">
+        <span class="pill">TRỢ LÝ CUỘC HỌP THÔNG MINH</span>
+        <h2>Bắt đầu cuộc họp mới<br><span>chỉ với 1 chạm.</span></h2>
+        <p>Mọi bản ghi âm, văn bản hội thoại (Transcript), tóm tắt AI và danh sách công việc đều được lưu trực tiếp trong bộ nhớ bền vững trên điện thoại/máy tính của anh.</p>
+        <div class="button-row">
+          <button class="btn primary" data-go="studio">🎙️ Mở Phòng Thu & Ghi Âm Ngay</button>
+          <button class="btn ghost" data-go="library">▦ Xem Thư Viện (<span id="homeLibCount">0</span>)</button>
+          <button class="btn ghost" data-go="settings">⚙️ Nhập Khóa AI Miễn Phí</button>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="smallrow"><h3 class="minihead">Trạng thái Năng lực v2.0</h3><span class="pill" id="homeAiBadge">Web Speech + AI</span></div>
+        <div class="insight">
+          <b>1. Ghi âm & Nhận diện giọng nói tiếng Việt</b>
+          <p>Hỗ trợ ghi âm Micro trực tiếp kèm nhận diện tiếng Việt tức thì trên trình duyệt, hoặc bóc băng file âm thanh bằng Groq Whisper / Gemini 2.5 Flash.</p>
+        </div>
+        <div class="insight">
+          <b>2. AI Tóm tắt & Giao việc có Kiểm duyệt</b>
+          <p>Tự động rút trích Nhận định chính, Quyết định cuộc họp và Danh sách công việc chờ anh phê duyệt.</p>
+        </div>
+        <div class="insight" style="margin-bottom:0">
+          <b>3. Xuất biên bản cuộc họp 1 chạm</b>
+          <p>Xuất thẳng ra file Word (<code>.doc</code>), Markdown (<code>.md</code>) hoặc sao lưu toàn bộ dữ liệu (<code>.json</code>).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="pane"><strong id="statMeetings">0</strong><small>Cuộc họp đã lưu</small></div>
+      <div class="pane"><strong id="statSegments">0</strong><small>Câu hội thoại bóc băng</small></div>
+      <div class="pane"><strong id="statTasksPending">0</strong><small>Công việc chờ duyệt</small></div>
+      <div class="pane"><strong id="statTasksDone">0</strong><small>Công việc đã duyệt</small></div>
+    </div>
+
+    <div class="section-header">
+      <h2>Cuộc họp gần đây</h2>
+      <a href="#" data-go="library">Xem toàn bộ thư viện →</a>
+    </div>
+    <div class="cardgrid" id="homeRecentGrid"></div>
+  </section>
+
+  <!-- VIEW 2: STUDIO (RECORD + UPLOAD + TRANSCRIBE + AI BRIEF) -->
+  <section class="view" id="v-studio" aria-label="Phòng thu và bóc băng">
+    <span class="kicker">PHÒNG THU · GHI ÂM MICRO · BÓC BĂNG AI</span>
+    <div class="smallrow" style="margin-bottom:10px">
+      <h1 class="heading" style="margin:4px 0">Phòng thu & Phân tích cuộc họp</h1>
+      <div class="row">
+        <button class="btn tiny ghost" id="newMeetingBtn">＋ Tạo cuộc họp mới</button>
+        <button class="btn tiny primary" id="exportDocBtn">↓ Xuất Biên Bản (.doc)</button>
+        <button class="btn tiny ghost" id="exportMdBtn">↓ Xuất (.md)</button>
+      </div>
+    </div>
+
+    <div class="split">
+      <!-- Left: Audio & Transcript -->
+      <div class="pane audio-wrap">
+        <div class="smallrow">
+          <div style="flex:1;min-width:200px">
+            <label class="fine" for="meetingTitleInput">Tiêu đề cuộc họp</label>
+            <input id="meetingTitleInput" class="input-box" style="font-weight:800;font-size:15px;margin-top:4px" placeholder="Nhập tên cuộc họp..." />
+          </div>
+          <div>
+            <span class="pill neutral" id="recTimer">00:00</span>
+          </div>
+        </div>
+
+        <div class="wave" id="wave" role="img" aria-label="Sóng âm thời gian thực"></div>
+
+        <!-- Recording & File Upload Controls -->
+        <div class="button-row" style="margin:12px 0">
+          <button class="btn danger" id="recordBtn" style="flex:1">🎙️ Bắt đầu Ghi âm Micro</button>
+          <label class="uploader" for="audioFile">
+            <span style="font-size:20px">📁</span>
+            <span><strong>Tải file ghi âm có sẵn</strong><small>MP3 · M4A · WAV · OGG · WEBM</small></span>
+          </label>
+          <input id="audioFile" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.webm,.flac" class="hide" />
+        </div>
+
+        <audio id="player" controls preload="metadata" style="display:none"></audio>
+        <p id="audioNotice" class="fine">Bấm "🎙️ Bắt đầu Ghi âm Micro" để thu âm trực tiếp (hỗ trợ tự nhảy chữ tiếng Việt), hoặc tải file âm thanh có sẵn lên.</p>
+
+        <div class="button-row" style="margin-top:10px">
+          <button class="btn primary" id="transcribeAiBtn" style="flex:1">✨ Bóc băng & Tóm tắt bằng AI (Whisper / Gemini)</button>
+          <button class="btn ghost tiny" id="addManualLineBtn">＋ Thêm câu ghi chú</button>
+          <button class="btn ghost tiny" id="copyTranscript">Sao chép chữ</button>
+        </div>
+
+        <!-- Manual / Live input box -->
+        <div id="manualInputRow" class="row hide" style="margin-top:10px">
+          <input id="manualSpeaker" class="input-box" style="width:110px" placeholder="Người nói" value="Ron" />
+          <input id="manualText" class="input-box" style="flex:1" placeholder="Nhập nội dung hội thoại hoặc ghi chú nhanh..." />
+          <button class="btn tiny primary" id="saveManualLineBtn">Lưu</button>
+        </div>
+
+        <div class="smallrow" style="margin-top:16px">
+          <h3 class="minihead" style="margin:0">Nội dung Hội thoại (Transcript)</h3>
+          <span class="fine" id="segmentCountLabel">0 câu · Chạm vào câu để tua âm thanh</span>
+        </div>
+        <div class="timeline" id="transcriptLines"></div>
+      </div>
+
+      <!-- Right: AI Meeting Brief & Action Extraction -->
+      <div class="pane">
+        <div class="smallrow">
+          <h3 class="minihead">AI Meeting Brief (Tóm tắt Cuộc họp)</h3>
+          <button class="btn tiny primary" id="runAiBriefBtn">⚡ Phân tích lại từ Transcript</button>
+        </div>
+        <p class="fine" style="margin-top:0">Tự động tổng hợp Nhận định chính, Quyết định và Công việc cần làm từ nội dung hội thoại bên trái.</p>
+
+        <div class="insight">
+          <b>📌 Nhận định & Tóm tắt chính</b>
+          <p id="briefSummary">Chưa có tóm tắt. Hãy ghi âm hoặc bấm "⚡ Phân tích lại từ Transcript".</p>
+        </div>
+        <div class="insight">
+          <b>✅ Quyết định quan trọng đã chốt</b>
+          <p id="briefDecisions">Chưa ghi nhận quyết định.</p>
+        </div>
+        <div class="insight">
+          <b>⚠️ Điểm nghẽn / Rủi ro cần lưu ý</b>
+          <p id="briefRisks">Không có rủi ro nào được ghi nhận.</p>
+        </div>
+
+        <div class="tagrow" id="briefTags"></div>
+
+        <hr />
+        <div class="smallrow">
+          <h3 class="minihead" style="margin:0">Công việc trích xuất từ cuộc họp</h3>
+          <button class="btn tiny ghost" data-go="actions">Mở bảng duyệt →</button>
+        </div>
+        <div id="studioTaskList" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 3: LIBRARY -->
+  <section class="view" id="v-library" aria-label="Thư viện cuộc họp">
+    <span class="kicker">THƯ VIỆN · LƯU TRỮ BỀN VỮNG TRÊN THIẾT BỊ</span>
+    <div class="smallrow">
+      <h1 class="heading">Tất cả cuộc họp của anh</h1>
+      <button class="btn primary" id="createFromLibBtn">＋ Cuộc họp mới</button>
+    </div>
+    <div class="pane" style="margin-bottom:14px">
+      <input class="search" id="librarySearch" placeholder="🔍 Tìm cuộc họp theo tiêu đề, nội dung hội thoại hoặc người nói…" aria-label="Tìm kiếm thư viện" />
+    </div>
+    <div class="cardgrid" id="libraryGrid"></div>
+  </section>
+
+  <!-- VIEW 4: AI ACTIONS / TASKS -->
+  <section class="view" id="v-actions" aria-label="Quản lý công việc AI">
+    <span class="kicker">HUMAN SOVEREIGNTY · PHÊ DUYỆT CÔNG VIỆC</span>
+    <h1 class="heading">Từ lời nói đến hành động thực tế.</h1>
+    <p class="subhead">AI đề xuất công việc kèm trích dẫn nguồn từ cuộc họp. Chỉ khi anh bấm "✓ Duyệt" thì công việc mới chuyển sang trạng thái thực thi chính thức.</p>
+    <div class="split">
+      <div class="pane">
+        <div class="smallrow">
+          <h3 class="minihead">Danh sách công việc từ mọi cuộc họp</h3>
+          <span class="pill amber" id="pendingCount">0 CHỜ DUYỆT</span>
+        </div>
+        <div class="row" style="margin-bottom:12px">
+          <input id="newTaskTitle" class="input-box" style="flex:1" placeholder="Thêm công việc mới thủ công..." />
+          <input id="newTaskOwner" class="input-box" style="width:130px" placeholder="Người phụ trách" value="Ron" />
+          <button class="btn tiny primary" id="addTaskBtn">＋ Thêm</button>
+        </div>
+        <div id="taskList"></div>
+      </div>
+      <div class="pane">
+        <h3 class="minihead">Kỷ luật Phê duyệt RON-SHO</h3>
+        <div class="successline" style="margin-bottom:12px">
+          ✓ Toàn bộ quyết định duyệt/hủy công việc được lưu cố định trên thiết bị của anh và đính kèm khi xuất biên bản Word/Markdown.
+        </div>
+        <div class="insight">
+          <b>Nguyên tắc 1: Có nguồn trích dẫn (Provenance)</b>
+          <p>Mỗi công việc do AI rút trích đều gắn kèm mốc thời gian và câu nói gốc trong cuộc họp.</p>
+        </div>
+        <div class="insight">
+          <b>Nguyên tắc 2: Con người nắm quyền tối cao</b>
+          <p>AI không tự ý giao việc ra ngoài khi chưa có nút Duyệt của anh.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 5: LIVING MEMORY (SEARCH & AI Q&A ACROSS ALL MEETINGS) -->
+  <section class="view" id="v-memory" aria-label="Hỏi đáp trí nhớ cuộc họp">
+    <span class="kicker">LIVING MEMORY · TRA CỨU XUYÊN SUỐT CÁC CUỘC HỌP</span>
+    <h1 class="heading">Hỏi bất kỳ điều gì đã từng bàn.</h1>
+    <p class="subhead">Tìm kiếm tức thì hoặc đặt câu hỏi để AI lục lại toàn bộ lịch sử các cuộc họp đã lưu của anh và trả lời kèm trích dẫn chính xác.</p>
+    <div class="split">
+      <div class="pane">
+        <h3 class="minihead">Đặt câu hỏi cho Trí nhớ Cuộc họp</h3>
+        <input class="search" id="memoryQuery" placeholder="Ví dụ: Cuộc họp gần nhất quyết định những gì? Ai phụ trách việc nào?" />
+        <div class="space"></div>
+        <button class="btn primary" id="askMemory" style="width:100%">🔍 Tra cứu & Trả lời từ Lịch sử Cuộc họp</button>
+        <div class="insight" style="margin-top:14px">
+          <b>Câu trả lời & Trích dẫn nguồn</b>
+          <p id="memoryAnswer">Hãy nhập câu hỏi ở trên. Hệ thống sẽ quét toàn bộ nội dung hội thoại, quyết định và công việc trong thư viện để trả lời anh.</p>
+        </div>
+      </div>
+      <div class="pane">
+        <h3 class="minihead">Thống kê Liên kết Tri thức</h3>
+        <div id="memoryGraphList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 6: SETTINGS & BACKUP -->
+  <section class="view" id="v-settings" aria-label="Cài đặt AI và Sao lưu">
+    <span class="kicker">CẤU HÌNH HỆ THỐNG · BYOK (BRING YOUR OWN KEY)</span>
+    <h1 class="heading">Cài đặt AI & Sao lưu dữ liệu</h1>
+    <p class="subhead">Để bóc băng file âm thanh có sẵn (MP3/M4A/WAV) và tóm tắt thông minh bằng AI miễn phí, anh có thể nhập khóa API miễn phí của <strong>Google Gemini</strong> hoặc <strong>Groq</strong>. Khóa chỉ lưu riêng trong trình duyệt máy anh.</p>
+    <div class="split">
+      <div class="pane">
+        <h3 class="minihead">1. Kết nối AI Miễn phí (Bóc băng & Tóm tắt thật)</h3>
+        <label class="fine">Chọn nền tảng AI ưu tiên</label>
+        <select id="aiProviderSelect" class="input-box" style="margin:4px 0 12px">
+          <option value="gemini">Google Gemini 2.5 Flash (Nghe trực tiếp file âm thanh + Tóm tắt tiếng Việt cực chuẩn)</option>
+          <option value="groq">Groq Cloud (Whisper Large-v3-Turbo siêu tốc + Llama 3.3 70B)</option>
+        </select>
+
+        <label class="fine">Google Gemini API Key (Lấy miễn phí tại aistudio.google.com)</label>
+        <input id="geminiKeyInput" type="password" class="input-box" style="margin:4px 0 12px" placeholder="AIzaSy..." />
+
+        <label class="fine">Groq API Key (Lấy miễn phí tại console.groq.com)</label>
+        <input id="groqKeyInput" type="password" class="input-box" style="margin:4px 0 14px" placeholder="gsk_..." />
+
+        <div class="button-row">
+          <button class="btn primary" id="saveApiKeysBtn">💾 Lưu Cấu Hình AI</button>
+          <button class="btn ghost" id="clearApiKeysBtn">Xóa khóa</button>
+        </div>
+        <p class="fine" style="margin-top:10px" id="keySavedStatus">Lưu ý: Ngay cả khi chưa nhập khóa API, anh vẫn dùng được tính năng <strong>Ghi âm Micro trực tiếp tự nhảy chữ tiếng Việt</strong> và <strong>Tóm tắt thông minh nội bộ</strong>!</p>
+      </div>
+
+      <div class="pane">
+        <h3 class="minihead">2. Sao lưu & Khôi phục Toàn bộ Dữ liệu</h3>
+        <p class="fine">Xuất toàn bộ các cuộc họp và công việc ra file JSON để cất giữ hoặc chuyển sang thiết bị khác.</p>
+        <div class="button-row" style="margin-top:12px">
+          <button class="btn primary" id="backupJsonBtn">↓ Tải file Sao lưu (.json)</button>
+          <label class="btn ghost" for="restoreJsonFile" style="cursor:pointer">↑ Khôi phục từ file (.json)</label>
+          <input id="restoreJsonFile" type="file" accept=".json,application/json" class="hide" />
+        </div>
+        <hr />
+        <h3 class="minihead">3. Đặt lại dữ liệu gốc</h3>
+        <button class="btn danger tiny" id="resetAllDataBtn">🗑️ Xóa và khôi phục dữ liệu mẫu ban đầu</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="review-footer">REMIN SIGNAL OS v2.0 Production · Hỗ trợ Điện thoại & Máy tính · Bảo mật dữ liệu cục bộ</footer>
+</main>
+</div>
+
+<nav class="bottom" id="mobileNav" aria-label="Điều hướng điện thoại">
+  <button class="active" data-go="home"><span class="ico">⌂</span>Tổng quan</button>
+  <button data-go="studio"><span class="ico">🎙️</span>Phòng thu</button>
+  <button data-go="library"><span class="ico">▦</span>Thư viện</button>
+  <button data-go="actions"><span class="ico">✓</span>Công việc</button>
+  <button data-go="memory"><span class="ico">◈</span>Trí nhớ</button>
+  <button data-go="settings"><span class="ico">⚙️</span>Cài đặt</button>
+</nav>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  // ================= 1. THEME SYSTEM (4 THEMES) =================
+  const REMIN_THEME_KEY = 'remin_ui_theme_v1';
+  const validThemes = new Set(['green', 'light', 'dark', 'system']);
+  const mediaQuery = typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  let selectedTheme = localStorage.getItem(REMIN_THEME_KEY) || 'green';
+  if (!validThemes.has(selectedTheme)) selectedTheme = 'green';
+
+  function applyReminTheme() {
+    const effective = selectedTheme === 'system' ? (mediaQuery?.matches ? 'dark' : 'light') : selectedTheme;
+    document.documentElement.setAttribute('data-remin-theme', effective);
+    const picker = $('reminThemeChoice');
+    if (picker) picker.value = selectedTheme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', effective === 'light' ? '#f5f8f7' : effective === 'green' ? '#090e16' : '#0d0e10');
+  }
+  $('reminThemeChoice').addEventListener('change', ev => {
+    selectedTheme = ev.target.value;
+    try { localStorage.setItem(REMIN_THEME_KEY, selectedTheme); } catch {}
+    applyReminTheme();
+  });
+  if (mediaQuery?.addEventListener) {
+    mediaQuery.addEventListener('change', () => { if (selectedTheme === 'system') applyReminTheme(); });
+  }
+  applyReminTheme();
+
+  // ================= 2. TOAST & NAVIGATION =================
+  let toastTimer;
+  function notify(msg) {
+    const el = $('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 3600);
+  }
+
+  function go(id) {
+    if (!$('v-' + id)) return;
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + id));
+    document.querySelectorAll('[data-go]').forEach(b => b.classList.toggle('active', b.getAttribute('data-go') === id));
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    refreshAllViews();
+  }
+  document.addEventListener('click', ev => {
+    const b = ev.target.closest('[data-go]');
+    if (b) {
+      ev.preventDefault();
+      go(b.getAttribute('data-go'));
+    }
+  });
+
+  // ================= 3. PERSISTENT STORAGE (STATE + INDEXEDDB FOR AUDIO BLOBS) =================
+  const STORAGE_KEY = 'remin_production_meetings_v2';
+  const AI_CONFIG_KEY = 'remin_ai_config_v2';
+
+  const defaultMeetings = [
+    {
+      id: 'm_default_1',
+      title: 'Họp điều phối sản xuất & Kiểm định chất lượng',
+      date: '16/11/2026 09:30',
+      durationSec: 112,
+      segments: [
+        { time: '00:14', sec: 14, who: 'Ron', text: 'Tuần này chúng ta tập trung xử lý dứt điểm các ngoại lệ ảnh hưởng đến tiến độ bàn giao.' },
+        { time: '00:42', sec: 42, who: 'Quản lý Kỹ thuật', text: 'Em đề xuất kiểm tra lại dây chuyền B trước khi mở rộng lịch sản xuất sang ca tối.' },
+        { time: '01:15', sec: 75, who: 'Ron', text: 'Đồng ý. Nhóm kỹ thuật chuẩn bị báo cáo nguyên nhân trước thứ Năm và gửi lại để anh duyệt.' },
+        { time: '01:45', sec: 105, who: 'Quản lý Kỹ thuật', text: 'Dạ rõ, em sẽ tổng hợp số liệu lỗi và gửi báo cáo đúng hạn.' }
+      ],
+      brief: {
+        summary: 'Cuộc họp chốt phương án kiểm tra ngoại lệ tại dây chuyền B trước khi tăng ca sản xuất.',
+        decisions: '• Tạm hoãn mở rộng ca tối tại dây chuyền B cho tới khi có kết quả kiểm tra.\n• Bắt buộc có báo cáo nguyên nhân gốc rễ trước khi phê duyệt.',
+        risks: '• Nguy cơ chậm tiến độ nếu dây chuyền B phát sinh lỗi phần cứng.',
+        tags: ['#SảnXuất', '#DâyChuyềnB', '#KiểmĐịnh']
+      },
+      tasks: [
+        { id: 't_1', title: 'Kiểm tra ngoại lệ dây chuyền B trước khi mở ca tối', quote: '[00:42] Kiểm tra lại dây chuyền B trước khi mở rộng lịch sản xuất', owner: 'Quản lý Kỹ thuật', deadline: 'Thứ Năm', state: 'Chờ duyệt' },
+        { id: 't_2', title: 'Chuẩn bị báo cáo nguyên nhân gửi Ron phê duyệt', quote: '[01:15] Chuẩn bị báo cáo nguyên nhân trước thứ Năm', owner: 'Quản lý Kỹ thuật', deadline: 'Thứ Năm', state: 'Đã duyệt' }
+      ]
+    }
+  ];
+
+  let meetings = [];
+  let activeMeetingId = null;
+  let currentAudioBlob = null;
+  let currentAudioUrl = null;
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      meetings = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaultMeetings));
+      if (!Array.isArray(meetings) || meetings.length === 0) {
+        meetings = JSON.parse(JSON.stringify(defaultMeetings));
+      }
+    } catch {
+      meetings = JSON.parse(JSON.stringify(defaultMeetings));
+    }
+    activeMeetingId = meetings[0].id;
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(meetings));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function getActiveMeeting() {
+    return meetings.find(m => m.id === activeMeetingId) || meetings[0];
+  }
+
+  // IndexedDB for storing audio blobs per meeting ID
+  function openAudioDB() {
+    return new Promise((resolve, reject) => {
+      if (!window.indexedDB) return resolve(null);
+      const req = indexedDB.open('remin_audio_store_v2', 1);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('audios')) db.createObjectStore('audios');
+      };
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror = () => resolve(null);
+    });
+  }
+
+  async function saveAudioBlobToDB(meetingId, blob) {
+    const db = await openAudioDB();
+    if (!db || !blob) return;
+    return new Promise(resolve => {
+      const tx = db.transaction('audios', 'readwrite');
+      tx.objectStore('audios').put(blob, meetingId);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    });
+  }
+
+  async function loadAudioBlobFromDB(meetingId) {
+    const db = await openAudioDB();
+    if (!db) return null;
+    return new Promise(resolve => {
+      const tx = db.transaction('audios', 'readonly');
+      const req = tx.objectStore('audios').get(meetingId);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => resolve(null);
+    });
+  }
+
+  // ================= 4. AI CONFIGURATION =================
+  function loadAiConfig() {
+    try {
+      return JSON.parse(localStorage.getItem(AI_CONFIG_KEY) || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  function updateAiConfigUI() {
+    const cfg = loadAiConfig();
+    if ($('aiProviderSelect')) $('aiProviderSelect').value = cfg.provider || 'gemini';
+    if ($('geminiKeyInput')) $('geminiKeyInput').value = cfg.geminiKey || '';
+    if ($('groqKeyInput')) $('groqKeyInput').value = cfg.groqKey || '';
+    const hasKey = Boolean((cfg.geminiKey && cfg.geminiKey.trim()) || (cfg.groqKey && cfg.groqKey.trim()));
+    $('homeAiBadge').textContent = hasKey ? 'AI Cloud Đã Kết Nối ✓' : 'Ghi âm Trực tiếp + Nội bộ';
+    $('aiConfigBtn').textContent = hasKey ? '⚙️ AI: Đã kết nối ✓' : '⚙️ Cấu hình AI';
+  }
+
+  $('saveApiKeysBtn').onclick = () => {
+    const cfg = {
+      provider: $('aiProviderSelect').value,
+      geminiKey: $('geminiKeyInput').value.trim(),
+      groqKey: $('groqKeyInput').value.trim()
+    };
+    localStorage.setItem(AI_CONFIG_KEY, JSON.stringify(cfg));
+    updateAiConfigUI();
+    notify('Đã lưu khóa AI an toàn vào trình duyệt của anh!');
+  };
+
+  $('clearApiKeysBtn').onclick = () => {
+    localStorage.removeItem(AI_CONFIG_KEY);
+    updateAiConfigUI();
+    notify('Đã xóa khóa AI khỏi trình duyệt.');
+  };
+
+  // ================= 5. WAVEFORM & STUDIO RENDERING =================
+  function renderWave(customHeights) {
+    const heights = customHeights || [18,30,23,41,16,34,56,40,26,19,37,72,58,24,49,39,21,16,29,55,42,80,34,22,48,70,34,18,29,53,71,44,21,29,47,87,45,23,42,63,32,19,49,59,31,15,28,56,77,43,24,52,69,27,18,34,62,48];
+    $('wave').innerHTML = heights.map(h => `<i style="--h:${Math.max(8, Math.min(98, Math.round(h)))}px"></i>`).join('');
+  }
+
+  function formatSec(sec) {
+    const s = Math.max(0, Math.floor(Number(sec) || 0));
+    const mm = String(Math.floor(s / 60)).padStart(2, '0');
+    const ss = String(s % 60).padStart(2, '0');
+    return `${mm}:${ss}`;
+  }
+
+  async function selectMeeting(id) {
+    activeMeetingId = id;
+    const m = getActiveMeeting();
+    $('meetingTitleInput').value = m.title || '';
+    $('recTimer').textContent = formatSec(m.durationSec || 0);
+
+    // Load stored audio blob if available
+    const blob = await loadAudioBlobFromDB(m.id);
+    currentAudioBlob = blob;
+    const player = $('player');
+    if (currentAudioUrl) URL.revokeObjectURL(currentAudioUrl);
+    if (blob) {
+      currentAudioUrl = URL.createObjectURL(blob);
+      player.src = currentAudioUrl;
+      player.style.display = 'block';
+      $('audioNotice').textContent = `Đang mở bản ghi âm đã lưu của cuộc họp "${m.title}". Bấm vào từng câu bên dưới để tua nhanh.`;
+    } else {
+      player.removeAttribute('src');
+      player.style.display = 'none';
+      $('audioNotice').textContent = 'Cuộc họp này chưa đính kèm file âm thanh. Anh có thể bấm Ghi âm Micro hoặc Tải file âm thanh lên.';
+    }
+    refreshAllViews();
+  }
+
+  $('meetingTitleInput').addEventListener('input', e => {
+    const m = getActiveMeeting();
+    m.title = e.target.value;
+    saveState();
+    renderHomeAndLibrary();
+  });
+
+  function renderStudio() {
+    const m = getActiveMeeting();
+    if ($('meetingTitleInput') && document.activeElement !== $('meetingTitleInput')) {
+      $('meetingTitleInput').value = m.title;
+    }
+    const segs = m.segments || [];
+    $('segmentCountLabel').textContent = `${segs.length} câu · Chạm vào câu để tua âm thanh`;
+    $('transcriptLines').innerHTML = segs.length
+      ? segs.map((x, idx) => `
+        <div class="segment" data-seek="${Number(x.sec) || 0}" title="Chạm để nghe từ mốc ${esc(x.time)}">
+          <div class="tm">${esc(x.time)}</div>
+          <div>
+            <b>${esc(x.who || 'Người nói')}</b>
+            <p>${esc(x.text)}</p>
+          </div>
+        </div>
+      `).join('')
+      : '<div class="fine" style="padding:14px">Chưa có nội dung hội thoại. Hãy bấm Ghi âm Micro, Tải file âm thanh hoặc Thêm câu ghi chú.</div>';
+
+    const brief = m.brief || {};
+    $('briefSummary').textContent = brief.summary || 'Chưa có tóm tắt.';
+    $('briefDecisions').textContent = brief.decisions || 'Chưa có quyết định.';
+    $('briefRisks').textContent = brief.risks || 'Chưa ghi nhận rủi ro.';
+    $('briefTags').innerHTML = (brief.tags || ['#CuộcHọp']).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+
+    const tasks = m.tasks || [];
+    $('studioTaskList').innerHTML = tasks.length
+      ? tasks.map(t => `
+        <div class="task" style="margin:6px 0;padding:10px">
+          <div class="smallrow">
+            <b style="font-size:12.5px">${esc(t.title)}</b>
+            <span class="task-status ${t.state === 'Đã duyệt' ? 'accept' : ''}">${esc(t.state)}</span>
+          </div>
+          <div class="fine">Phụ trách: ${esc(t.owner || 'Ron')} · Nguồn: ${esc(t.quote || 'Trong cuộc họp')}</div>
+        </div>
+      `).join('')
+      : '<div class="fine">Chưa có công việc nào. Bấm "⚡ Phân tích lại từ Transcript" để trích xuất tự động.</div>';
+  }
+
+  // Click transcript segment to seek audio player
+  $('transcriptLines').addEventListener('click', ev => {
+    const seg = ev.target.closest('[data-seek]');
+    if (!seg) return;
+    const sec = Number(seg.getAttribute('data-seek')) || 0;
+    const player = $('player');
+    if (player && player.src) {
+      player.currentTime = sec;
+      player.play().catch(() => {});
+      notify(`Đã tua âm thanh tới mốc ${formatSec(sec)}`);
+    } else {
+      notify(`Mốc thời gian ${formatSec(sec)} (Chưa có file âm thanh đính kèm)`);
+    }
+  });
+
+  // Manual line addition
+  $('addManualLineBtn').onclick = () => {
+    $('manualInputRow').classList.toggle('hide');
+    if (!$('manualInputRow').classList.contains('hide')) $('manualText').focus();
+  };
+  $('saveManualLineBtn').onclick = () => {
+    const txt = $('manualText').value.trim();
+    if (!txt) return;
+    const who = $('manualSpeaker').value.trim() || 'Ron';
+    const m = getActiveMeeting();
+    const player = $('player');
+    const sec = player && player.src && player.currentTime > 0 ? Math.floor(player.currentTime) : (m.durationSec || (m.segments.length * 15));
+    m.segments.push({ time: formatSec(sec), sec, who, text: txt });
+    $('manualText').value = '';
+    saveState();
+    refreshAllViews();
+    notify('Đã thêm câu hội thoại vào Transcript.');
+  };
+  $('manualText').addEventListener('keydown', e => { if (e.key === 'Enter') $('saveManualLineBtn').click(); });
+
+  // ================= 6. LIVE MICROPHONE RECORDING + WEB SPEECH API =================
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let speechRec = null;
+  let isRecording = false;
+  let recStartTime = 0;
+  let recInterval = null;
+  let audioCtx = null;
+  let analyser = null;
+  let animId = null;
+
+  async function startRecording() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach(t => t.stop());
+        if (animId) cancelAnimationFrame(animId);
+        if (audioCtx) audioCtx.close().catch(() => {});
+        const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+        currentAudioBlob = blob;
+        const m = getActiveMeeting();
+        await saveAudioBlobToDB(m.id, blob);
+        if (currentAudioUrl) URL.revokeObjectURL(currentAudioUrl);
+        currentAudioUrl = URL.createObjectURL(blob);
+        const player = $('player');
+        player.src = currentAudioUrl;
+        player.style.display = 'block';
+        $('audioNotice').textContent = `Đã thu âm xong (${Math.round(blob.size / 1024)} KB) và lưu vào thiết bị! Anh có thể nghe lại hoặc bấm "✨ Bóc băng & Tóm tắt bằng AI".`;
+        generateLocalOrAiBrief();
+      };
+
+      // Live Waveform Visualizer
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioCtx.createMediaStreamSource(stream);
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 128;
+        source.connect(analyser);
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        const drawLiveWave = () => {
+          if (!isRecording) return;
+          analyser.getByteFrequencyData(dataArray);
+          const bars = Array.from(dataArray.slice(0, 48)).map(v => 10 + (v / 255) * 85);
+          renderWave(bars);
+          animId = requestAnimationFrame(drawLiveWave);
+        };
+        drawLiveWave();
+      } catch {}
+
+      // Start Web Speech API (Vietnamese live speech-to-text) if supported
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        speechRec = new SpeechRecognition();
+        speechRec.lang = 'vi-VN';
+        speechRec.continuous = true;
+        speechRec.interimResults = false;
+        speechRec.onresult = ev => {
+          const m = getActiveMeeting();
+          for (let i = ev.resultIndex; i < ev.results.length; i++) {
+            if (ev.results[i].isFinal) {
+              const transcriptText = ev.results[i][0].transcript.trim();
+              if (transcriptText) {
+                const elapsed = Math.floor((Date.now() - recStartTime) / 1000);
+                m.segments.push({
+                  time: formatSec(elapsed),
+                  sec: elapsed,
+                  who: 'Ghi âm trực tiếp',
+                  text: transcriptText
+                });
+                saveState();
+                renderStudio();
+              }
+            }
+          }
+        };
+        speechRec.onerror = () => {};
+        speechRec.onend = () => { if (isRecording && speechRec) { try { speechRec.start(); } catch {} } };
+        try { speechRec.start(); } catch {}
+      }
+
+      mediaRecorder.start(1000);
+      isRecording = true;
+      recStartTime = Date.now();
+      $('recordBtn').classList.add('recording');
+      $('recordBtn').textContent = '⏹️ Dừng Ghi âm & Lưu';
+      $('statusBadge').textContent = '🔴 ĐANG GHI ÂM TRỰC TIẾP...';
+      recInterval = setInterval(() => {
+        const sec = Math.floor((Date.now() - recStartTime) / 1000);
+        const m = getActiveMeeting();
+        m.durationSec = sec;
+        $('recTimer').textContent = formatSec(sec);
+      }, 500);
+      notify('Đang ghi âm! Hãy nói vào Micro (Tự động nhận diện tiếng Việt).');
+    } catch (err) {
+      notify('Không thể mở Micro: Hãy cấp quyền Micro trên trình duyệt hoặc chọn tải file ghi âm lên.');
+    }
+  }
+
+  function stopRecording() {
+    isRecording = false;
+    clearInterval(recInterval);
+    if (speechRec) {
+      try { speechRec.onend = null; speechRec.stop(); } catch {}
+      speechRec = null;
+    }
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+    }
+    $('recordBtn').classList.remove('recording');
+    $('recordBtn').textContent = '🎙️ Bắt đầu Ghi âm Micro';
+    $('statusBadge').textContent = '● ĐÃ LƯU BẢN GHI ÂM';
+    saveState();
+    refreshAllViews();
+  }
+
+  $('recordBtn').onclick = () => {
+    if (isRecording) stopRecording();
+    else startRecording();
+  };
+
+  // ================= 7. UPLOAD AUDIO FILE & AI TRANSCRIPTION (GEMINI / GROQ WHISPER) =================
+  $('audioFile').onchange = async e => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    currentAudioBlob = f;
+    const m = getActiveMeeting();
+    if (!m.title || m.title.startsWith('Cuộc họp mới')) {
+      m.title = f.name.replace(/\.[^.]+$/, '');
+    }
+    await saveAudioBlobToDB(m.id, f);
+    if (currentAudioUrl) URL.revokeObjectURL(currentAudioUrl);
+    currentAudioUrl = URL.createObjectURL(f);
+    const player = $('player');
+    player.src = currentAudioUrl;
+    player.style.display = 'block';
+    player.onloadedmetadata = () => {
+      if (player.duration && isFinite(player.duration)) {
+        m.durationSec = Math.round(player.duration);
+        $('recTimer').textContent = formatSec(m.durationSec);
+        saveState();
+      }
+    };
+    $('audioNotice').textContent = `Đã nạp file "${f.name}" (${Math.round(f.size / 1024)} KB) và lưu vào thiết bị! Bấm "✨ Bóc băng & Tóm tắt bằng AI" bên dưới để dịch ra chữ.`;
+    saveState();
+    refreshAllViews();
+    notify('Đã nạp file âm thanh thành công!');
+  };
+
+  function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const res = String(reader.result || '');
+        resolve(res.includes(',') ? res.split(',')[1] : res);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function transcribeAndSummarizeWithAI() {
+    const cfg = loadAiConfig();
+    const m = getActiveMeeting();
+    const btn = $('transcribeAiBtn');
+    btn.disabled = true;
+    const origText = btn.textContent;
+    btn.textContent = '⏳ Đang xử lý âm thanh & phân tích AI...';
+
+    try {
+      // CASE 1: Gemini API Key available & we have an audio blob
+      if (cfg.geminiKey && currentAudioBlob) {
+        const b64 = await blobToBase64(currentAudioBlob);
+        const mimeType = currentAudioBlob.type || 'audio/mp3';
+        const prompt = `Bạn là trợ lý thư ký cuộc họp REMIN. Hãy nghe file âm thanh này, bóc băng chính xác sang tiếng Việt theo từng mốc thời gian và tóm tắt cuộc họp. Trả về đúng định dạng JSON chuẩn (không bọc markdown) với cấu trúc:
+{
+  "segments": [{"time": "00:05", "sec": 5, "who": "Người nói 1", "text": "Nội dung câu nói..."}],
+  "brief": {
+    "summary": "Tóm tắt ngắn gọn nội dung chính cuộc họp...",
+    "decisions": "• Quyết định 1\\n• Quyết định 2",
+    "risks": "• Rủi ro hoặc vấn đề cần lưu ý",
+    "tags": ["#ChủĐề1", "#ChủĐề2"]
+  },
+  "tasks": [{"title": "Tên công việc cần làm", "quote": "[00:05] Câu trích dẫn", "owner": "Người phụ trách", "deadline": "Hạn chót"}]
+}`;
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(cfg.geminiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [
+                { text: prompt },
+                { inline_data: { mime_type: mimeType, data: b64 } }
+              ]
+            }],
+            generationConfig: { responseMimeType: 'application/json' }
+          })
+        });
+        if (!resp.ok) throw new Error(`Gemini API HTTP ${resp.status}`);
+        const data = await resp.json();
+        const rawJson = data?.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+        const parsed = JSON.parse(rawJson);
+        if (Array.isArray(parsed.segments) && parsed.segments.length) m.segments = parsed.segments;
+        if (parsed.brief) m.brief = parsed.brief;
+        if (Array.isArray(parsed.tasks)) {
+          m.tasks = parsed.tasks.map((t, i) => ({
+            id: 't_' + Date.now() + '_' + i,
+            title: t.title || 'Công việc mới',
+            quote: t.quote || 'Trích từ cuộc họp',
+            owner: t.owner || 'Ron',
+            deadline: t.deadline || 'Sớm nhất',
+            state: 'Chờ duyệt'
+          }));
+        }
+        saveState();
+        refreshAllViews();
+        notify('✓ Đã bóc băng & tóm tắt cuộc họp bằng Google Gemini thành công!');
+        return;
+      }
+
+      // CASE 2: Groq API Key available & we have an audio blob
+      if (cfg.groqKey && currentAudioBlob) {
+        const fd = new FormData();
+        fd.append('file', currentAudioBlob, 'recording.webm');
+        fd.append('model', 'whisper-large-v3-turbo');
+        fd.append('response_format', 'verbose_json');
+        fd.append('language', 'vi');
+        const resp = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${cfg.groqKey}` },
+          body: fd
+        });
+        if (!resp.ok) throw new Error(`Groq Whisper HTTP ${resp.status}`);
+        const data = await resp.json();
+        if (Array.isArray(data.segments) && data.segments.length > 0) {
+          m.segments = data.segments.map((s, idx) => ({
+            time: formatSec(s.start || idx * 5),
+            sec: Math.floor(s.start || idx * 5),
+            who: 'Người nói',
+            text: (s.text || '').trim()
+          })).filter(s => s.text);
+        } else if (data.text) {
+          m.segments = [{ time: '00:00', sec: 0, who: 'Người nói', text: data.text.trim() }];
+        }
+        await generateLocalOrAiBrief();
+        saveState();
+        refreshAllViews();
+        notify('✓ Đã bóc băng siêu tốc bằng Groq Whisper thành công!');
+        return;
+      }
+
+      // CASE 3: No API key configured yet or only text exists -> run smart local/AI brief on existing transcript
+      if (m.segments && m.segments.length > 0) {
+        await generateLocalOrAiBrief();
+        notify('Đã phân tích & trích xuất tóm tắt + công việc từ Transcript! (Nhập khóa Gemini/Groq ở mục Cài đặt nếu muốn bóc băng file âm thanh mới).');
+      } else {
+        notify('Để bóc băng file âm thanh có sẵn, hãy nhập khóa Gemini hoặc Groq miễn phí tại mục ⚙️ Cài đặt AI (hoặc dùng nút Ghi âm Micro trực tiếp).');
+        go('settings');
+      }
+    } catch (err) {
+      notify('Lỗi kết nối AI: ' + (err.message || 'Kiểm tra lại API Key trong mục Cài đặt.'));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = origText;
+    }
+  }
+
+  $('transcribeAiBtn').onclick = transcribeAndSummarizeWithAI;
+  $('runAiBriefBtn').onclick = async () => {
+    await generateLocalOrAiBrief();
+    notify('Đã cập nhật Tóm tắt & Công việc từ nội dung Transcript!');
+  };
+
+  // Smart Brief & Task Extractor (Uses Gemini/Groq if key present, otherwise deterministic Vietnamese NLP extraction!)
+  async function generateLocalOrAiBrief() {
+    const m = getActiveMeeting();
+    const segs = m.segments || [];
+    if (!segs.length) return;
+    const fullTranscript = segs.map(s => `[${s.time}] ${s.who}: ${s.text}`).join('\n');
+    const cfg = loadAiConfig();
+
+    // Try Gemini / Groq text summarization first if key exists
+    if (cfg.geminiKey) {
+      try {
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(cfg.geminiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `Phân tích transcript cuộc họp sau và trả về JSON {"brief":{"summary":"...","decisions":"...","risks":"...","tags":["#tag"]},"tasks":[{"title":"...","quote":"...","owner":"...","deadline":"..."}]}:\n\n${fullTranscript}`
+              }]
+            }],
+            generationConfig: { responseMimeType: 'application/json' }
+          })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          const parsed = JSON.parse(data?.candidates?.[0]?.content?.parts?.[0]?.text || '{}');
+          if (parsed.brief) m.brief = parsed.brief;
+          if (Array.isArray(parsed.tasks) && parsed.tasks.length) {
+            m.tasks = parsed.tasks.map((t, i) => ({
+              id: 't_' + Date.now() + '_' + i,
+              title: t.title,
+              quote: t.quote || '',
+              owner: t.owner || 'Ron',
+              deadline: t.deadline || 'Cần xác nhận',
+              state: 'Chờ duyệt'
+            }));
+          }
+          saveState();
+          refreshAllViews();
+          return;
+        }
+      } catch {}
+    }
+
+    // Deterministic Vietnamese heuristic extraction (works 100% offline without any API key!)
+    const decisions = [];
+    const risks = [];
+    const extractedTasks = [];
+    segs.forEach(s => {
+      const low = s.text.toLowerCase();
+      if (low.includes('đồng ý') || low.includes('chốt') || low.includes('quyết định') || low.includes('phê duyệt') || low.includes('thống nhất')) {
+        decisions.push(`• [${s.time}] ${s.text}`);
+      }
+      if (low.includes('lỗi') || low.includes('rủi ro') || low.includes('chậm') || low.includes('ngoại lệ') || low.includes('vấn đề') || low.includes('cẩn thận')) {
+        risks.push(`• [${s.time}] ${s.text}`);
+      }
+      if (low.includes('đề xuất') || low.includes('chuẩn bị') || low.includes('kiểm tra') || low.includes('tổng hợp') || low.includes('gửi') || low.includes('cần làm') || low.includes('phụ trách')) {
+        extractedTasks.push({
+          id: 't_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          title: s.text.length > 85 ? s.text.slice(0, 82) + '...' : s.text,
+          quote: `[${s.time}] ${s.who}: ${s.text}`,
+          owner: s.who || 'Ron',
+          deadline: low.includes('thứ ') ? s.text.match(/thứ\s+\w+/i)?.[0] || 'Trong tuần' : 'Cần xác nhận',
+          state: 'Chờ duyệt'
+        });
+      }
+    });
+
+    m.brief = {
+      summary: `Cuộc họp "${m.title}" gồm ${segs.length} lượt phát biểu (${formatSec(m.durationSec)}). Trọng tâm: ${segs[0].text}`,
+      decisions: decisions.length ? decisions.join('\n') : `• [${segs[segs.length - 1].time}] ${segs[segs.length - 1].text}`,
+      risks: risks.length ? risks.join('\n') : '• Chưa phát hiện rủi ro nghiêm trọng trong nội dung hội thoại.',
+      tags: ['#REMIN', '#CuộcHọp', `#${segs.length}CâuHộiThoại`]
+    };
+    if (extractedTasks.length > 0 && (!m.tasks || m.tasks.length === 0)) {
+      m.tasks = extractedTasks;
+    }
+    saveState();
+    refreshAllViews();
+  }
+
+  // ================= 8. CREATE / DELETE MEETINGS & LIBRARY =================
+  function createNewMeeting() {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('vi-VN') + ' ' + now.toTimeString().slice(0, 5);
+    const newM = {
+      id: 'm_' + Date.now(),
+      title: `Cuộc họp mới (${dateStr})`,
+      date: dateStr,
+      durationSec: 0,
+      segments: [],
+      brief: {
+        summary: 'Cuộc họp mới khởi tạo. Hãy bấm Ghi âm Micro hoặc Tải file âm thanh lên.',
+        decisions: 'Chưa có quyết định.',
+        risks: 'Chưa có rủi ro.',
+        tags: ['#CuộcHọpMới']
+      },
+      tasks: []
+    };
+    meetings.unshift(newM);
+    saveState();
+    selectMeeting(newM.id);
+    go('studio');
+    notify('Đã tạo cuộc họp mới! Sẵn sàng ghi âm.');
+  }
+
+  $('newMeetingBtn').onclick = createNewMeeting;
+  $('createFromLibBtn').onclick = createNewMeeting;
+
+  function renderHomeAndLibrary(q = '') {
+    const query = q.trim().toLowerCase();
+    let totalSegs = 0, pendingTasks = 0, doneTasks = 0;
+    meetings.forEach(m => {
+      totalSegs += (m.segments || []).length;
+      (m.tasks || []).forEach(t => {
+        if (t.state === 'Đã duyệt') doneTasks++;
+        else pendingTasks++;
+      });
+    });
+
+    $('statMeetings').textContent = meetings.length;
+    $('statSegments').textContent = totalSegs;
+    $('statTasksPending').textContent = pendingTasks;
+    $('statTasksDone').textContent = doneTasks;
+    $('homeLibCount').textContent = meetings.length;
+    $('sideTaskCount').textContent = pendingTasks;
+
+    const cardHtml = m => `
+      <div class="meeting ${m.id === activeMeetingId ? 'active-card' : ''}">
+        <div>
+          <div class="kind">
+            <span class="pill ${m.id === activeMeetingId ? '' : 'neutral'}">${m.id === activeMeetingId ? '● ĐANG MỞ' : 'ĐÃ LƯU'}</span>
+            <span class="fine">${esc(m.date)} · ${formatSec(m.durationSec)}</span>
+          </div>
+          <h3>${esc(m.title)}</h3>
+          <p>${esc((m.brief && m.brief.summary) || 'Chưa có tóm tắt.')}</p>
+        </div>
+        <div class="smallrow" style="margin-top:8px">
+          <span class="fine">${(m.segments || []).length} câu · ${(m.tasks || []).length} việc</span>
+          <div class="row">
+            <button class="btn tiny primary" data-open-meeting="${esc(m.id)}">Mở →</button>
+            ${meetings.length > 1 ? `<button class="btn tiny ghost" data-del-meeting="${esc(m.id)}" title="Xóa cuộc họp">🗑️</button>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+
+    $('homeRecentGrid').innerHTML = meetings.slice(0, 3).map(cardHtml).join('');
+    const filtered = meetings.filter(m => {
+      const hay = (m.title + ' ' + (m.brief?.summary || '') + ' ' + (m.segments || []).map(s => s.text).join(' ')).toLowerCase();
+      return hay.includes(query);
+    });
+    $('libraryGrid').innerHTML = filtered.length ? filtered.map(cardHtml).join('') : '<div class="pane">Không tìm thấy cuộc họp phù hợp.</div>';
+  }
+
+  document.addEventListener('click', ev => {
+    const openBtn = ev.target.closest('[data-open-meeting]');
+    if (openBtn) {
+      selectMeeting(openBtn.getAttribute('data-open-meeting'));
+      go('studio');
+      return;
+    }
+    const delBtn = ev.target.closest('[data-del-meeting]');
+    if (delBtn) {
+      const id = delBtn.getAttribute('data-del-meeting');
+      if (meetings.length <= 1) return notify('Cần giữ lại ít nhất 1 cuộc họp trong thư viện.');
+      meetings = meetings.filter(m => m.id !== id);
+      if (activeMeetingId === id) activeMeetingId = meetings[0].id;
+      saveState();
+      refreshAllViews();
+      notify('Đã xóa cuộc họp.');
+    }
+  });
+
+  $('librarySearch').addEventListener('input', e => renderHomeAndLibrary(e.target.value));
+
+  // ================= 9. TASKS APPROVAL VIEW =================
+  function renderTasksView() {
+    const allTasks = [];
+    meetings.forEach(m => {
+      (m.tasks || []).forEach((t, idx) => {
+        allTasks.push({ ...t, meetingId: m.id, meetingTitle: m.title, idx });
+      });
+    });
+    const pending = allTasks.filter(t => t.state !== 'Đã duyệt').length;
+    $('pendingCount').textContent = `${pending} CHỜ DUYỆT`;
+
+    $('taskList').innerHTML = allTasks.length
+      ? allTasks.map(t => `
+        <div class="task">
+          <div class="smallrow">
+            <span class="pill neutral">${esc(t.meetingTitle)}</span>
+            <span class="task-status ${t.state === 'Đã duyệt' ? 'accept' : ''}">${esc(t.state)}</span>
+          </div>
+          <p><b>${esc(t.title)}</b></p>
+          <p class="fine">Nguồn trích dẫn: ${esc(t.quote || 'Tạo thủ công')}</p>
+          <div class="task-actions">
+            <span class="caption">Phụ trách: <b>${esc(t.owner || 'Ron')}</b> · Hạn: ${esc(t.deadline || 'Sớm nhất')}</span>
+            <div class="row">
+              <button class="btn tiny ${t.state === 'Đã duyệt' ? 'ghost' : 'primary'}" data-toggle-task="${esc(t.meetingId)}|${t.idx}">
+                ${t.state === 'Đã duyệt' ? '↺ Hoàn tác duyệt' : '✓ Phê duyệt'}
+              </button>
+              <button class="btn tiny ghost" data-remove-task="${esc(t.meetingId)}|${t.idx}">✕</button>
+            </div>
+          </div>
+        </div>
+      `).join('')
+      : '<div class="fine">Chưa có công việc nào.</div>';
+  }
+
+  document.addEventListener('click', ev => {
+    const toggleBtn = ev.target.closest('[data-toggle-task]');
+    if (toggleBtn) {
+      const [mId, idxStr] = toggleBtn.getAttribute('data-toggle-task').split('|');
+      const m = meetings.find(x => x.id === mId);
+      if (m && m.tasks && m.tasks[Number(idxStr)]) {
+        const t = m.tasks[Number(idxStr)];
+        t.state = t.state === 'Đã duyệt' ? 'Chờ duyệt' : 'Đã duyệt';
+        saveState();
+        refreshAllViews();
+        notify(`Đã chuyển trạng thái công việc sang: ${t.state}`);
+      }
+      return;
+    }
+    const remBtn = ev.target.closest('[data-remove-task]');
+    if (remBtn) {
+      const [mId, idxStr] = remBtn.getAttribute('data-remove-task').split('|');
+      const m = meetings.find(x => x.id === mId);
+      if (m && m.tasks) {
+        m.tasks.splice(Number(idxStr), 1);
+        saveState();
+        refreshAllViews();
+        notify('Đã xóa công việc.');
+      }
+    }
+  });
+
+  $('addTaskBtn').onclick = () => {
+    const title = $('newTaskTitle').value.trim();
+    if (!title) return;
+    const owner = $('newTaskOwner').value.trim() || 'Ron';
+    const m = getActiveMeeting();
+    m.tasks = m.tasks || [];
+    m.tasks.unshift({
+      id: 't_' + Date.now(),
+      title,
+      quote: 'Bổ sung trực tiếp bởi Thuyền trưởng Ron',
+      owner,
+      deadline: 'Trong tuần',
+      state: 'Đã duyệt'
+    });
+    $('newTaskTitle').value = '';
+    saveState();
+    refreshAllViews();
+    notify('Đã thêm và phê duyệt công việc mới!');
+  };
+
+  // ================= 10. LIVING MEMORY Q&A =================
+  function renderMemoryView() {
+    $('memoryGraphList').innerHTML = meetings.map(m => `
+      <div class="insight">
+        <b>📁 ${esc(m.title)} (${esc(m.date)})</b>
+        <p>Tóm tắt: ${esc(m.brief?.summary || '')}\nQuyết định: ${esc(m.brief?.decisions || '')}</p>
+      </div>
+    `).join('');
+  }
+
+  $('askMemory').onclick = async () => {
+    const q = $('memoryQuery').value.trim();
+    if (!q) return notify('Hãy nhập câu hỏi cần tra cứu.');
+    const cfg = loadAiConfig();
+    const corpus = meetings.map(m =>
+      `=== CUỘC HỌP: ${m.title} (${m.date}) ===\nTóm tắt: ${m.brief?.summary}\nQuyết định: ${m.brief?.decisions}\nCông việc: ${(m.tasks || []).map(t => `${t.title} (${t.owner} - ${t.state})`).join('; ')}\nHội thoại:\n${(m.segments || []).map(s => `[${s.time}] ${s.who}: ${s.text}`).join('\n')}`
+    ).join('\n\n');
+
+    $('memoryAnswer').textContent = '⏳ Đang lục tìm trong toàn bộ lịch sử cuộc họp...';
+
+    if (cfg.geminiKey) {
+      try {
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(cfg.geminiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `Dựa duy nhất vào dữ liệu lịch sử cuộc họp dưới đây, hãy trả lời câu hỏi "${q}" bằng tiếng Việt ngắn gọn, kèm trích dẫn tên cuộc họp và mốc thời gian:\n\n${corpus}` }] }]
+          })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          const ans = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (ans) {
+            $('memoryAnswer').textContent = ans;
+            return;
+          }
+        }
+      } catch {}
+    }
+
+    // Local keyword search across all meetings, segments, decisions, and tasks
+    const terms = q.toLowerCase().split(/\s+/).filter(w => w.length > 1);
+    const hits = [];
+    meetings.forEach(m => {
+      (m.segments || []).forEach(s => {
+        const line = `${s.who} ${s.text}`.toLowerCase();
+        if (terms.some(t => line.includes(t))) {
+          hits.push(`• [${m.title} - mốc ${s.time}] ${s.who}: "${s.text}"`);
+        }
+      });
+      (m.tasks || []).forEach(t => {
+        const line = `${t.title} ${t.owner}`.toLowerCase();
+        if (terms.some(k => line.includes(k))) {
+          hits.push(`• [Công việc trong "${m.title}"] ${t.title} — Phụ trách: ${t.owner} (${t.state})`);
+        }
+      });
+    });
+
+    $('memoryAnswer').textContent = hits.length
+      ? `Tìm thấy ${hits.length} kết quả khớp trong bộ nhớ cuộc họp:\n\n` + hits.slice(0, 8).join('\n')
+      : `Không tìm thấy câu hội thoại nào chứa từ khóa "${q}". Gợi ý: Cuộc họp gần nhất là "${meetings[0].title}" với quyết định: ${meetings[0].brief?.decisions || 'Chưa có'}.`;
+  };
+  $('memoryQuery').addEventListener('keydown', e => { if (e.key === 'Enter') $('askMemory').click(); });
+
+  // ================= 11. EXPORT WORD (.DOC) / MARKDOWN (.MD) / BACKUP JSON =================
+  function downloadBlob(filename, content, mime) {
+    const blob = new Blob([content], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  }
+
+  function buildMarkdownReport(m) {
+    return `# BIÊN BẢN CUỘC HỌP: ${m.title}\n` +
+      `- **Thời gian:** ${m.date}\n` +
+      `- **Thời lượng:** ${formatSec(m.durationSec)}\n\n` +
+      `## 1. Tóm tắt & Nhận định chính\n${m.brief?.summary || ''}\n\n` +
+      `## 2. Quyết định đã chốt\n${m.brief?.decisions || ''}\n\n` +
+      `## 3. Rủi ro & Lưu ý\n${m.brief?.risks || ''}\n\n` +
+      `## 4. Danh sách Công việc (Action Items)\n` +
+      ((m.tasks || []).map((t, i) => `${i + 1}. **[${t.state}]** ${t.title} — *Phụ trách:* ${t.owner} (*Hạn:* ${t.deadline})`).join('\n') || 'Chưa có công việc.') +
+      `\n\n## 5. Toàn văn Nội dung Hội thoại (Transcript)\n` +
+      ((m.segments || []).map(s => `- **[${s.time}] ${s.who}:** ${s.text}`).join('\n') || 'Chưa có transcript.');
+  }
+
+  $('exportMdBtn').onclick = () => {
+    const m = getActiveMeeting();
+    downloadBlob(`${m.title.replace(/\s+/g, '_')}.md`, buildMarkdownReport(m), 'text/markdown;charset=utf-8');
+    notify('Đã tải xuống Biên bản cuộc họp (.md)!');
+  };
+
+  $('exportDocBtn').onclick = () => {
+    const m = getActiveMeeting();
+    const htmlDoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(m.title)}</title></head><body style="font-family:Arial,sans-serif;line-height:1.6">` +
+      `<h1>BIÊN BẢN CUỘC HỌP: ${esc(m.title)}</h1>` +
+      `<p><b>Ngày giờ:</b> ${esc(m.date)} | <b>Thời lượng:</b> ${formatSec(m.durationSec)}</p><hr/>` +
+      `<h2>1. Tóm tắt chính</h2><p>${esc(m.brief?.summary || '')}</p>` +
+      `<h2>2. Quyết định đã chốt</h2><pre style="font-family:Arial,sans-serif">${esc(m.brief?.decisions || '')}</pre>` +
+      `<h2>3. Rủi ro & Lưu ý</h2><pre style="font-family:Arial,sans-serif">${esc(m.brief?.risks || '')}</pre>` +
+      `<h2>4. Danh sách Công việc</h2><ul>` +
+      (m.tasks || []).map(t => `<li><b>[${esc(t.state)}]</b> ${esc(t.title)} — Phụ trách: <b>${esc(t.owner)}</b> (Hạn: ${esc(t.deadline)})</li>`).join('') +
+      `</ul><h2>5. Nội dung Hội thoại (Transcript)</h2>` +
+      (m.segments || []).map(s => `<p><b>[${esc(s.time)}] ${esc(s.who)}:</b> ${esc(s.text)}</p>`).join('') +
+      `</body></html>`;
+    downloadBlob(`${m.title.replace(/\s+/g, '_')}.doc`, htmlDoc, 'application/msword;charset=utf-8');
+    notify('Đã xuất Biên bản cuộc họp ra file Word (.doc)!');
+  };
+
+  $('copyTranscript').onclick = () => {
+    const m = getActiveMeeting();
+    const txt = (m.segments || []).map(s => `[${s.time}] ${s.who}: ${s.text}`).join('\n');
+    navigator.clipboard?.writeText(txt).then(() => notify('Đã sao chép toàn bộ Transcript!'), () => notify('Không thể sao chép tự động.'));
+  };
+
+  $('backupJsonBtn').onclick = () => {
+    downloadBlob(`REMIN_Backup_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(meetings, null, 2), 'application/json;charset=utf-8');
+    notify('Đã tải file sao lưu toàn bộ cuộc họp (.json)!');
+  };
+
+  $('restoreJsonFile').onchange = e => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(String(reader.result || '[]'));
+        if (Array.isArray(data) && data.length > 0) {
+          meetings = data;
+          activeMeetingId = meetings[0].id;
+          saveState();
+          refreshAllViews();
+          notify(`Đã khôi phục thành công ${meetings.length} cuộc họp!`);
+        }
+      } catch {
+        notify('File JSON không hợp lệ.');
+      }
+    };
+    reader.readAsText(f);
+  };
+
+  $('resetAllDataBtn').onclick = () => {
+    if (confirm('Khôi phục dữ liệu mẫu ban đầu?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      loadState();
+      refreshAllViews();
+      notify('Đã khôi phục dữ liệu gốc.');
+    }
+  };
+
+  function refreshAllViews() {
+    renderHomeAndLibrary($('librarySearch')?.value || '');
+    renderStudio();
+    renderTasksView();
+    renderMemoryView();
+    updateAiConfigUI();
+  }
+
+  // Init
+  loadState();
+  renderWave();
+  selectMeeting(activeMeetingId);
+})();
+</script>
+</body>
+</html>
