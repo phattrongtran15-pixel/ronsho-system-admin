@@ -151,6 +151,23 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
   .toast{bottom:86px}
 }
 @media(max-width:480px){.cardgrid{grid-template-columns:1fr}}
+
+/* v2.5: 24/7 Smart VAD, Call Recording Hub & Silence Trimmer */
+.vad-box{padding:12px 14px;border-radius:14px;border:1px solid var(--line-strong);background:var(--accent-soft);margin:10px 0}
+.vad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.vad-stat{padding:8px 10px;border-radius:10px;background:var(--surface-solid);border:1px solid var(--line);text-align:center}
+.vad-stat strong{display:block;font-size:15px;font-weight:900;color:var(--accent)}
+.vad-stat small{font-size:11px;color:var(--muted)}
+.call-hub{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface-2);margin:10px 0}
+.call-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.call-step{padding:9px 10px;border-radius:10px;background:var(--surface-solid);border:1px solid var(--line);font-size:12px;line-height:1.45}
+.call-step b{display:block;color:var(--text);margin-bottom:3px}
+.trim-result{padding:10px 12px;border-radius:12px;border:1px solid var(--line-strong);background:var(--accent-soft);margin-top:8px;font-size:12.5px}
+body.oled-dim{filter:brightness(0.28) contrast(1.15);background:#000 !important}
+@media (max-width:760px){
+  .vad-grid,.call-steps{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -170,7 +187,7 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
     <button data-go="settings"><span class="ico">⚙️</span> Cài đặt AI & Sao lưu</button>
   </div>
   <div class="sidefoot">
-    <strong>✓ REMIN Production v2.0</strong>
+    <strong>✓ REMIN Production v2.5 (24/7 VAD + Call Trim)</strong>
     <p id="aiStatusSide">Chế độ: Ghi âm Micro trực tiếp + AI Cloud (Groq / Gemini)</p>
   </div>
 </aside>
@@ -197,7 +214,7 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 
   <!-- VIEW 1: HOME -->
   <section class="view active" id="v-home" aria-label="Tổng quan">
-    <span class="kicker">REMIN SIGNAL OS v2.0 · PRODUCTION READY</span>
+    <span class="kicker">REMIN SIGNAL OS v2.5 · 24/7 SMART VAD & CALL RECORDING</span>
     <h1 class="heading">Ghi âm cuộc họp.<br>Tự động hóa thành hành động.</h1>
     <p class="subhead">Bản hoàn thiện cho điện thoại & máy tính: Ghi âm trực tiếp qua Micro (tự nhảy chữ tiếng Việt thời gian thực) hoặc tải file ghi âm có sẵn để AI bóc băng, tóm tắt quyết định và trích xuất công việc cần duyệt.</p>
     <div class="hero">
@@ -272,11 +289,83 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
         <!-- Recording & File Upload Controls -->
         <div class="button-row" style="margin:12px 0">
           <button class="btn danger" id="recordBtn" style="flex:1">🎙️ Bắt đầu Ghi âm Micro</button>
+          <button class="btn primary" id="vad247Btn" style="flex:1" title="Bật trực 24/7: Khi có tiếng nói tự động ghi, khi im lặng tự động tạm ngưng">🟢 Bật Trực 24/7 (Có tiếng mới ghi)</button>
           <label class="uploader" for="audioFile">
             <span style="font-size:20px">📁</span>
-            <span><strong>Tải file ghi âm có sẵn</strong><small>MP3 · M4A · WAV · OGG · WEBM</small></span>
+            <span><strong>Tải file / Ghi âm cuộc gọi</strong><small>iPhone Notes · Android · MP3/M4A/WAV</small></span>
           </label>
           <input id="audioFile" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.webm,.flac" class="hide" />
+        </div>
+
+        <!-- 24/7 SMART VAD PANEL (Voice Activity Detection) -->
+        <div class="vad-box" id="vadPanel">
+          <div class="smallrow">
+            <div>
+              <b style="font-size:13px">🛡️ Chế độ 24/7 Smart VAD (Nhận diện giọng nói & Tự ngắt khoảng lặng)</b>
+              <div class="fine" id="vadLiveState">Trạng thái: Sẵn sàng · Tự động giữ màn hình thức (WakeLock) khi bật 24/7</div>
+            </div>
+            <div class="row">
+              <label class="fine" style="display:flex;align-items:center;gap:5px;cursor:pointer">
+                <input type="checkbox" id="vadEnableToggle" checked /> Tự ngưng khi im lặng
+              </label>
+              <button class="btn tiny ghost" id="oledDimBtn" type="button">🌙 Tiết kiệm pin OLED</button>
+            </div>
+          </div>
+          <div class="row" style="margin-top:8px;gap:12px">
+            <label class="fine" style="flex:1">
+              Độ nhạy giọng nói: <strong id="vadThreshLabel">-42 dB</strong> (Hiện tại: <span id="vadCurrentDb">-60 dB</span>)
+              <input type="range" id="vadThreshold" min="-55" max="-22" value="-42" style="width:100%;margin-top:4px" />
+            </label>
+            <label class="fine" style="width:170px">
+              Thời gian chờ ngắt im lặng:
+              <select id="vadHoldSec" class="input-box" style="padding:5px 8px;margin-top:4px">
+                <option value="1.2">1.2 giây im lặng</option>
+                <option value="2.0" selected>2.0 giây im lặng</option>
+                <option value="3.5">3.5 giây im lặng</option>
+                <option value="5.0">5.0 giây im lặng</option>
+              </select>
+            </label>
+          </div>
+          <div class="vad-grid">
+            <div class="vad-stat"><strong id="vadTotalTime">00:00</strong><small>Tổng thời gian trực 24/7</small></div>
+            <div class="vad-stat"><strong id="vadSpeechTime">00:00</strong><small>Thời gian có tiếng nói đã ghi</small></div>
+            <div class="vad-stat"><strong id="vadSavedTime">00:00 (0%)</strong><small>Khoảng lặng đã tự bỏ qua</small></div>
+          </div>
+        </div>
+
+        <!-- SILENCE TRIMMER & CALL RECORDING HUB -->
+        <div class="button-row" style="margin:8px 0">
+          <button class="btn ghost tiny" id="trimSilenceBtn" style="flex:1;font-weight:800">✂️ Cắt bỏ khoảng lặng & Xuất file (.WAV gọn)</button>
+          <button class="btn ghost tiny" id="toggleCallHubBtn">📞 Hướng dẫn & Nhập Ghi âm Cuộc gọi (iPhone / Nhà mạng / Android)</button>
+        </div>
+
+        <div id="trimResultBox" class="trim-result hide"></div>
+
+        <div id="callHubPanel" class="call-hub hide">
+          <div class="smallrow">
+            <b style="font-size:13px">📞 Tích hợp Ghi âm Cuộc gọi trên iPhone (iOS 18.1+), Nhà mạng & Android</b>
+            <label class="btn tiny primary" for="audioFile" style="cursor:pointer">📥 Chọn file Ghi âm Cuộc gọi vừa lưu</label>
+          </div>
+          <div class="call-steps">
+            <div class="call-step">
+              <b>1. iPhone (iOS 18.1+ có sẵn)</b>
+              Khi đang gọi điện hoặc FaceTime, bấm biểu tượng <b>Ghi âm cuộc gọi</b> ở góc trên bên trái màn hình iPhone. Cúp máy xong, mở app <b>Ghi chú (Notes) → Bản ghi cuộc gọi</b> → bấm <b>Chia sẻ âm thanh / Lưu vào Tệp</b> rồi chọn nạp vào REMIN.
+            </div>
+            <div class="call-step">
+              <b>2. Nhà mạng / Tổng đài gộp 3 bên</b>
+              Trên mọi đời iPhone/Android: khi đang nghe cuộc gọi, bấm <b>Thêm cuộc gọi (Add Call)</b> tới nhánh tổng đài ghi âm (vPBX Viettel/VNPT/SIP/Voicemail) rồi bấm <b>Gộp cuộc gọi (Merge Calls)</b> hoặc bật Loa ngoài + chế độ <b>Trực 24/7</b>.
+            </div>
+            <div class="call-step">
+              <b>3. Android (Tự động 100%)</b>
+              Máy Samsung, Xiaomi, OPPO tự lưu mọi cuộc gọi vào thư mục <code>Recordings/Call</code> hoặc <code>MIUI/sound_recorder/call_rec</code>. Bấm nút <b>Chọn file Ghi âm Cuộc gọi</b> để tự động cắt khoảng lặng & bóc băng AI.
+            </div>
+          </div>
+          <div class="row" style="margin-top:8px">
+            <label class="fine" style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <input type="checkbox" id="autoTrimOnUpload" checked />
+              <b>Tự động cắt bỏ khoảng lặng ngay khi tải file ghi âm cuộc gọi lên</b>
+            </label>
+          </div>
         </div>
 
         <audio id="player" controls preload="metadata" style="display:none"></audio>
@@ -768,28 +857,89 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
   };
   $('manualText').addEventListener('keydown', e => { if (e.key === 'Enter') $('saveManualLineBtn').click(); });
 
-  // ================= 6. LIVE MICROPHONE RECORDING + WEB SPEECH API =================
+  // ================= 6. LIVE MICROPHONE RECORDING + 24/7 SMART VAD + SILENCE TRIMMER =================
   let mediaRecorder = null;
   let recordedChunks = [];
   let speechRec = null;
   let isRecording = false;
+  let is247Mode = false;
+  let vadIsPausedForSilence = false;
+  let lastVoiceTimestamp = 0;
   let recStartTime = 0;
+  let activeSpeechMs = 0;
+  let lastTickTime = 0;
   let recInterval = null;
   let audioCtx = null;
   let analyser = null;
   let animId = null;
+  let wakeLockSentinel = null;
 
-  async function startRecording() {
+  async function requestWakeLock() {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if ('wakeLock' in navigator && !wakeLockSentinel) {
+        wakeLockSentinel = await navigator.wakeLock.request('screen');
+        wakeLockSentinel.addEventListener('release', () => { wakeLockSentinel = null; });
+      }
+    } catch {}
+  }
+
+  async function releaseWakeLock() {
+    try {
+      if (wakeLockSentinel) {
+        await wakeLockSentinel.release();
+        wakeLockSentinel = null;
+      }
+    } catch {}
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && isRecording) {
+      requestWakeLock();
+    }
+  });
+
+  // Update VAD threshold slider label
+  if ($('vadThreshold')) {
+    $('vadThreshold').oninput = e => {
+      $('vadThreshLabel').textContent = `${e.target.value} dB`;
+    };
+  }
+  if ($('oledDimBtn')) {
+    $('oledDimBtn').onclick = () => {
+      document.body.classList.toggle('oled-dim');
+      const on = document.body.classList.contains('oled-dim');
+      $('oledDimBtn').textContent = on ? '☀️ Bật sáng lại màn hình' : '🌙 Tiết kiệm pin OLED';
+      notify(on ? 'Đã bật chế độ làm tối màn hình tiết kiệm pin 24/7.' : 'Đã khôi phục độ sáng màn hình.');
+    };
+  }
+  if ($('toggleCallHubBtn')) {
+    $('toggleCallHubBtn').onclick = () => {
+      $('callHubPanel').classList.toggle('hide');
+    };
+  }
+
+  async function startRecording(enable247 = false) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
       recordedChunks = [];
+      is247Mode = !!enable247;
+      if (is247Mode && $('vadEnableToggle')) $('vadEnableToggle').checked = true;
+
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
       mediaRecorder.onstop = async () => {
         stream.getTracks().forEach(t => t.stop());
         if (animId) cancelAnimationFrame(animId);
         if (audioCtx) audioCtx.close().catch(() => {});
-        const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+        await releaseWakeLock();
+        document.body.classList.remove('oled-dim');
+        let blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
         currentAudioBlob = blob;
         const m = getActiveMeeting();
         await saveAudioBlobToDB(m.id, blob);
@@ -798,26 +948,73 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
         const player = $('player');
         player.src = currentAudioUrl;
         player.style.display = 'block';
-        $('audioNotice').textContent = `Đã thu âm xong (${Math.round(blob.size / 1024)} KB) và lưu vào thiết bị! Anh có thể nghe lại hoặc bấm "✨ Bóc băng & Tóm tắt bằng AI".`;
+        const savedSec = Math.max(0, Math.floor((Date.now() - recStartTime - activeSpeechMs) / 1000));
+        $('audioNotice').textContent = `Đã thu âm xong (${Math.round(blob.size / 1024)} KB, tự động bỏ qua ${formatSec(savedSec)} khoảng lặng) và lưu vào thiết bị! Anh có thể bấm "✂️ Cắt bỏ khoảng lặng & Xuất file (.WAV gọn)" hoặc "✨ Bóc băng & Tóm tắt bằng AI".`;
         generateLocalOrAiBrief();
       };
 
-      // Live Waveform Visualizer
+      await requestWakeLock();
+      lastVoiceTimestamp = Date.now();
+      activeSpeechMs = 0;
+      lastTickTime = Date.now();
+      vadIsPausedForSilence = false;
+
+      // Live Waveform Visualizer + Real-time dB Voice Activity Detection (VAD)
       try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const source = audioCtx.createMediaStreamSource(stream);
         analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 128;
+        analyser.fftSize = 512;
         source.connect(analyser);
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
-        const drawLiveWave = () => {
+        const freqData = new Uint8Array(analyser.frequencyBinCount);
+        const timeData = new Float32Array(analyser.fftSize);
+
+        const drawLiveWaveAndVAD = () => {
           if (!isRecording) return;
-          analyser.getByteFrequencyData(dataArray);
-          const bars = Array.from(dataArray.slice(0, 48)).map(v => 10 + (v / 255) * 85);
+          analyser.getByteFrequencyData(freqData);
+          analyser.getFloatTimeDomainData(timeData);
+
+          // Compute RMS -> dBFS
+          let sumSq = 0;
+          for (let i = 0; i < timeData.length; i++) sumSq += timeData[i] * timeData[i];
+          const rms = Math.sqrt(sumSq / timeData.length);
+          const db = Math.max(-65, Math.min(0, Math.round(20 * Math.log10(rms + 1e-7))));
+          if ($('vadCurrentDb')) $('vadCurrentDb').textContent = `${db} dB`;
+
+          const threshDb = Number($('vadThreshold')?.value || -42);
+          const holdMs = Number($('vadHoldSec')?.value || 2.0) * 1000;
+          const vadActive = $('vadEnableToggle') ? $('vadEnableToggle').checked : true;
+
+          const now = Date.now();
+          if (db >= threshDb) {
+            lastVoiceTimestamp = now;
+            if (vadIsPausedForSilence && mediaRecorder && mediaRecorder.state === 'paused') {
+              try { mediaRecorder.resume(); } catch {}
+              vadIsPausedForSilence = false;
+            }
+            if ($('vadLiveState')) {
+              $('vadLiveState').innerHTML = `<span style="color:var(--accent);font-weight:800">🟢 ĐANG THU TIẾNG NÓI (${db} dB)</span> · Đang ghi vào bộ nhớ`;
+            }
+          } else if (vadActive && (now - lastVoiceTimestamp > holdMs)) {
+            if (!vadIsPausedForSilence && mediaRecorder && mediaRecorder.state === 'recording') {
+              try { mediaRecorder.pause(); } catch {}
+              vadIsPausedForSilence = true;
+            }
+            if ($('vadLiveState')) {
+              $('vadLiveState').innerHTML = `<span style="color:var(--warn);font-weight:800">🟡 IM LẶNG (${db} dB) — TẠM NGƯNG GHI</span> · Tự thu lại ngay khi có tiếng nói`;
+            }
+          }
+
+          const step = Math.max(1, Math.floor(freqData.length / 48));
+          const bars = [];
+          for (let i = 0; i < 48; i++) {
+            const v = freqData[i * step] || 0;
+            bars.push(vadIsPausedForSilence ? 8 : (10 + (v / 255) * 85));
+          }
           renderWave(bars);
-          animId = requestAnimationFrame(drawLiveWave);
+          animId = requestAnimationFrame(drawLiveWaveAndVAD);
         };
-        drawLiveWave();
+        drawLiveWaveAndVAD();
       } catch {}
 
       // Start Web Speech API (Vietnamese live speech-to-text) if supported
@@ -833,11 +1030,12 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
             if (ev.results[i].isFinal) {
               const transcriptText = ev.results[i][0].transcript.trim();
               if (transcriptText) {
-                const elapsed = Math.floor((Date.now() - recStartTime) / 1000);
+                lastVoiceTimestamp = Date.now();
+                const elapsed = Math.floor(activeSpeechMs / 1000);
                 m.segments.push({
                   time: formatSec(elapsed),
                   sec: elapsed,
-                  who: 'Ghi âm trực tiếp',
+                  who: is247Mode ? 'Trực 24/7' : 'Ghi âm trực tiếp',
                   text: transcriptText
                 });
                 saveState();
@@ -854,16 +1052,35 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
       mediaRecorder.start(1000);
       isRecording = true;
       recStartTime = Date.now();
+      lastTickTime = Date.now();
       $('recordBtn').classList.add('recording');
       $('recordBtn').textContent = '⏹️ Dừng Ghi âm & Lưu';
-      $('statusBadge').textContent = '🔴 ĐANG GHI ÂM TRỰC TIẾP...';
+      $('vad247Btn').textContent = is247Mode ? '🟢 Đang Trực 24/7 (Bấm để dừng)' : '🟢 Đang Bật VAD (Bấm để dừng)';
+      $('statusBadge').textContent = is247Mode ? '🟢 ĐANG TRỰC 24/7 SMART VAD (CÓ TIẾNG MỚI GHI)...' : '🔴 ĐANG GHI ÂM + SMART VAD...';
+
       recInterval = setInterval(() => {
-        const sec = Math.floor((Date.now() - recStartTime) / 1000);
+        const now = Date.now();
+        const dt = now - lastTickTime;
+        lastTickTime = now;
+        if (!vadIsPausedForSilence) {
+          activeSpeechMs += dt;
+        }
+        const totalSec = Math.floor((now - recStartTime) / 1000);
+        const speechSec = Math.floor(activeSpeechMs / 1000);
+        const savedSec = Math.max(0, totalSec - speechSec);
+        const pct = totalSec > 0 ? Math.round((savedSec / totalSec) * 100) : 0;
+
         const m = getActiveMeeting();
-        m.durationSec = sec;
-        $('recTimer').textContent = formatSec(sec);
-      }, 500);
-      notify('Đang ghi âm! Hãy nói vào Micro (Tự động nhận diện tiếng Việt).');
+        m.durationSec = speechSec;
+        $('recTimer').textContent = formatSec(speechSec);
+        if ($('vadTotalTime')) $('vadTotalTime').textContent = formatSec(totalSec);
+        if ($('vadSpeechTime')) $('vadSpeechTime').textContent = formatSec(speechSec);
+        if ($('vadSavedTime')) $('vadSavedTime').textContent = `${formatSec(savedSec)} (${pct}%)`;
+      }, 400);
+
+      notify(is247Mode
+        ? 'Đã bật chế độ Trực 24/7 Smart VAD! Máy sẽ tự ghi khi có tiếng nói và tự tạm ngưng khi im lặng.'
+        : 'Đang ghi âm kèm bộ lọc khoảng lặng thông minh (Smart VAD)!');
     } catch (err) {
       notify('Không thể mở Micro: Hãy cấp quyền Micro trên trình duyệt hoặc chọn tải file ghi âm lên.');
     }
@@ -871,6 +1088,7 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 
   function stopRecording() {
     isRecording = false;
+    is247Mode = false;
     clearInterval(recInterval);
     if (speechRec) {
       try { speechRec.onend = null; speechRec.stop(); } catch {}
@@ -881,6 +1099,7 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
     }
     $('recordBtn').classList.remove('recording');
     $('recordBtn').textContent = '🎙️ Bắt đầu Ghi âm Micro';
+    if ($('vad247Btn')) $('vad247Btn').textContent = '🟢 Bật Trực 24/7 (Có tiếng mới ghi)';
     $('statusBadge').textContent = '● ĐÃ LƯU BẢN GHI ÂM';
     saveState();
     refreshAllViews();
@@ -888,8 +1107,184 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
 
   $('recordBtn').onclick = () => {
     if (isRecording) stopRecording();
-    else startRecording();
+    else startRecording(false);
   };
+  if ($('vad247Btn')) {
+    $('vad247Btn').onclick = () => {
+      if (isRecording) stopRecording();
+      else startRecording(true);
+    };
+  }
+
+  // ================= 6B. AUTO-SILENCE TRIMMER ENGINE (CẮT BỎ KHOẢNG LẶNG & XUẤT WAV) =================
+  function encodeAudioBufferToWavBlob(audioBuffer, segmentsToKeep) {
+    const numChannels = 1; // Mono mixdown for clean, compact voice export
+    const sampleRate = audioBuffer.sampleRate;
+    const ch0 = audioBuffer.getChannelData(0);
+    const ch1 = audioBuffer.numberOfChannels > 1 ? audioBuffer.getChannelData(1) : null;
+
+    let totalSamples = 0;
+    for (const [startSample, endSample] of segmentsToKeep) {
+      totalSamples += (endSample - startSample);
+    }
+
+    const buffer = new ArrayBuffer(44 + totalSamples * 2);
+    const view = new DataView(buffer);
+    const writeStr = (offset, str) => {
+      for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+    };
+
+    writeStr(0, 'RIFF');
+    view.setUint32(4, 36 + totalSamples * 2, true);
+    writeStr(8, 'WAVE');
+    writeStr(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true); // PCM
+    view.setUint16(22, numChannels, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * numChannels * 2, true);
+    view.setUint16(32, numChannels * 2, true);
+    view.setUint16(34, 16, true);
+    writeStr(36, 'data');
+    view.setUint32(40, totalSamples * 2, true);
+
+    let offset = 44;
+    const fadeSamples = Math.min(240, Math.floor(sampleRate * 0.01)); // 10ms smooth crossfade
+    for (const [startSample, endSample] of segmentsToKeep) {
+      const len = endSample - startSample;
+      for (let i = 0; i < len; i++) {
+        const idx = startSample + i;
+        let sample = ch1 ? 0.5 * (ch0[idx] + ch1[idx]) : ch0[idx];
+        if (i < fadeSamples) sample *= (i / fadeSamples);
+        else if (len - i < fadeSamples) sample *= ((len - i) / fadeSamples);
+        sample = Math.max(-1, Math.min(1, sample));
+        view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+        offset += 2;
+      }
+    }
+    return new Blob([buffer], { type: 'audio/wav' });
+  }
+
+  async function trimSilenceFromCurrentAudio(autoDownload = true) {
+    if (!currentAudioBlob) {
+      notify('Chưa có file âm thanh nào! Hãy thu âm hoặc tải file ghi âm cuộc gọi lên trước.');
+      return null;
+    }
+    const btn = $('trimSilenceBtn');
+    const origText = btn ? btn.textContent : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '⏳ Đang quét sóng âm & cắt bỏ khoảng lặng...';
+    }
+    try {
+      const arrayBuf = await currentAudioBlob.arrayBuffer();
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioBuffer = await ctx.decodeAudioData(arrayBuf);
+      await ctx.close().catch(() => {});
+
+      const sampleRate = audioBuffer.sampleRate;
+      const ch0 = audioBuffer.getChannelData(0);
+      const totalSamples = ch0.length;
+      const origDurationSec = totalSamples / sampleRate;
+
+      const threshDb = Number($('vadThreshold')?.value || -42);
+      const threshLinear = Math.pow(10, threshDb / 20);
+      const winSize = Math.floor(sampleRate * 0.02); // 20ms window
+      const padSamples = Math.floor(sampleRate * 0.08); // 80ms natural padding around speech
+      const minSilenceGap = Math.floor(sampleRate * 0.35); // merge gaps shorter than 350ms
+
+      const rawSegments = [];
+      let inSpeech = false;
+      let segStart = 0;
+
+      for (let i = 0; i < totalSamples; i += winSize) {
+        const end = Math.min(totalSamples, i + winSize);
+        let sum = 0;
+        for (let j = i; j < end; j++) sum += ch0[j] * ch0[j];
+        const rms = Math.sqrt(sum / (end - i));
+        if (rms >= threshLinear) {
+          if (!inSpeech) {
+            inSpeech = true;
+            segStart = Math.max(0, i - padSamples);
+          }
+        } else if (inSpeech) {
+          inSpeech = false;
+          rawSegments.push([segStart, Math.min(totalSamples, end + padSamples)]);
+        }
+      }
+      if (inSpeech) rawSegments.push([segStart, totalSamples]);
+
+      // Merge adjacent speech segments separated by < 350ms
+      const merged = [];
+      for (const seg of rawSegments) {
+        if (!merged.length) merged.push(seg);
+        else {
+          const prev = merged[merged.length - 1];
+          if (seg[0] - prev[1] <= minSilenceGap) {
+            prev[1] = Math.max(prev[1], seg[1]);
+          } else {
+            merged.push(seg);
+          }
+        }
+      }
+
+      if (!merged.length) {
+        notify('Không phát hiện đoạn tiếng nói nào vượt ngưỡng dB hiện tại. Hãy kéo thanh Độ nhạy giọng nói xuống thấp hơn (ví dụ -50 dB).');
+        return null;
+      }
+
+      const wavBlob = encodeAudioBufferToWavBlob(audioBuffer, merged);
+      let keptSamples = 0;
+      for (const [s, e] of merged) keptSamples += (e - s);
+      const newDurationSec = keptSamples / sampleRate;
+      const cutSec = Math.max(0, origDurationSec - newDurationSec);
+      const savedPct = origDurationSec > 0 ? Math.round((cutSec / origDurationSec) * 100) : 0;
+
+      currentAudioBlob = wavBlob;
+      const m = getActiveMeeting();
+      m.durationSec = Math.max(1, Math.round(newDurationSec));
+      await saveAudioBlobToDB(m.id, wavBlob);
+      if (currentAudioUrl) URL.revokeObjectURL(currentAudioUrl);
+      currentAudioUrl = URL.createObjectURL(wavBlob);
+
+      const player = $('player');
+      player.src = currentAudioUrl;
+      player.style.display = 'block';
+      $('recTimer').textContent = formatSec(m.durationSec);
+
+      const box = $('trimResultBox');
+      if (box) {
+        box.classList.remove('hide');
+        box.innerHTML = `<b>✂️ Đã cắt bỏ khoảng lặng thành công!</b> · Độ dài gốc: <b>${formatSec(Math.round(origDurationSec))}</b> → Sau khi cắt: <b>${formatSec(Math.round(newDurationSec))}</b> (Đã loại bỏ <b>${ cutSec.toFixed(1) } giây</b> khoảng lặng · Giảm <b>${savedPct}%</b> thời lượng · Giữ lại <b>${merged.length}</b> đoạn có tiếng nói).`;
+      }
+
+      if (autoDownload) {
+        const a = document.createElement('a');
+        a.href = currentAudioUrl;
+        const safeTitle = (m.title || 'remin-audio').replace(/[^a-zA-Z0-9_-]+/g, '_');
+        a.download = `${safeTitle}_da_cat_khoang_lang.wav`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      saveState();
+      refreshAllViews();
+      notify(`✂️ Đã cắt bỏ ${cutSec.toFixed(1)}s khoảng lặng (giảm ${savedPct}%)!`);
+      return wavBlob;
+    } catch (err) {
+      notify('Không thể giải mã định dạng âm thanh này để cắt khoảng lặng: ' + (err.message || ''));
+      return null;
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = origText;
+      }
+    }
+  }
+
+  if ($('trimSilenceBtn')) {
+    $('trimSilenceBtn').onclick = () => trimSilenceFromCurrentAudio(true);
+  }
 
   // ================= 7. UPLOAD AUDIO FILE & AI TRANSCRIPTION (GEMINI / GROQ WHISPER) =================
   $('audioFile').onchange = async e => {
@@ -917,6 +1312,9 @@ hr{border:0;border-top:1px solid var(--line);margin:14px 0}
     saveState();
     refreshAllViews();
     notify('Đã nạp file âm thanh thành công!');
+    if ($('autoTrimOnUpload') && $('autoTrimOnUpload').checked) {
+      await trimSilenceFromCurrentAudio(false);
+    }
   };
 
   function blobToBase64(blob) {
